@@ -1,0 +1,59 @@
+@import '~antd/es/style/themes/default.less';
+
+.icon_vr {
+  font-size: 20px !important;
+}
+.cardContent {
+  width: 100%;
+  margin-top: 10px;
+}
+.icon {
+  float: right;
+  font-size: 20px;
+}
+.icon_monitorStation {
+  color: #4aec45;
+  font-size: 40px;
+}
+.newButton {
+  width: 100%;
+  height: 340px;
+  color: @text-color-secondary;
+  background-color: @component-background;
+  border-color: @border-color-base;
+}
+
+.cardItemContent {
+  display: flex;
+  height: 20px;
+  margin-top: 16px;
+  margin-bottom: -4px;
+  line-height: 20px;
+
+  & > span {
+    flex: 1;
+    color: @text-color-secondary;
+    font-size: 12px;
+  }
+
+  .avatarList {
+    flex: 0 1 auto;
+  }
+}
+
+@keyframes blink {
+  0% {
+    box-shadow: 0 0 5px red;
+  }
+  50% {
+    box-shadow: 0 0 20px red;
+  }
+  100% {
+    box-shadow: 0 0 5px red;
+  }
+}
+
+.alarmdiv {
+  border: 2px solid red;
+  animation: blink 1s infinite;
+}

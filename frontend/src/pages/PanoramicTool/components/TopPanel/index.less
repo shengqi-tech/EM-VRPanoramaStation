@@ -1,0 +1,64 @@
+@import '~antd/es/style/themes/default.less';
+.topPanel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 5px;
+  text-align: center;
+  .leftBox {
+    position: absolute;
+    left: 5px;
+    .loginoutBtn {
+      color: #fff;
+      background-color: rgb(40, 40, 40);
+      border: none;
+      &.active,
+      &:hover,
+      &:focus {
+        background-color: rgb(78, 78, 78);
+      }
+    }
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .style {
+    position: absolute;
+    right: 5px;
+    .share {
+      display: inline-block;
+      height: 30px;
+      padding: 0 5px;
+      line-height: 30px;
+      background-color: rgb(40, 40, 40);
+      cursor: pointer;
+      span {
+        margin: 0 5px;
+      }
+      .iconCode {
+        font-size: 16px;
+      }
+    }
+
+    :global {
+      .ant-segmented {
+        background-color: rgb(40, 40, 40);
+        .ant-segmented-thumb {
+          background-color: rgb(78, 78, 78);
+        }
+        .ant-segmented-item-selected {
+          background-color: rgb(78, 78, 78);
+        }
+      }
+    }
+  }
+
+  .icon {
+    color: #fff;
+    font-size: 18px;
+  }
+}

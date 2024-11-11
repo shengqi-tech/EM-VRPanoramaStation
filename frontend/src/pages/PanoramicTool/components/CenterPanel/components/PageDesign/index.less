@@ -1,0 +1,43 @@
+@import '~antd/es/style/themes/default.less';
+@bg-color: rgba(0, 0, 0, 0.1);
+.pageDesignBox {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  .banner {
+    pointer-events: all;
+    .ant-alert-banner {
+      padding: 5px 15px;
+      background: rgba(0, 0, 0, 0.1);
+      .rfm-marquee {
+        color: #fff;
+      }
+      .ant-alert-close-icon {
+        .anticon-close {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .rndBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: @bg-color;
+    pointer-events: all;
+    .dragBox {
+      width: 100%;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

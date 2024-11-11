@@ -1,0 +1,104 @@
+.ViewPanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .title {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    font-weight: bold;
+    line-height: 40px;
+    border-bottom: 1px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.06);
+  }
+  .content {
+    flex: 1;
+    width: 100%;
+    padding: 0 14px 0 14px;
+
+    .form {
+      .ant-tabs {
+        .ant-tabs-nav {
+          margin-bottom: 5px;
+          .ant-tabs-tab {
+            color: #fff;
+          }
+          &::before {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          }
+        }
+      }
+
+      .ant-pro-card {
+        .ant-pro-card-header {
+          padding: 10px 0;
+          .card-title {
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            span {
+              margin-right: 10px;
+              color: aqua;
+              font-size: 20px;
+            }
+          }
+        }
+        .ant-slider {
+          .ant-slider-rail {
+            background-color: rgb(40, 40, 40);
+          }
+          .ant-slider-mark {
+            .ant-slider-mark-text {
+              color: rgba(255, 255, 255, 0.3);
+            }
+          }
+        }
+
+        .card-form {
+          margin-top: 10px;
+          padding-left: 10px;
+          color: rgba(255, 255, 255, 0.8);
+          .viewCanvas {
+            width: 100%;
+            height: 150px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .ant-form-item {
+            width: 100%;
+            margin-bottom: 15px;
+          }
+          .ant-form-item-label {
+            label {
+              color: rgba(255, 255, 255, 0.8);
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottom {
+    width: 100%;
+    padding: 0 14px 14px 14px;
+    .bottom-top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .btn {
+      width: 100%;
+      background-color: rgb(36, 36, 36) !important;
+      border: none !important;
+    }
+    .btn-cancel {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,115 @@
+@import '~antd/es/style/themes/default.less';
+.PanoramaList {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  :global {
+    .ant-tabs {
+      color: #fff;
+      .ant-tabs-content {
+        height: 101%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      .ant-tabs-tabpane {
+        height: 100%;
+      }
+      .ant-tabs-tab {
+        padding-left: 10px;
+      }
+      .ant-tabs-content-holder {
+        display: flex;
+        align-items: center;
+        border-left: 1px solid rgba(36, 36, 36, 1);
+      }
+
+      .ant-list-item {
+        margin-top: 16px;
+      }
+      .ant-card {
+        background: rgb(36, 36, 36);
+        .ant-card-body {
+          background: none;
+        }
+      }
+    }
+    .ant-list {
+      .ant-empty-description {
+        color: #fff;
+      }
+    }
+  }
+}
+.card {
+  margin: 0 5px;
+  padding: 1px;
+}
+.selectedCard:hover {
+  border-color: #1677ff;
+}
+.selectedCard {
+  margin: 0 5px;
+  padding: 1px;
+  border-color: #1677ff;
+}
+.enterIcon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 3px;
+  color: #fff;
+  font-size: 18px;
+  background-color: #1677ff;
+  border-radius: 50%;
+}
+.icon_level_air {
+  color: #1890ff;
+  font-size: 25px;
+}
+.icon_level_two {
+  color: #33ff66;
+  font-size: 20px;
+}
+.icon_level_one {
+  color: #669900;
+  font-size: 20px;
+}
+.bottomPanelList {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.btnAddGroup {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  color: #fff;
+  background-color: #242424;
+  border: none;
+}
+.btnAddGroup:hover,
+.btnAddGroup:focus {
+  background-color: rgb(50, 50, 50);
+}
+
+.btnAddBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100%;
+  margin-left: auto;
+  // border-left: 1px solid rgba(36, 36, 36, 1);
+}
+.btnAdd {
+  width: 80px;
+  height: 90%;
+  color: #fff;
+  background-color: #242424;
+  border: none;
+}
+.btnAdd:hover,
+.btnAdd:focus {
+  background-color: rgb(50, 50, 50);
+}

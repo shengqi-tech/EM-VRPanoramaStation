@@ -1,0 +1,65 @@
+.alarmBox {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+}
+.alarm-popup {
+  // position: absolute;
+  // top: 5px;
+  // left: 5px;
+  width: 300px;
+  padding: 15px;
+  color: #fff;
+  // background-color: rgba(117, 172, 255, 0.5);
+  pointer-events: none;
+  .ant-space {
+    width: 100%;
+  }
+  .alarmTitle {
+    font-weight: bold;
+    font-size: 18px;
+    .icon-warning {
+      font-size: 20px;
+    }
+  }
+  .line {
+    width: 120%;
+    transform: translateX(-10%);
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .ant-space-align-center {
+    align-items: flex-start;
+  }
+  .label {
+    display: inline-block;
+    width: 60px;
+    vertical-align: top;
+  }
+}
+.alarm-3 {
+  background: url('~@/assets/images/panorama/alarm/popup3.png') no-repeat;
+  //  background: url('~@/assets/images/panorama/alarm/popup2.png') no-repeat;
+  background-size: 100% 100%;
+  .alarmTitle {
+    color: red;
+  }
+}
+.alarm-2 {
+  background: url('~@/assets/images/panorama/alarm/popup2.png') no-repeat;
+  background-size: 100% 100%;
+  .alarmTitle {
+    color: yellow;
+  }
+}
+.alarm-1 {
+  background: url('~@/assets/images/panorama/alarm/popup1.png') no-repeat;
+  background-size: 100% 100%;
+  .alarmTitle {
+    color: rgb(21, 161, 229);
+  }
+}

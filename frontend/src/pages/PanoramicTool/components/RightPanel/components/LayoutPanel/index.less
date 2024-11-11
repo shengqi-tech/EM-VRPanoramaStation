@@ -1,0 +1,170 @@
+.LayoutPanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .title {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    font-weight: bold;
+    line-height: 40px;
+    border-bottom: 1px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.06);
+  }
+  .content {
+    width: 100%;
+    height: 720px;
+    padding: 0 14px 0 14px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgb(54, 52, 52);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgb(236, 235, 235);
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgb(100, 100, 100);
+    }
+    &::-webkit-scrollbar-thumb:active {
+      background: rgb(100, 100, 100);
+    }
+    .form {
+      .ant-pro-card {
+        .ant-pro-card-header {
+          padding: 10px 0;
+          .card-title {
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            span {
+              margin-right: 10px;
+              color: aqua;
+              font-size: 20px;
+            }
+          }
+        }
+
+        .card-form {
+          margin-top: 10px;
+          padding-left: 10px;
+          color: rgba(255, 255, 255, 0.8);
+
+          .sceneMode {
+            margin-bottom: 15px;
+          }
+          .ant-input {
+            color: #fff;
+            background-color: rgb(60, 60, 60);
+            border: none;
+          }
+          .ant-upload {
+            padding: 0;
+            background-color: rgb(36, 36, 36);
+            border: none;
+
+            .ant-upload-drag-container {
+              p {
+                display: none;
+              }
+              .ant-upload-text {
+                color: rgba(255, 255, 255, 0.8);
+              }
+              .ant-upload-icon {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 30px;
+              }
+            }
+          }
+          .ant-upload-list {
+            .ant-upload-list-item {
+              background-color: rgb(36, 36, 36);
+              border: none;
+              .ant-upload-list-item-name,
+              .anticon-delete {
+                color: rgba(255, 255, 255, 0.8);
+              }
+            }
+          }
+
+          .ant-select {
+            .ant-select-selector {
+              color: #fff;
+              background-color: rgb(60, 60, 60);
+              border: none;
+            }
+            .ant-select-arrow {
+              color: #fff;
+            }
+          }
+
+          .ant-radio-group {
+            .ant-radio-wrapper {
+              margin-bottom: 10px;
+              color: rgba(255, 255, 255, 0.8);
+            }
+          }
+          .card-selected {
+            border-color: #1677ff;
+          }
+          .icon-selected {
+            position: absolute;
+            padding: 1px;
+            color: #1677ff;
+            font-size: 16px;
+            background-color: #fff;
+            border-radius: 50%;
+            inset-block-start: 2px;
+            inset-inline-end: 2px;
+          }
+          .ant-card {
+            margin-bottom: 10px;
+            padding: 1px;
+            background: rgb(36, 36, 36);
+            .ant-card-body {
+              padding: 4px 0;
+              text-align: center;
+              background: none;
+              .ant-card-meta-title {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 14px;
+              }
+            }
+          }
+
+          .ant-form-item {
+            margin-bottom: 15px;
+            .ant-form-item-label {
+              label {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottom {
+    width: 100%;
+    padding: 0 14px 14px 14px;
+    .bottom-top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .btn {
+      width: 100%;
+      background-color: rgb(36, 36, 36) !important;
+      border: none !important;
+    }
+    .btn-cancel {
+      width: 100%;
+    }
+  }
+}

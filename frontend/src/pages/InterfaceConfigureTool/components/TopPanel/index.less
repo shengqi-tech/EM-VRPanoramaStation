@@ -1,0 +1,40 @@
+@import '~antd/es/style/themes/default.less';
+.topPanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 5px;
+  .loginoutBtn {
+    color: #fff;
+    background-color: rgb(40, 40, 40);
+    border: none;
+    &.active,
+    &:hover,
+    &:focus {
+      background-color: rgb(78, 78, 78);
+    }
+  }
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .style {
+    :global {
+      .ant-segmented {
+        background-color: rgb(40, 40, 40);
+        .ant-segmented-thumb {
+          background-color: rgb(78, 78, 78);
+        }
+        .ant-segmented-item-selected {
+          background-color: rgb(78, 78, 78);
+        }
+      }
+    }
+  }
+
+  .icon {
+    color: #fff;
+    font-size: 18px;
+  }
+}

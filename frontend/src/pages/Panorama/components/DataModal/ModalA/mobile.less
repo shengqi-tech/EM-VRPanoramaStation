@@ -1,0 +1,370 @@
+.DataModalShow-mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+  .header {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    .return {
+      margin-left: auto;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+  .typing-effect {
+    position: absolute;
+    top: -16px;
+    width: 20ch;
+    overflow: hidden;
+    color: #fff;
+    font-size: 12px;
+    font-family: monospace;
+    white-space: nowrap;
+    animation: typing 2s steps(20), effect 1s step-end infinite alternate;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+  }
+
+  @keyframes effect {
+    50% {
+      border-color: transparent;
+    }
+  }
+
+  .line-left {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    z-index: 9999;
+    width: 2%;
+    height: 40%;
+    background: url('~@/assets/images/panorama/dataModal/边框.png') no-repeat;
+    background-size: 100% 100%;
+  }
+
+  /*弹层动画（从右往左）*/
+  .fadeleftIn {
+    animation: slideLeftOut 1s ease-out forwards;
+    /* 添加动画效果 */
+  }
+
+  @keyframes slideLeftOut {
+    0% {
+      left: 0%;
+      opacity: 0;
+    }
+
+    100% {
+      left: 5%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes areaLeftOut {
+    0% {
+      left: 0%;
+      opacity: 0;
+    }
+
+    100% {
+      left: 12%;
+      opacity: 1;
+    }
+  }
+
+  .line-right {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    z-index: 9999;
+    width: 2%;
+    height: 40%;
+    background: url('~@/assets/images/panorama/dataModal/边框.png') no-repeat;
+    background-size: 100% 100%;
+    transform: rotateY(180deg);
+  }
+
+  /*弹层动画（从右往左）*/
+  .fadeRightIn {
+    animation: slideRightOut 1s ease-out forwards;
+    /* 添加动画效果 */
+  }
+
+  @keyframes slideRightOut {
+    0% {
+      right: 0%;
+      opacity: 0;
+    }
+
+    100% {
+      right: 5%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes areaRightOut {
+    0% {
+      right: 0%;
+      opacity: 0;
+    }
+
+    100% {
+      right: 12%;
+      opacity: 1;
+    }
+  }
+
+  .planeLeft {
+    position: absolute;
+    top: 14%;
+    left: 14%;
+    z-index: 9999;
+    width: 40%;
+    color: #fff;
+    animation: areaLeftOut 1s ease-out forwards;
+    .pl-top {
+      width: 100%;
+      height: 45%;
+      font-size: 12px;
+    }
+
+    .pl-content {
+      width: 100%;
+      height: 30%;
+      margin-bottom: 10%;
+    }
+
+    .pl-bottom {
+      width: 100%;
+      height: 30%;
+    }
+  }
+
+  .planeContent {
+    position: absolute;
+    bottom: 0%;
+    left: 3%;
+    z-index: 9999;
+    width: 94%;
+    height: 47%;
+    .switch {
+      position: fixed;
+      top: 4%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transform: translateX(-50%);
+      .icon {
+        font-size: 24px;
+      }
+      .icon:active {
+        color: #467cf0;
+      }
+      .title {
+        width: 200px;
+        margin: 0 10px;
+        overflow: hidden;
+        color: aqua;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+  }
+
+  .planeRight {
+    position: absolute;
+    top: 12%;
+    right: 14%;
+    z-index: 9999;
+    width: 15%;
+    color: #fff;
+    animation: areaRightOut 1s ease-out forwards;
+
+    .right-area {
+      position: absolute;
+      top: 40px;
+      right: 0;
+    }
+
+    .right-area h3 {
+      position: relative;
+      top: 8px;
+      padding-bottom: 8px;
+      padding-left: 5px;
+      font-weight: bold;
+      font-size: 14px;
+      background: url('~@/assets/images/panorama/dataModal/bg04rightarea.png') 5px bottom no-repeat;
+    }
+
+    .area-inbox-1 {
+      width: 100px;
+      height: 100px;
+      dl dd {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100px;
+        height: 40px;
+        overflow: hidden;
+        div {
+          font-size: 12px;
+          font-family: 'electronicFont';
+          letter-spacing: 1px;
+          white-space: nowrap;
+          text-align: center;
+        }
+      }
+    }
+
+    .round-1 {
+      position: absolute;
+      top: 30px;
+      right: -10px;
+      width: 120px;
+      height: 120px;
+      background: url('~@/assets/images/panorama/dataModal/circle.png') no-repeat;
+      background-size: 100% 100%;
+      border-radius: 100%;
+      animation-name: forotate;
+      animation-duration: 19000ms;
+      animation-iteration-count: infinite;
+    }
+
+    .round-2 {
+      position: absolute;
+      top: 30px;
+      right: -10px;
+      width: 120px;
+      height: 120px;
+      border: 0.052vw dashed rgb(9, 123, 138);
+      border-radius: 100%;
+      animation-name: forotate1;
+      animation-duration: 8000ms;
+      animation-iteration-count: infinite;
+    }
+
+    .round-3 {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      font-family: 'electronicFont';
+      line-height: 12px;
+      text-align: center;
+      background: url('~@/assets/images/panorama/dataModal/bg05rightarea.png') right bottom
+        no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 100%;
+      animation-name: whitePulse;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+    }
+
+    .round-4 {
+      position: absolute;
+      top: 30px;
+      left: 5px;
+      width: 10px;
+      height: 10px;
+      background: url('~@/assets/images/panorama/dataModal/bg06rightarea.png') right bottom
+        no-repeat;
+      border-radius: 100%;
+      box-shadow: 0 0 2px #fff;
+      animation-name: forotate;
+      animation-duration: 4000ms;
+      animation-iteration-count: infinite;
+    }
+    .round-time {
+      position: absolute;
+      top: 40vw;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .animation-line1 {
+      left: 0;
+      background: url('~@/assets/images/panorama/dataModal/bg01righttext2.png') center top no-repeat;
+    }
+
+    .animation-line2 {
+      right: 0;
+      background: url('~@/assets/images/panorama/dataModal/bg01righttext2.png') center top no-repeat;
+      transform: rotateY(180deg);
+    }
+
+    @keyframes flash1 {
+      0%,
+      50%,
+      100% {
+        opacity: 1;
+      }
+
+      25%,
+      75% {
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes flash2 {
+      0%,
+      50%,
+      100% {
+        opacity: 0.2;
+      }
+
+      25%,
+      75% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes forotate {
+      from {
+        transform: rotate(-360deg);
+        opacity: 0.9;
+      }
+
+      to {
+        transform: rotate(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes forotate1 {
+      from {
+        transform: rotate(0);
+      }
+
+      to {
+        transform: rotate(-180deg);
+      }
+    }
+
+    @keyframes whitePulse {
+      from {
+        box-shadow: 0 0 1.354vw #fff, 0 0 0.208vw #fff, 0 0 0.104vw #fff, 0 0 0vw #fff;
+      }
+
+      to {
+        box-shadow: 0 0 0 #fff, 0 0 0.104vw #fff, 0 0 0.208vw #fff, 0 0 1.354vw #fff;
+      }
+    }
+  }
+}

@@ -1,0 +1,265 @@
+.ModalB-mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+  animation: fade-in 0.5s ease-in-out;
+  .header {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    .return {
+      margin-left: auto;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+  .content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 25px);
+    color: #fff;
+    .contentTitle {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      background: url('~@/assets/images/panorama/dataModal/标题栏.png') no-repeat;
+      background-size: 100% 100%;
+      div {
+        margin-bottom: 1%;
+        margin-left: 14%;
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+        letter-spacing: 2px;
+        text-shadow: 1px 2px 2px rgba(0, 255, 255, 0.7137254901960784);
+      }
+    }
+    .contentC {
+      width: 100%;
+      height: calc(100% - 30px);
+      .cTop {
+        display: flex;
+        width: 100%;
+        height: 45%;
+        .ct-Left {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 45%;
+          height: 100%;
+          .switch {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transform: translateX(-50%);
+            .icon {
+              font-size: 16px;
+            }
+            .icon:active {
+              color: #467cf0;
+            }
+            .title {
+              width: 100px;
+              margin: 0 10px;
+              overflow: hidden;
+              color: aqua;
+              font-weight: bold;
+              text-align: center;
+            }
+          }
+          .round-1 {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: url('~@/assets/images/panorama/dataModal/circle.png') no-repeat;
+            background-size: 100% 100%;
+            border-radius: 100%;
+            animation-name: forotate;
+            animation-duration: 19000ms;
+            animation-iteration-count: infinite;
+          }
+          .round-2 {
+            width: 140px;
+            height: 140px;
+            border: 0.052vw dashed rgb(9, 123, 138);
+            border-radius: 100%;
+            animation-name: forotate1;
+            animation-duration: 8000ms;
+            animation-iteration-count: infinite;
+          }
+          .round-time {
+            position: absolute;
+            top: 220px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+          }
+          .valueBox {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 60px;
+            overflow: hidden;
+            text-align: center;
+            .valueTitle {
+              font-weight: bold;
+              font-size: 18px;
+            }
+          }
+        }
+        .ct-Right {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          justify-content: space-around;
+          padding: 10px;
+          padding-right: 10px;
+          .ctrItem {
+            display: flex;
+            height: 23%;
+            padding: 5px;
+            background-color: rgba(107, 175, 252, 0.1);
+            border-radius: 5px;
+            .item-left {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 25%;
+              height: 100%;
+              background: linear-gradient(
+                to bottom,
+                rgba(79, 141, 255, 0.3),
+                rgba(83, 83, 83, 0.1)
+              );
+              border-radius: 5px;
+              span {
+                font-size: 20px;
+              }
+            }
+            .item-right {
+              padding-left: 10px;
+              font-size: 14px;
+              .title {
+                color: aqua;
+                font-weight: bold;
+              }
+              .content {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+      .cBottom {
+        width: 100%;
+        height: 55%;
+        .bottom {
+          width: 100%;
+          height: 100%;
+          color: #fff;
+          .bottomTitle {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            background: url('~@/assets/images/panorama/dataModal/标题栏.png') no-repeat;
+            background-size: 100% 100%;
+            div {
+              margin-bottom: 1%;
+              margin-left: 14%;
+              color: #fff;
+              font-weight: bold;
+              font-size: 16px;
+              letter-spacing: 2px;
+              text-shadow: 1px 2px 2px rgba(0, 255, 255, 0.7137254901960784);
+            }
+          }
+          .echart {
+            width: 100%;
+            height: calc(100% - 30px);
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes forotate {
+  from {
+    transform: rotate(-360deg);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes forotate1 {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(-180deg);
+  }
+}
+.title-scanning {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    position: absolute;
+    top: 0;
+    z-index: -10;
+    display: block;
+    width: 5.208vw;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent 0%, #467cf0 100%);
+    opacity: 0.7;
+    animation: scanning 2s infinite linear;
+    content: ' ';
+  }
+}
+@keyframes scanning {
+  0% {
+    left: 0;
+    opacity: 0.7;
+  }
+  90% {
+    left: 100%;
+    opacity: 0.3;
+  }
+  100% {
+    right: -1.042vw;
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

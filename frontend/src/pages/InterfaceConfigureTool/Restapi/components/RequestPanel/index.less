@@ -1,0 +1,69 @@
+@import '~antd/es/style/themes/default.less';
+.threeCanvas {
+  position: absolute;
+  width: 100% !important;
+  height: 100%;
+  :global {
+    .ant-tabs {
+      .ant-tabs-content {
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .ant-tabs-tab {
+        padding-right: 10px;
+        padding-left: 10px;
+        color: aliceblue;
+        background-color: transparent;
+      }
+      .ant-tabs-tab-remove {
+        color: aliceblue;
+      }
+      .ant-tabs-nav-add {
+        color: aliceblue;
+        background-color: transparent;
+      }
+      .ant-tabs-content-holder {
+        display: flex;
+        align-items: center;
+        border-left: 1px solid rgba(36, 36, 36, 1);
+      }
+
+      .ant-list-item {
+        margin-top: 16px;
+      }
+      .ant-card {
+        background: rgb(36, 36, 36);
+        .ant-card-body {
+          background: none;
+        }
+      }
+    }
+    .ant-input {
+      color: #fff;
+      background-color: #1a1919;
+    }
+
+    .ant-select {
+      .ant-select-selector {
+        color: #fff;
+        background-color: rgb(60, 60, 60);
+        border: none;
+      }
+      .ant-select-arrow {
+        color: #fff;
+      }
+    }
+    .ant-pro-field-color-picker {
+      width: 45px;
+      height: 25px;
+      padding: 0;
+      background: none !important;
+      div {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+  }
+}

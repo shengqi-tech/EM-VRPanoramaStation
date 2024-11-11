@@ -1,0 +1,74 @@
+.opts {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  border-radius: 50%;
+  .btn {
+    color: #fff;
+  }
+  .btn:active {
+    color: #69b1ff;
+  }
+  .btn-big {
+    position: absolute;
+    cursor: pointer;
+  }
+  .btn-small {
+    position: absolute;
+    cursor: pointer;
+  }
+  .btn-up {
+    position: absolute;
+    top: 0.625vw;
+    left: 50%;
+    font-size: 14px;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .btn-right {
+    position: absolute;
+    top: 50%;
+    right: 0.625vw;
+    font-size: 14px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .btn-down {
+    position: absolute;
+    bottom: 0.625vw;
+    left: 50%;
+    font-size: 14px;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .btn-left {
+    position: absolute;
+    top: 50%;
+    left: 0.625vw;
+    font-size: 14px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28%;
+    height: 28%;
+    color: #fff;
+    font-size: 80%;
+    background: #333;
+    border-radius: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    content: '';
+  }
+  .center:active {
+    background: #444;
+  }
+}

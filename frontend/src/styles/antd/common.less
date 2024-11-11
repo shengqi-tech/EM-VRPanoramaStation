@@ -1,0 +1,80 @@
+.ant-page-header {
+  // background-color: #fff;
+}
+#root {
+  overflow-y: hidden !important;
+}
+.ant-pro-page-container {
+  height: calc(100vh - 48px);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(191, 191, 191);
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(153, 153, 153);
+  }
+  &::-webkit-scrollbar-thumb:active {
+    background: rgb(153, 153, 153);
+  }
+}
+.ant-pagination {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  margin: 0 !important;
+  padding: 10px 0 !important;
+  background-color: #fff;
+  box-shadow: 0 -1px 0 #f0f0f0;
+}
+.ant-list-pagination {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  margin: 0 !important;
+  background-color: #fff;
+  box-shadow: 0 -1px 0 #f0f0f0;
+  .ant-pagination {
+    box-shadow: none;
+  }
+}
+.ant-segmented-gray {
+  padding: 0 !important;
+  color: #fff;
+  background-color: rgb(40, 40, 40) !important;
+  .ant-segmented-item-label {
+    color: #fff;
+  }
+  .ant-segmented-thumb {
+    background-color: rgb(78, 78, 78);
+  }
+  .ant-segmented-item-selected {
+    background-color: rgb(78, 78, 78);
+  }
+}
+
+.ant-cascader-menu {
+  min-height: 200px !important;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(236, 235, 235);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(54, 52, 52);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(100, 100, 100);
+  }
+  &::-webkit-scrollbar-thumb:active {
+    background: rgb(100, 100, 100);
+  }
+}
+
+.ant-pro-steps-form-container {
+  min-width: 338px;
+}

@@ -1,0 +1,79 @@
+@import '~antd/es/style/themes/default.less';
+@bg-color: #1b1b1c;
+@border-radius: 5px;
+@padding: 2px;
+@margin: 2px;
+@panelBoxStyle: {
+  background-color: @bg-color;
+  border-radius: @border-radius;
+};
+.restapi {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: @padding;
+  color: #fff;
+  background-color: #000;
+
+  .content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    .contentLeft {
+      display: flex;
+      flex: 1;
+      height: 100%;
+
+      .labelBox {
+        width: 19%;
+        min-width: 19%;
+        max-width: 30%;
+        height: 100%;
+        margin-right: @margin;
+        @panelBoxStyle();
+      }
+
+      .center {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+        .centerT {
+          position: relative;
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          @panelBoxStyle();
+          .toolbar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 5%;
+          }
+          .canvas {
+            position: relative;
+            flex: 1;
+            width: 100%;
+          }
+        }
+        .centerB {
+          width: 100%;
+          height: 5%;
+          min-height: 5%;
+          max-height: 100%;
+          margin-top: @margin;
+
+          @panelBoxStyle();
+        }
+      }
+      .contentLB {
+        flex: 1;
+        width: 100%;
+
+        @panelBoxStyle();
+      }
+    }
+  }
+}

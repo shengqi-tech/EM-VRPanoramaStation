@@ -1,0 +1,30 @@
+@import '~antd/es/style/themes/default.less';
+.uriBar {
+  display: flex;
+  width: 100% !important;
+  :global {
+    .ant-space-compact {
+      width: calc(100% - 40px);
+    }
+  }
+}
+
+.select {
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  height: 32px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 20px 0 0 20px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input {
+  width: calc(100% - 130px);
+  max-width: calc(100% - 120px);
+  height: 100%;
+  overflow: hidden;
+}

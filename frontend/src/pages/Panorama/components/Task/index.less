@@ -1,0 +1,70 @@
+.TaskBox {
+  position: absolute;
+  bottom: 0.625rem;
+  left: 50%;
+  z-index: 2;
+
+  .btn {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.625rem;
+    padding-right: 0.625rem;
+    .btn-close {
+      margin-left: auto;
+      color: #fff;
+    }
+    button {
+      color: #fff;
+      border: none;
+    }
+  }
+  .content {
+    padding: 0 15px;
+    color: #fff;
+    .ant-segmented {
+      color: rgba(255, 255, 255, 0.8);
+      background-color: rgb(65, 65, 65);
+      .ant-segmented-thumb {
+        background-color: rgb(78, 78, 78);
+      }
+      .ant-segmented-item-selected {
+        color: #fff;
+        background-color: rgb(78, 78, 78);
+      }
+    }
+    .taskList {
+      padding-top: 15px;
+      .taskName {
+        color: #fff;
+      }
+    }
+  }
+}
+.showAnimation {
+  animation: showAnimation 0.2s forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes showAnimation {
+  0% {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+.hideAnimation {
+  animation: hideAnimation 0.2s forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes hideAnimation {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+}

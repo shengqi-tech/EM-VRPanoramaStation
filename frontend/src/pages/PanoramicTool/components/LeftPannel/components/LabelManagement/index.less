@@ -1,0 +1,210 @@
+@import '~antd/es/style/themes/default.less';
+.LabelManagement {
+  width: 100%;
+  height: 100%;
+
+  .labelTitle {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    line-height: 40px;
+    border-bottom: 1px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.06);
+
+    .labelTitleIcon {
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+
+  .labels {
+    height: 30%;
+    .icon-title {
+      width: 16px;
+    }
+    .icon {
+      width: 20px;
+      color: #fff;
+      font-size: 16px;
+    }
+    .icon-rotate {
+      color: #fff;
+      font-size: 20px;
+    }
+    .icon-right {
+      float: right;
+    }
+    .title {
+      margin-left: 10px;
+      color: #fff;
+    }
+
+    .ant-collapse-header {
+      padding-bottom: 4px;
+    }
+    .ant-collapse-content {
+      .ant-collapse-content-box {
+        width: 98%;
+        height: 200px;
+        padding-top: 0 !important;
+        padding-right: 10px;
+        padding-bottom: 0 !important;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+        &::-webkit-scrollbar-track {
+          background: rgb(54, 52, 52);
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgb(236, 235, 235);
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgb(100, 100, 100);
+        }
+        &::-webkit-scrollbar-thumb:active {
+          background: rgb(100, 100, 100);
+        }
+        .ant-list-items {
+          .seletedLabel {
+            background-color: rgba(240, 245, 255, 0.06);
+          }
+          .ant-list-item {
+            padding-bottom: 0;
+            padding-left: 30px;
+            cursor: pointer;
+            .title {
+              margin-left: 0;
+            }
+            &:active,
+            &:focus,
+            &:hover {
+              background-color: rgba(240, 245, 255, 0.06);
+            }
+          }
+        }
+        .ant-list-empty-text {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .labelList {
+    width: 100%;
+    padding: 0 10px;
+    .tagListBox {
+      width: 100%;
+      height: 40px;
+      .tagList {
+        margin-left: 0;
+        background-color: rgb(27, 27, 28);
+        border-bottom: 1px solid hsla(0, 0%, 100%, 0.06);
+        .anticon {
+          color: #fff;
+        }
+        .ant-tag-checkable-checked {
+          background-color: rgba(240, 240, 255, 0.11);
+        }
+        .ant-tag {
+          margin-right: 5px;
+          padding: 0 5px;
+          color: hsla(0, 0%, 100%, 0.4);
+          &:hover,
+          &.active {
+            background-color: rgba(240, 240, 255, 0.11);
+          }
+        }
+      }
+    }
+    .btn {
+      margin-bottom: 10px;
+      background-color: rgb(36, 36, 36);
+      border: none;
+    }
+    .labelTypeListBox {
+      width: 100%;
+      height: 480px;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: rgb(54, 52, 52);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgb(236, 235, 235);
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: rgb(100, 100, 100);
+      }
+      &::-webkit-scrollbar-thumb:active {
+        background: rgb(100, 100, 100);
+      }
+      .labelTypeList {
+        padding: 0 5px;
+        padding-right: 10px;
+        .title-img {
+          width: 22px;
+          height: 22px;
+          margin-top: -3px;
+          margin-right: 4px;
+          vertical-align: middle;
+        }
+        .title {
+          color: @icon-color;
+          font-size: 12px;
+        }
+        .list {
+          margin-top: 15px;
+          .card {
+            background-color: #242424;
+            cursor: grab;
+            .ant-card-body {
+              padding: 5px 0 !important;
+              text-align: center;
+              .ant-card-meta-description {
+                color: #fff;
+                font-size: 10px;
+              }
+            }
+            @keyframes play {
+              0% {
+                transform: translate3d(0, 0, 0);
+              }
+              100% {
+                transform: translate3d(0, -100%, 0);
+              }
+            }
+            .imgBox {
+              width: 34px;
+              height: 34px;
+              margin: 3px auto;
+              overflow: hidden;
+              .card-img-small {
+                width: 25px;
+                height: 25px;
+                margin: 2px auto;
+              }
+              .card-img-animate {
+                height: auto !important;
+                animation: play 1s infinite steps(25);
+              }
+              .card-img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .card:active {
+            cursor: grabbing;
+          }
+        }
+      }
+    }
+  }
+}

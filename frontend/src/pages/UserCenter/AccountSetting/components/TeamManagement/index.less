@@ -1,0 +1,72 @@
+.ant-pro-card-col.ant-pro-card-split-vertical {
+  border-inline-end: none;
+}
+.more-tag {
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(212, 212, 212);
+  }
+}
+.btn-add {
+  &:hover {
+    color: #0094ff;
+  }
+  &.active {
+    color: #0094ff;
+  }
+}
+.protable {
+  height: 100%;
+  .ant-pro-card {
+    // border-color: transparent;
+    // box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
+  }
+  .ant-pro-card:nth-child(2) {
+    height: calc(100% - 96px);
+  }
+}
+.leftCard {
+  .ant-pro-card-header {
+    padding: 10px 15px;
+  }
+  .ant-pro-card-body {
+    padding: 10px;
+  }
+}
+.ant-card {
+  .ant-card-cover {
+    padding: 1px;
+  }
+}
+.checkedCard {
+  &:hover {
+    border-color: #1677ff;
+  }
+
+  width: 100%;
+  background-color: #e6f7ff;
+  border-color: #1677ff;
+  :global {
+    .ant-card-actions {
+      background: none;
+    }
+  }
+}
+
+.checkedCard::after {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 0;
+  height: 0;
+  border: 8px solid #1677ff;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-top-right-radius: 2px;
+  content: '';
+}
+.stationListTable {
+  .ant-pro-card-body {
+    padding: 0;
+  }
+}

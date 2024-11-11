@@ -1,0 +1,106 @@
+.IntroBox {
+  position: absolute;
+  bottom: 0.625rem;
+  left: 50%;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background-color: #1f243b !important;
+  border-radius: 0 !important;
+
+  .btn {
+    display: flex;
+    align-items: center;
+    .btn-close {
+      margin-left: auto;
+      color: #fff;
+      font-size: 16px;
+    }
+    button {
+      color: #fff;
+      border: none;
+    }
+  }
+  .content {
+    padding: 5px 0;
+    color: #fff;
+    .title {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      .title-text {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      .title-icon {
+        margin-right: 10px;
+        color: rgb(248, 64, 248);
+        font-size: 20px;
+      }
+      .ant-segmented {
+        margin-left: auto;
+        padding: 0;
+        color: #fff;
+        background-color: #363c4f;
+        .ant-segmented-thumb {
+          background-color: #579cfc;
+        }
+        .ant-segmented-item-selected {
+          color: #fff;
+          background-color: #579cfc;
+        }
+      }
+    }
+    .c-data {
+      margin: 20px 0;
+      .dataInfo {
+        width: 100%;
+        padding: 5px 10px;
+        background-color: #323747;
+        border-radius: 5px;
+        .ant-statistic {
+          .ant-statistic-title {
+            color: #fff;
+          }
+          .ant-statistic-content {
+            color: #42d8ff;
+            font-weight: bold;
+            font-size: 24px;
+          }
+        }
+        .top-title {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+.showAnimation {
+  animation: showAnimation 0.2s forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes showAnimation {
+  0% {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+.hideAnimation {
+  animation: hideAnimation 0.2s forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes hideAnimation {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+}

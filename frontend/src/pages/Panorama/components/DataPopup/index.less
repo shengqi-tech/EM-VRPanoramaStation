@@ -1,0 +1,54 @@
+.data-popup-Box {
+  position: absolute;
+  display: none;
+}
+.data-popup {
+  position: relative;
+  color: #fff;
+  pointer-events: none;
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    pointer-events: none;
+    .showData {
+      width: 200px;
+      height: 200px;
+      font-weight: bold;
+      text-shadow: 0 0 0.521vw #4d64eb, 0 0 1.042vw #4d64eb, 0 0 1.563vw #4d64eb,
+        0 0 2.083vw #4d64eb; //设置发光效果
+      pointer-events: none;
+      div {
+        pointer-events: none;
+      }
+    }
+    .line {
+      width: 120%;
+      transform: translateX(-10%);
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.showData {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.showData div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.showData div:only-child {
+  opacity: 1 !important; /* 确保单个子元素始终可见 */
+  animation: none !important;
+}

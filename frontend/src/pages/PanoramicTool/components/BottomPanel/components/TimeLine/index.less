@@ -1,0 +1,126 @@
+@import '~antd/es/style/themes/default.less';
+@width: 7200px; // 120*60px
+.TimeLine {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  height: 220px;
+  .funcIcons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    .icon-timeline {
+      margin: 0 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  }
+  .content {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    .contentLeft {
+      display: flex;
+      flex-direction: column;
+      width: 100px;
+      height: 100%;
+      border-top: 1px solid gray;
+
+      .timeTitle,
+      .trackTitle,
+      .introduceTitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 50px;
+        color: #fff;
+      }
+      .timeTitle {
+        height: 40px;
+      }
+      .introduceTitle {
+        margin-top: 10px;
+      }
+    }
+    .contentRight {
+      display: flex;
+      flex: 1;
+      .box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        .boxIn {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          margin-right: -17px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          inset: 0;
+          &::-webkit-scrollbar {
+            height: 10px;
+          }
+          &::-webkit-scrollbar-track {
+            display: none;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: rgb(54, 52, 52);
+            border-radius: 5px;
+          }
+          &::-webkit-scrollbar-thumb:hover {
+            background: rgb(100, 100, 100);
+          }
+          &::-webkit-scrollbar-thumb:active {
+            background: rgb(100, 100, 100);
+          }
+          .time {
+            width: @width;
+            height: 40px;
+          }
+          .track {
+            width: @width;
+            height: 50px;
+            background-color: rgb(36, 36, 36);
+            .range {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100%;
+              background-color: rgb(14, 48, 88);
+              border-radius: 5px;
+              &:active {
+                border: 2px solid white; /* 设置选中时的边框样式 */
+              }
+            }
+            .selected {
+              border: 1px solid #fff;
+            }
+            .pointer {
+              width: 10px;
+              height: 300px;
+              background: url('~@/assets/images/panoramicTool/pointer.png') no-repeat;
+              background-size: 100% 100%;
+              // background-color: #fff;
+              transform: translateX(-40%) translateY(-15%);
+              cursor: pointer;
+              resize: none;
+            }
+          }
+          .introduce {
+            width: @width;
+            height: 50px;
+            margin-top: 10px;
+            background-color: rgb(36, 36, 36);
+          }
+        }
+      }
+    }
+  }
+}

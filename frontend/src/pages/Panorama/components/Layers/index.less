@@ -1,0 +1,100 @@
+@import '~antd/es/style/themes/default.less';
+.layerBox {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  box-sizing: border-box;
+  width: 86px;
+  height: 60px;
+  cursor: pointer;
+  .imgBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+
+    span {
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      z-index: 1;
+      margin-left: 1px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 12px;
+    }
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+    }
+  }
+
+  .imgBox:first-child {
+    z-index: 2;
+  }
+  .imgBox:hover {
+    border: 1px solid #3385ff;
+  }
+}
+.selectedImgBox {
+  border: 1px solid #3385ff;
+}
+.selectedImgBox::after {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 0;
+  height: 0;
+  border: 6px solid #ae81ff;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid transparent;
+  border-top-right-radius: 2px;
+  content: '';
+}
+.layerBox:hover {
+  .imgBox:nth-child(2) {
+    transform: translateX(106%);
+  }
+  .imgBox:nth-child(3) {
+    transform: translateX(106% * 2);
+  }
+  .imgBox:nth-child(4) {
+    transform: translateX(106% * 3);
+  }
+  .imgBox:nth-child(5) {
+    transform: translateX(106% * 4);
+  }
+  .imgBox:nth-child(6) {
+    transform: translateX(106% * 5);
+  }
+  .imgBox:nth-child(7) {
+    transform: translateX(106% * 6);
+  }
+}
+.floors {
+  position: absolute;
+  bottom: 80px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  .selectedFloor {
+    color: #fff;
+    background-color: @primary-color;
+  }
+  .selectedFloor:hover {
+    color: #fff !important;
+  }
+  .floor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .floor:hover {
+    color: @primary-color;
+  }
+}

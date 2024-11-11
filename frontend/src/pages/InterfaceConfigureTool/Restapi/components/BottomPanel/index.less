@@ -1,0 +1,70 @@
+@import '~antd/es/style/themes/default.less';
+.bottomPanel {
+  height: inherit;
+  padding-top: 10px;
+
+  :global {
+    .ant-tabs {
+      color: #fff;
+      .ant-tabs-content {
+        height: inherit;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      .ant-tabs-tab {
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+      .ant-tabs-content-holder {
+        display: flex;
+        align-items: center;
+        border-left: 1px solid rgba(36, 36, 36, 1);
+      }
+
+      .ant-list-item {
+        margin-top: 16px;
+      }
+      .ant-card {
+        .ant-card-body {
+          background: none;
+        }
+      }
+    }
+  }
+}
+
+.card,
+.addbtn {
+  width: 180px;
+}
+.icon_level_air {
+  color: #1890ff;
+  font-size: 25px;
+}
+.icon_level_two {
+  color: #33ff66;
+  font-size: 20px;
+}
+.icon_level_one {
+  color: #669900;
+  font-size: 20px;
+}
+
+.statusText {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  color: #33ff66;
+  font-weight: 700;
+}
+
+.icon {
+  margin: 0 10px;
+  padding: 3px;
+  // color: rgb(137, 137, 137);
+  color: #fff;
+  cursor: pointer;
+}
+.space {
+  margin: 0 10px;
+  color: rgba(137, 137, 137, 0.2);
+}

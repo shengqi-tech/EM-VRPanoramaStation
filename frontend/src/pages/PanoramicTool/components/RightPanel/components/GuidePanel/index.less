@@ -1,0 +1,194 @@
+.GuidePanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .title {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    font-weight: bold;
+    line-height: 40px;
+    border-bottom: 1px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.06);
+  }
+  .content {
+    flex: 1;
+    width: 100%;
+    padding: 0 14px 0 14px;
+    .mode {
+      width: 100%;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .form {
+      display: none;
+      .ant-pro-card {
+        .ant-pro-card-header {
+          padding: 10px 0;
+          .card-title {
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            span {
+              margin-right: 10px;
+              color: aqua;
+              font-size: 20px;
+            }
+          }
+        }
+
+        .card-form {
+          margin-top: 10px;
+          padding-left: 10px;
+          color: rgba(255, 255, 255, 0.8);
+
+          .sceneMode {
+            margin-bottom: 15px;
+          }
+          .ant-input-affix-wrapper {
+            background-color: rgb(60, 60, 60);
+            border: none;
+            .ant-input-suffix {
+              .ant-input-clear-icon {
+                color: #fff;
+              }
+            }
+          }
+          .ant-input {
+            color: #fff;
+            background-color: rgb(60, 60, 60);
+            border: none;
+          }
+
+          .ant-slider {
+            .ant-slider-rail {
+              background-color: rgb(40, 40, 40);
+            }
+            .ant-slider-mark {
+              .ant-slider-mark-text {
+                color: rgba(255, 255, 255, 0.3);
+              }
+            }
+          }
+          .ant-select {
+            .ant-select-selector {
+              color: #fff;
+              background-color: rgb(60, 60, 60);
+              border: none;
+            }
+            .ant-select-arrow {
+              color: #fff;
+            }
+          }
+
+          .ant-form-item {
+            margin-bottom: 15px;
+            .ant-form-item-label {
+              label {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 14px;
+              }
+            }
+          }
+
+          .edit {
+            .editBtn {
+              margin-bottom: 10px;
+              background-color: rgb(36, 36, 36) !important;
+              border: none !important;
+            }
+            .editPlane-list {
+              padding: 10px;
+              background-color: rgb(36, 36, 36);
+              .editPlaneTitle {
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                font-weight: bold;
+                font-size: 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+              }
+              .editPlaneContent {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                .pointTilte {
+                  flex-basis: 30%;
+                  margin: 8px 0;
+                  font-weight: bold;
+                  text-align: center;
+                  cursor: pointer;
+                }
+              }
+            }
+            .editPlane {
+              padding: 10px;
+              background-color: rgb(36, 36, 36);
+              .editPlaneTitle {
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                font-weight: bold;
+                font-size: 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+              }
+              .pointName {
+                display: flex;
+                margin: 20px 0;
+                .pointLabel {
+                  width: 15%;
+                }
+                .pointTilte {
+                  margin-left: 10px;
+                  color: aqua;
+                  font-weight: bold;
+                  font-size: 14px;
+                }
+              }
+              .fov {
+                display: flex;
+                margin: 10px 0;
+                .fovLabel {
+                  width: 15%;
+                }
+                .ant-slider {
+                  flex: 1;
+                  // width: 100%;
+                }
+              }
+              .editBottom {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                .editBottomBtn {
+                  width: 49%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .show {
+      display: block;
+    }
+  }
+  .bottom {
+    width: 100%;
+    padding: 0 14px 14px 14px;
+    .bottom-top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .btn {
+      width: 49%;
+      background-color: rgb(36, 36, 36) !important;
+      border: none !important;
+    }
+    .cancel-btn {
+      width: 100%;
+    }
+  }
+}

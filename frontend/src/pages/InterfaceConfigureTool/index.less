@@ -1,0 +1,44 @@
+@import '~antd/es/style/themes/default.less';
+@bg-color: #1b1b1c;
+@border-radius: 5px;
+@padding: 2px;
+@margin: 2px;
+@panelBoxStyle: {
+  background-color: @bg-color;
+  border-radius: @border-radius;
+};
+.configureToolPanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: @padding;
+  color: #fff;
+  background-color: #000;
+  .top {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    width: 100%;
+    height: 6%;
+    margin-bottom: @margin;
+    @panelBoxStyle();
+  }
+  .content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    .menuList {
+      width: 4.5%;
+      height: 100%;
+      margin-right: @margin;
+      @panelBoxStyle();
+    }
+    .request {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      height: 100%;
+    }
+  }
+}
