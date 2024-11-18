@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.CommonMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Common">
+        <id column="ems_common_id" property="ems_common_id" />
+        <result column="ems_common_name" property="ems_common_name" />
+        <result column="ems_common_panoramaid" property="ems_common_panoramaid" />
+        <result column="ems_common_tagtypeid" property="ems_common_tagtypeid" />
+        <result column="ems_common_widthratio" property="ems_common_widthratio" />
+        <result column="ems_common_heightratio" property="ems_common_heightratio" />
+        <result column="ems_common_taganimationid" property="ems_common_taganimationid" />
+        <result column="ems_common_rotation" property="ems_common_rotation" />
+        <result column="ems_common_location" property="ems_common_location" />
+        <result column="ems_common_isview" property="ems_common_isview" />
+        <result column="ems_common_isembed" property="ems_common_isembed" />
+        <result column="ems_common_fovrange" property="ems_common_fovrange" />
+        <result column="ems_common_jsondata" property="ems_common_jsondata" />
+        <result column="ems_common_createtime" property="ems_common_createtime" />
+        <result column="ems_common_updatetime" property="ems_common_updatetime" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.CommonVo">
+        <result column="ems_tagtype_type" property="ems_common_tagtype" />
+        <result column="ems_tagtype_pid" property="ems_common_tagtypepid" />
+        <association column="ems_sysfile_id = ems_tagtype_iconfileid" property="ems_common_tagtypeiconfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+        <collection column="ems_common_id" property="ems_common_devices"
+                    ofType="com.shengqitech.ems.models.domains.Device"
+                    select="com.shengqitech.ems.mappers.DeviceMapper.findByCommonId"/>
+        <collection column="ems_common_id" property="ems_common_properties"
+                    ofType="com.shengqitech.ems.models.domains.Property"
+                    select="com.shengqitech.ems.mappers.PropertyMapper.findByCommon"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_common_id, ems_common_name, ems_common_panoramaid, ems_common_tagtypeid, ems_common_widthratio, ems_common_heightratio, ems_common_taganimationid, ems_common_rotation, ems_common_location, ems_common_isview, ems_common_isembed, ems_common_fovrange, ems_common_jsondata, ems_common_createtime, ems_common_updatetime
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_common_id, ${alias}.ems_common_name, ${alias}.ems_common_panoramaid, ${alias}.ems_common_tagtypeid, ${alias}.ems_common_widthratio, ${alias}.ems_common_heightratio, ${alias}.ems_common_taganimationid, ${alias}.ems_common_rotation, ${alias}.ems_common_location, ${alias}.ems_common_isview, ${alias}.ems_common_isembed, ${alias}.ems_common_fovrange, ${alias}.ems_common_jsondata, ${alias}.ems_common_createtime, ${alias}.ems_common_updatetime
+    </sql>
+
+    <select id="selectByPanoramaId" resultMap="VoResultMap">
+        SELECT
+            <include refid="Relevance_Column_List">
+                <property name="alias" value="h"/>
+            </include>
+            ,t.ems_tagtype_iconfileid, t.ems_tagtype_type, t.ems_tagtype_pid FROM common h JOIN tagtype t ON t.ems_tagtype_id = h.ems_common_tagtypeid
+        WHERE h.ems_common_panoramaid=#{ems_panorama_id}
+    </select>
+
+    <insert id="insert" parameterType="Common" useGeneratedKeys="true" keyProperty="ems_common_id">
+        INSERT INTO common
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_common_name != null and ems_common_name != ''">ems_common_name,</if>
+            <if test="ems_common_panoramaid != null">ems_common_panoramaid,</if>
+            <if test="ems_common_tagtypeid != null">ems_common_tagtypeid,</if>
+            <if test="ems_common_widthratio != null">ems_common_widthratio,</if>
+            <if test="ems_common_heightratio != null">ems_common_heightratio,</if>
+            <if test="ems_common_taganimationid != null">ems_common_taganimationid,</if>
+            <if test="ems_common_rotation != null">ems_common_rotation,</if>
+            <if test="ems_common_location != null">ems_common_location,</if>
+            <if test="ems_common_isview != null">ems_common_isview,</if>
+            <if test="ems_common_isembed != null">ems_common_isembed,</if>
+            <if test="ems_common_fovrange != null">ems_common_fovrange,</if>
+            <if test="ems_common_jsondata != null">ems_common_jsondata,</if>
+            <if test="ems_common_createtime != null">ems_common_createtime,</if>
+            <if test="ems_common_updatetime != null">ems_common_updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_common_name != null and ems_common_name != ''">#{ems_common_name},</if>
+            <if test="ems_common_panoramaid != null">#{ems_common_panoramaid},</if>
+            <if test="ems_common_tagtypeid != null">#{ems_common_tagtypeid},</if>
+            <if test="ems_common_widthratio != null">#{ems_common_widthratio},</if>
+            <if test="ems_common_heightratio != null">#{ems_common_heightratio},</if>
+            <if test="ems_common_taganimationid != null">#{ems_common_taganimationid},</if>
+            <if test="ems_common_rotation != null">#{ems_common_rotation},</if>
+            <if test="ems_common_location != null">#{ems_common_location},</if>
+            <if test="ems_common_isview != null">#{ems_common_isview},</if>
+            <if test="ems_common_isembed != null">#{ems_common_isembed},</if>
+            <if test="ems_common_fovrange != null">#{ems_common_fovrange},</if>
+            <if test="ems_common_jsondata != null">#{ems_common_jsondata},</if>
+            <if test="ems_common_createtime != null">#{ems_common_createtime},</if>
+            <if test="ems_common_updatetime != null">#{ems_common_updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Common">
+        UPDATE common
+        <set>
+            <if test="ems_common_name != null and ems_common_name != ''">ems_common_name=#{ems_common_name},</if>
+            <if test="ems_common_panoramaid != null">ems_common_panoramaid=#{ems_common_panoramaid},</if>
+            <if test="ems_common_tagtypeid != null">ems_common_tagtypeid=#{ems_common_tagtypeid},</if>
+            <if test="ems_common_widthratio != null">ems_common_widthratio=#{ems_common_widthratio},</if>
+            <if test="ems_common_heightratio != null">ems_common_heightratio=#{ems_common_heightratio},</if>
+            <if test="ems_common_taganimationid != null">ems_common_taganimationid=#{ems_common_taganimationid},</if>
+            <if test="ems_common_rotation != null">ems_common_rotation=#{ems_common_rotation},</if>
+            <if test="ems_common_location != null">ems_common_location=#{ems_common_location},</if>
+            <if test="ems_common_isview != null">ems_common_isview=#{ems_common_isview},</if>
+            <if test="ems_common_isembed != null">ems_common_isembed=#{ems_common_isembed},</if>
+            <if test="ems_common_fovrange != null">ems_common_fovrange=#{ems_common_fovrange},</if>
+            <if test="ems_common_jsondata != null">ems_common_jsondata=#{ems_common_jsondata},</if>
+            <if test="ems_common_updatetime != null">ems_common_updatetime=#{ems_common_updatetime},</if>
+        </set>
+        WHERE ems_common_id = #{ems_common_id}
+    </update>
+
+    <select id="findByTagtypeId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM common
+        WHERE ems_common_tagtypeid=#{ems_tagtype_id}
+    </select>
+
+    <update id="batchUpdate" parameterType="Common">
+        <foreach collection="commons" item="item" index="index" open="" close="" separator=";">
+            update common
+            <set>
+                ems_common_name = #{item.ems_common_name},
+                ems_common_panoramaid = #{item.ems_common_panoramaid},
+                ems_common_tagtypeid = #{item.ems_common_tagtypeid},
+                ems_common_widthratio = #{item.ems_common_widthratio},
+                ems_common_heightratio = #{item.ems_common_heightratio},
+                ems_common_taganimationid = #{item.ems_common_taganimationid},
+                ems_common_rotation = #{item.ems_common_rotation},
+                ems_common_location = #{item.ems_common_location},
+                ems_common_isview = #{item.ems_common_isview},
+                ems_common_fovrange = #{item.ems_common_fovrange},
+                ems_common_jsondata = #{item.ems_common_jsondata}
+            </set>
+            where ems_common_id=#{item.ems_common_id}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM common WHERE ems_common_id=#{ems_common_id}
+    </delete>
+
+    <delete id="deleteByPanorama" parameterType="int">
+        DELETE FROM common WHERE ems_common_panoramaid=#{ems_panorama_id}
+    </delete>
+
+
+
+    <delete id="deleteCommonProperties" parameterType="INTEGER">
+       delete from commonproperty where ems_commonproperty_commonid = #{ id }
+    </delete>
+
+    <!-- 批量新增 热点与产品属性 关系 -->
+    <insert id="insertCommonProperties" parameterType="java.util.Map">
+        insert into commonproperty(ems_commonproperty_commonid,ems_commonproperty_propertyid)
+        values
+        <foreach collection="propertyids" item="item" index="index" separator=",">
+            (#{id},#{item})
+        </foreach>
+    </insert>
+
+</mapper>

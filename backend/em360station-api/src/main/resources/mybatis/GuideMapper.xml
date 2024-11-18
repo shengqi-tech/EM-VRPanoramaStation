@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.GuideMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Guide">
+        <id column="ems_guide_id" property="ems_guide_id" />
+        <result column="ems_guide_name" property="ems_guide_name" />
+        <result column="ems_guide_coverid" property="ems_guide_coverid" />
+        <result column="ems_guide_intr" property="ems_guide_intr" />
+        <result column="ems_guide_instanceid" property="ems_guide_instanceid" />
+        <result column="ems_guide_panoramaid" property="ems_guide_panoramaid" />
+        <result column="ems_guide_sort" property="ems_guide_sort" />
+        <result column="ems_guide_jsondata" property="ems_guide_jsondata" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.GuideVo">
+        <result column="ems_guide_panoramaname" property="ems_guide_panoramaname" />
+        <association column="ems_sysfile_id = ems_guide_coverid" property="ems_guide_coverfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+        <collection column="ems_guide_id" property="ems_guide_lookpoints"
+                    ofType="com.shengqitech.ems.models.domains.Api"
+                    select="com.shengqitech.ems.mappers.LookpointMapper.selectByGuideId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_guide_id, ems_guide_name, ems_guide_coverid, ems_guide_intr, ems_guide_instanceid, ems_guide_panoramaid, ems_guide_sort, ems_guide_jsondata
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_guide_id, ${alias}.ems_guide_name, ${alias}.ems_guide_coverid, ${alias}.ems_guide_intr, ${alias}.ems_guide_instanceid, ${alias}.ems_guide_panoramaid, ${alias}.ems_guide_sort, ${alias}.ems_guide_jsondata
+    </sql>
+
+    <insert id="insert" parameterType="Guide" useGeneratedKeys="true" keyProperty="ems_guide_id">
+        INSERT INTO guide
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_guide_name != null and ems_guide_name != ''">ems_guide_name,</if>
+            <if test="ems_guide_coverid != null">ems_guide_coverid,</if>
+            <if test="ems_guide_intr != null">ems_guide_intr,</if>
+            <if test="ems_guide_instanceid != null">ems_guide_instanceid,</if>
+            <if test="ems_guide_panoramaid != null">ems_guide_panoramaid,</if>
+            <if test="ems_guide_sort != null">ems_guide_sort,</if>
+            <if test="ems_guide_jsondata != null and ems_guide_jsondata != ''">ems_guide_jsondata,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_guide_name != null and ems_guide_name != ''">#{ems_guide_name},</if>
+            <if test="ems_guide_coverid != null">#{ems_guide_coverid},</if>
+            <if test="ems_guide_intr != null">#{ems_guide_intr},</if>
+            <if test="ems_guide_instanceid != null">#{ems_guide_instanceid},</if>
+            <if test="ems_guide_panoramaid != null">#{ems_guide_panoramaid},</if>
+            <if test="ems_guide_sort != null">#{ems_guide_sort},</if>
+            <if test="ems_guide_jsondata != null and ems_guide_jsondata != ''">#{ems_guide_jsondata},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Guide">
+        UPDATE guide
+        <set>
+            <if test="ems_guide_name != null and ems_guide_name != ''">ems_guide_name=#{ems_guide_name},</if>
+            <if test="ems_guide_coverid != null">ems_guide_coverid=#{ems_guide_coverid},</if>
+            <if test="ems_guide_intr != null">ems_guide_intr=#{ems_guide_intr},</if>
+            <if test="ems_guide_instanceid != null">ems_guide_instanceid=#{ems_guide_instanceid},</if>
+            <if test="ems_guide_panoramaid != null">ems_guide_panoramaid=#{ems_guide_panoramaid},</if>
+            <if test="ems_guide_sort != null">ems_guide_sort=#{ems_guide_sort},</if>
+            <if test="ems_guide_jsondata != null and ems_guide_jsondata != ''">ems_guide_jsondata=#{ems_guide_jsondata},</if>
+        </set>
+        WHERE ems_guide_id = #{ems_guide_id}
+    </update>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="g"/>
+        </include>,p.ems_panorama_name AS ems_guide_panoramaname
+        FROM guide g JOIN panorama p ON p.ems_panorama_id = g.ems_guide_panoramaid
+        <where>
+            <if test="ems_guide_id != null">
+                g.ems_guide_id=#{ems_guide_id}
+            </if>
+            <if test="ems_guide_name != null and ems_guide_name != ''">
+                AND g.ems_guide_name LIKE CONCAT(CONCAT('%', #{ems_guide_name}), '%')
+            </if>
+            <if test="ems_guide_instanceid != null">
+                AND g.ems_guide_instanceid=#{ems_guide_instanceid}
+            </if>
+        </where>
+        ORDER BY g.ems_guide_sort ASC
+    </select>
+
+    <select id="findMaxSort" parameterType="int" resultType="double">
+        SELECT MAX(ems_guide_sort)
+        FROM guide
+        WHERE ems_guide_instanceid = #{ems_instance_id}
+    </select>
+
+    <update id="sort" parameterType="int">
+        UPDATE guide AS p1
+            INNER JOIN (SELECT COALESCE (((p2.ems_guide_sort) + (p3.ems_guide_sort)) / 2,
+            (SELECT MIN(p4.ems_guide_sort) - 1
+            FROM guide p4
+            WHERE p4.ems_guide_id = ${id})) AS new_index
+            FROM guide p2
+            CROSS JOIN (SELECT MAX(p5.ems_guide_sort) AS ems_guide_sort
+            FROM guide p5
+            WHERE p5.ems_guide_sort <![CDATA[ < ]]> (SELECT p6.ems_guide_sort
+            FROM guide p6
+            WHERE p6.ems_guide_id = ${id})) AS p3
+            WHERE p2.ems_guide_id = ${id}) AS new_values
+        SET p1.ems_guide_sort = new_values.new_index
+        WHERE p1.ems_guide_id = ${sortId}
+    </update>
+
+    <update id="sortLast" parameterType="int">
+        UPDATE guide AS p1
+            INNER JOIN (
+            SELECT MAX(ems_guide_sort) + 1 AS new_index
+            FROM guide
+            ) AS new_values
+        SET p1.ems_guide_sort = new_values.new_index
+        WHERE p1.ems_guide_id = ${sortId};
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM guide WHERE ems_guide_id=#{ems_guide_id}
+    </delete>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ElementMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Element">
+        <id column="ems_element_id" property="ems_element_id" />
+        <result column="ems_element_name" property="ems_element_name" />
+        <result column="ems_element_icon" property="ems_element_icon" />
+        <result column="ems_element_index" property="ems_element_index" />
+        <result column="ems_element_des" property="ems_element_des" />
+
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.ElementVo">
+        <collection column="ems_activity_elementid = ems_element_id" property="ems_element_activities"
+                    ofType="com.shengqitech.ems.models.domains.Activity"
+                    select="com.shengqitech.ems.mappers.ActivityMapper.selectByElementId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_element_id, ems_element_name, ems_element_icon, ems_element_index,ems_element_des
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_element_id, ${alias}.ems_element_name, ${alias}.ems_element_icon, ${alias}.ems_element_index, ${alias}.ems_element_des
+    </sql>
+
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM element ORDER BY ems_element_index ASC
+    </select>
+
+
+</mapper>

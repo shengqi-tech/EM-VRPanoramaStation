@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.DeviceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Device">
+        <id column="ems_device_id" property="ems_device_id"/>
+        <result column="ems_device_no" property="ems_device_no"/>
+        <result column="ems_device_picfileid" property="ems_device_picfileid"/>
+        <result column="ems_device_state" property="ems_device_state"/>
+        <result column="ems_device_versionid" property="ems_device_versionid"/>
+        <result column="ems_device_instanceid" property="ems_device_instanceid"/>
+        <result column="ems_device_createtime" property="ems_device_createtime"/>
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.DeviceVo">
+        <collection column="ems_device_id" property="ems_device_InstallconfigurationVos"
+                    ofType="com.shengqitech.ems.models.domains.Installconfiguration"
+                    select="com.shengqitech.ems.mappers.InstallconfigurationMapper.findByDeviceId"/>
+    </resultMap>
+
+    <resultMap id="DeviceCommonVoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.DeviceCommonVo">
+        <association column="ems_device_versionid" property="product"
+                     javaType="com.shengqitech.ems.models.domains.Product"
+                     select="com.shengqitech.ems.mappers.ProductMapper.findByVersion" fetchType="eager"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}
+        .
+        ems_device_id
+        ,
+        ${alias}
+        .
+        ems_device_no,
+        ${alias}
+        .
+        ems_device_picfileid,
+        ${alias}
+        .
+        ems_device_state,
+        ${alias}
+        .
+        ems_device_versionid,
+        ${alias}
+        .
+        ems_device_instanceid,
+        ${alias}
+        .
+        ems_device_createtime
+    </sql>
+
+
+    <select id="findByCommonId" resultMap="DeviceCommonVoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="d"/>
+        </include>
+        FROM device d JOIN devicecommon dc ON d.ems_device_id=dc.ems_devicecommon_deviceid
+        WHERE dc.ems_devicecommon_commonid=#{ems_common_id}
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="d"/>
+        </include>
+        FROM device d WHERE ems_device_id=#{ems_devicealarm_deviceid}
+    </select>
+
+    <insert id="insert" parameterType="Device" useGeneratedKeys="true" keyProperty="ems_device_id">
+        INSERT INTO device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_device_no != null and ems_device_no != ''">ems_device_no,</if>
+            <if test="ems_device_picfileid != null">ems_device_picfileid,</if>
+            <if test="ems_device_state != null">ems_device_state,</if>
+            <if test="ems_device_versionid != null">ems_device_versionid,</if>
+            <if test="ems_device_instanceid != null">ems_device_instanceid,</if>
+            <if test="ems_device_createtime != null">ems_device_createtime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_device_no != null and ems_device_no != ''">#{ems_device_no},</if>
+            <if test="ems_device_picfileid != null">#{ems_device_picfileid},</if>
+            <if test="ems_device_state != null">#{ems_device_state},</if>
+            <if test="ems_device_versionid != null">#{ems_device_versionid},</if>
+            <if test="ems_device_instanceid != null">#{ems_device_instanceid},</if>
+            <if test="ems_device_createtime != null">#{ems_device_createtime},</if>
+        </trim>
+    </insert>
+
+    <select id="findDuplicateDevice" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="d"/>
+        </include>
+        FROM device d WHERE d.ems_device_no=#{deviceNo}
+    </select>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="d"/>
+        </include>
+        FROM device d
+        <if test="ems_product_id != null">
+            JOIN version v ON d.ems_device_versionid=v.ems_version_id JOIN product p ON
+            v.ems_version_productid=p.ems_product_id
+        </if>
+
+        <where>
+            <if test="ems_instance_id != null">
+                d.ems_device_instanceid=#{ems_instance_id}
+            </if>
+            <if test="ems_product_id != null">
+                AND p.ems_product_id=#{ems_product_id}
+            </if>
+            <if test="ems_device_id != null">
+                AND d.ems_device_id=#{ems_device_id}
+            </if>
+            <if test="ems_device_no != null and ems_device_no != ''">
+                AND d.ems_device_no=#{ems_device_no}
+            </if>
+
+        </where>
+    </select>
+
+</mapper>

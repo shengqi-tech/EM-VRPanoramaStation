@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.RestapigroupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Restapigroup">
+        <id column="ems_restapigroup_id" property="ems_restapigroup_id" />
+        <result column="ems_restapigroup_name" property="ems_restapigroup_name" />
+        <result column="ems_restapigroup_userid" property="ems_restapigroup_userid" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.RestapigroupVo">
+        <collection column="ems_api_restapigroupid = ems_restapigroup_id" property="ems_restapigroup_apivos"
+                    ofType="com.shengqitech.ems.models.domains.Api"
+                    select="com.shengqitech.ems.mappers.ApiMapper.selectByRestapigroupId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_restapigroup_id, ems_restapigroup_name, ems_restapigroup_userid
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_restapigroup_id, ${alias}.ems_restapigroup_name, ${alias}.ems_restapigroup_userid
+    </sql>
+
+    <insert id="insert" parameterType="Restapigroup" useGeneratedKeys="true" keyProperty="ems_restapigroup_id">
+        INSERT INTO restapigroup
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_restapigroup_name != null and ems_restapigroup_name != ''">ems_restapigroup_name,</if>
+            <if test="ems_restapigroup_userid != null">ems_restapigroup_userid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_restapigroup_name != null and ems_restapigroup_name != ''">#{ems_restapigroup_name},</if>
+            <if test="ems_restapigroup_userid != null">#{ems_restapigroup_userid},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Restapigroup">
+        UPDATE restapigroup
+        <set>
+            <if test="ems_restapigroup_name != null and ems_restapigroup_name != ''">ems_restapigroup_name=#{ems_restapigroup_name},</if>
+            <if test="ems_restapigroup_userid != null">ems_restapigroup_userid=#{ems_restapigroup_userid},</if>
+        </set>
+        WHERE ems_restapigroup_id = #{ems_restapigroup_id}
+    </update>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM restapigroup
+        <where>
+            <if test="ems_api_restapigroupid != null">
+                ems_api_restapigroupid=#{ems_api_restapigroupid}
+            </if>
+        </where>
+    </select>
+</mapper>

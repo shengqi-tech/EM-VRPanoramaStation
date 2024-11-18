@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.InstanceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Instance">
+        <id column="ems_instance_id" property="ems_instance_id" />
+        <result column="ems_instance_coordinate" property="ems_instance_coordinate" />
+        <result column="ems_instance_name" property="ems_instance_name" />
+        <result column="ems_instance_no" property="ems_instance_no" />
+        <result column="ems_instance_csolutionid" property="ems_instance_csolutionid" />
+        <result column="ems_instance_constructionstarttime" property="ems_instance_constructionstarttime" />
+        <result column="ems_instance_sceneid" property="ems_instance_sceneid" />
+        <result column="ems_instance_picfileid" property="ems_instance_picfileid" />
+        <result column="ems_instance_des" property="ems_instance_des" />
+        <result column="ems_instance_sectionid" property="ems_instance_sectionid" />
+        <result column="ems_instance_createtime" property="ems_instance_createtime" />
+        <result column="ems_instance_updatetime" property="ems_instance_updatetime" />
+        <result column="ems_instance_address" property="ems_instance_address" />
+        <result column="ems_instance_constructionendtime" property="ems_instance_constructionendtime" />
+        <result column="ems_instance_creatorid" property="ems_instance_creatorid" />
+        <result column="ems_instance_globeconf" property="ems_instance_globeconf" />
+        <result column="ems_instance_ishobby" property="ems_instance_ishobby" />
+        <result column="ems_instance_contractorid" property="ems_instance_contractorid" />
+        <result column="ems_instance_isshare" property="ems_instance_isshare" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.InstanceVo">
+<!--        <result column="ems_instance_sectiontype" property="ems_instance_sectiontype" />-->
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_instance_id, ST_ASTEXT(ems_instance_coordinate) AS ems_instance_coordinate, ems_instance_name, ems_instance_no, ems_instance_csolutionid,
+        ems_instance_constructionstarttime, ems_instance_sceneid, ems_instance_picfileid, ems_instance_des, ems_instance_sectionid, ems_instance_createtime,
+        ems_instance_updatetime, ems_instance_address, ems_instance_constructionendtime, ems_instance_creatorid, ems_instance_globeconf, ems_instance_ishobby,
+        ems_instance_contractorid, ems_instance_isshare
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_instance_id, ST_ASTEXT(${alias}.ems_instance_coordinate) AS ems_instance_coordinate, ${alias}.ems_instance_name, ${alias}.ems_instance_no,
+        ${alias}.ems_instance_csolutionid, ${alias}.ems_instance_constructionstarttime, ${alias}.ems_instance_sceneid, ${alias}.ems_instance_picfileid, ${alias}.ems_instance_des,
+        ${alias}.ems_instance_sectionid, ${alias}.ems_instance_createtime, ${alias}.ems_instance_updatetime, ${alias}.ems_instance_address, ${alias}.ems_instance_constructionendtime,
+        ${alias}.ems_instance_creatorid, ${alias}.ems_instance_globeconf, ${alias}.ems_instance_ishobby, ${alias}.ems_instance_globeconf, ${alias}.ems_instance_ishobby,
+        ${alias}.ems_instance_contractorid, ${alias}.ems_instance_isshare
+
+    </sql>
+
+    <select id="findById" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM instance WHERE ems_instance_id=#{ems_instance_id}
+    </select>
+
+    <select id="findByNo" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM instance WHERE ems_instance_no=#{ems_instance_no}
+    </select>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT
+            <include refid="Relevance_Column_List">
+                <property name="alias" value="i"/>
+            </include>
+        FROM instance i JOIN section s
+        ON s.ems_section_id = i.ems_instance_sectionid
+        <where>
+            <if test="ems_instance_id != null">
+                i.ems_instance_id=#{ems_instance_id}
+            </if>
+            <if test="nameOrNo != null">
+                AND (i.ems_instance_name LIKE CONCAT('%',#{nameOrNo},'%') OR ems_instance_no=#{nameOrNo})
+            </if>
+            <if test="ems_instance_csolutionid != null">
+                AND i.ems_instance_csolutionid=#{ems_instance_csolutionid}
+            </if>
+            <if test="ems_instance_starttime != null and ems_instance_endtime != null">
+                AND i.ems_instance_constructionstarttime BETWEEN #{ems_instance_starttime} AND #{ems_instance_endtime}
+            </if>
+            <if test="ems_instance_sceneid != null">
+                AND i.ems_instance_sceneid=#{ems_instance_sceneid}
+            </if>
+            <if test="ems_instance_sectionid != null">
+                AND i.ems_instance_sectionid=#{ems_instance_sectionid}
+            </if>
+            <if test="ems_instance_ishobby != null">
+                AND i.ems_instance_ishobby=#{ems_instance_ishobby}
+            </if>
+            <if test="ems_instance_isshare != null">
+                AND i.ems_instance_isshare=#{ems_instance_isshare}
+            </if>
+            <if test="ems_instance_contractorid != null">
+                AND i.ems_instance_contractorid= #{ems_instance_contractorid} OR ems_instance_isshare = 1
+            </if>
+            <if test="ems_instance_activities != null">
+                <foreach item="activity" collection="ems_instance_activities" open="AND s.ems_section_activityid IN (" separator="," close=")">
+                    #{activity}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY i.ems_instance_createtime DESC
+    </select>
+
+
+
+    <insert id="insert" parameterType="Instance">
+        INSERT INTO instance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_instance_coordinate != null and ems_instance_coordinate != ''">ems_instance_coordinate,</if>
+            <if test="ems_instance_name != null and ems_instance_name != ''">ems_instance_name,</if>
+            <if test="ems_instance_no != null and ems_instance_no != ''">ems_instance_no,</if>
+            <if test="ems_instance_csolutionid != null">ems_instance_csolutionid,</if>
+            <if test="ems_instance_constructionstarttime != null">ems_instance_constructionstarttime,</if>
+            <if test="ems_instance_sceneid != null">ems_instance_sceneid,</if>
+            <if test="ems_instance_picfileid != null">ems_instance_picfileid,</if>
+            <if test="ems_instance_des != null and ems_instance_des != ''">ems_instance_des,</if>
+            <if test="ems_instance_sectionid != null">ems_instance_sectionid,</if>
+            <if test="ems_instance_createtime != null">ems_instance_createtime,</if>
+            <if test="ems_instance_updatetime != null">ems_instance_updatetime,</if>
+            <if test="ems_instance_address != null">ems_instance_address,</if>
+            <if test="ems_instance_constructionendtime != null">ems_instance_constructionendtime,</if>
+            <if test="ems_instance_creatorid != null">ems_instance_creatorid,</if>
+            <if test="ems_instance_contractorid != null">ems_instance_contractorid,</if>
+            <if test="ems_instance_isshare != null">ems_instance_isshare,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_instance_coordinate != null and ems_instance_coordinate != ''">ST_GeomFromText(#{ems_instance_coordinate},4326),</if>
+            <if test="ems_instance_name != null and ems_instance_name != ''">#{ems_instance_name},</if>
+            <if test="ems_instance_no != null and ems_instance_no != ''">#{ems_instance_no},</if>
+            <if test="ems_instance_csolutionid != null">#{ems_instance_csolutionid},</if>
+            <if test="ems_instance_constructionstarttime != null">#{ems_instance_constructionstarttime},</if>
+            <if test="ems_instance_sceneid != null">#{ems_instance_sceneid},</if>
+            <if test="ems_instance_picfileid != null">#{ems_instance_picfileid},</if>
+            <if test="ems_instance_des != null and ems_instance_des != ''">#{ems_instance_des},</if>
+            <if test="ems_instance_sectionid != null">#{ems_instance_sectionid},</if>
+            <if test="ems_instance_createtime != null">#{ems_instance_createtime},</if>
+            <if test="ems_instance_updatetime != null">#{ems_instance_updatetime},</if>
+            <if test="ems_instance_address != null">#{ems_instance_address},</if>
+            <if test="ems_instance_constructionendtime != null">#{ems_instance_constructionendtime},</if>
+            <if test="ems_instance_creatorid != null">#{ems_instance_creatorid},</if>
+            <if test="ems_instance_contractorid != null">#{ems_instance_contractorid},</if>
+            <if test="ems_instance_isshare != null">#{ems_instance_isshare},</if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByNo" parameterType="instance">
+        UPDATE instance
+        <set>
+            <if test="ems_instance_coordinate != null and ems_instance_coordinate != ''">
+                ems_instance_coordinate = ST_GeomFromText(#{ems_instance_coordinate},4326),
+            </if>
+            <if test="ems_instance_name != null and ems_instance_name != ''">ems_instance_name = #{ems_instance_name},</if>
+            <if test="ems_instance_no != null and ems_instance_no != ''">ems_instance_no = #{ems_instance_no},</if>
+            <if test="ems_instance_csolutionid != null">ems_instance_csolutionid = #{ems_instance_csolutionid},</if>
+            <if test="ems_instance_constructionstarttime != null">ems_instance_constructionstarttime = #{ems_instance_constructionstarttime},</if>
+            <if test="ems_instance_sceneid != null">ems_instance_sceneid = #{ems_instance_sceneid},</if>
+            <if test="ems_instance_picfileid != null">ems_instance_picfileid = #{ems_instance_picfileid},</if>
+            <if test="ems_instance_des != null and ems_instance_des != ''">ems_instance_des = #{ems_instance_des},</if>
+            <if test="ems_instance_sectionid != null">ems_instance_sectionid = #{ems_instance_sectionid},</if>
+            <if test="ems_instance_createtime != null">ems_instance_createtime = #{ems_instance_createtime},</if>
+            <if test="ems_instance_updatetime != null">ems_instance_updatetime = #{ems_instance_updatetime},</if>
+            <if test="ems_instance_address != null">ems_instance_address = #{ems_instance_address},</if>
+            <if test="ems_instance_constructionendtime != null">ems_instance_constructionendtime = #{ems_instance_constructionendtime},</if>
+            <if test="ems_instance_creatorid != null">ems_instance_creatorid = #{ems_instance_creatorid},</if>
+<!--            <if test="ems_instance_contractorid != null">ems_instance_contractorid = #{ems_instance_contractorid},</if>-->
+            <if test="ems_instance_isshare != null">ems_instance_isshare = #{ems_instance_isshare},</if>
+        </set>
+        WHERE ems_instance_no = #{ems_instance_no}
+    </update>
+
+    <update id="saveTemplate" parameterType="map">
+        UPDATE instance SET ems_instance_ishobby=#{isHobby},ems_instance_globeconf=#{globeconf} WHERE ems_instance_id=#{ems_instance_id}
+    </update>
+
+    <update id="setHare" parameterType="int">
+        UPDATE instance SET ems_instance_isshare=#{ems_instance_isshare} WHERE ems_instance_id=#{ems_instance_id}
+    </update>
+
+    <select id="findAssignInstance" resultMap="VoResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="i"/>
+        </include>
+        FROM instance i WHERE ems_instance_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

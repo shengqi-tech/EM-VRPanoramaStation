@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Item">
+        <id column="ems_item_id" property="ems_item_id" />
+        <result column="ems_item_parentid" property="ems_item_parentid" />
+        <result column="ems_item_code" property="ems_item_code" />
+        <result column="ems_item_name" property="ems_item_name" />
+        <result column="ems_item_path" property="ems_item_path" />
+        <result column="ems_item_icon" property="ems_item_icon" />
+        <result column="ems_item_createtime" property="ems_item_createtime" />
+        <result column="ems_item_updatetime" property="ems_item_updatetime" />
+        <result column="ems_item_order" property="ems_item_order" />
+        <result column="ems_item_type" property="ems_item_type" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_item_id, ems_item_parentid, ems_item_code, ems_item_name, ems_item_path, ems_item_icon, ems_item_createtime, ems_item_updatetime, ems_item_order, ems_item_type
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_item_id, ${alias}.ems_item_parentid, ${alias}.ems_item_code, ${alias}.ems_item_name, ${alias}.ems_item_path,  ${alias}.ems_item_icon, ${alias}.ems_item_createtime, ${alias}.ems_item_updatetime, ${alias}.ems_item_order, ${alias}.ems_item_type
+    </sql>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="i"/>
+        </include>
+        FROM item i JOIN roleitem ri
+        ON i.ems_item_id=ri.ems_roleitem_itemid
+        WHERE ri.ems_roleitem_roleid=#{ems_role_id}
+    </select>
+
+    <select id="selectPermsByRoleId" parameterType="Integer" resultType="String">
+        SELECT e.ems_item_code
+        FROM item e
+                 LEFT JOIN roleitem re ON e.ems_item_id = re.ems_roleitem_itemid
+        WHERE re.ems_roleitem_roleid = #{roleId} order by e.ems_item_order
+    </select>
+
+    <select id="selectPermsByUserId" parameterType="Integer" resultType="String">
+        SELECT e.ems_item_code
+        from item e
+                 LEFT JOIN roleitem re ON e.ems_item_id = re.ems_roleitem_itemid
+                 LEFT JOIN userrole ur ON re.ems_roleitem_roleid = ur.ems_userrole_roleid
+                 LEFT JOIN role r ON r.ems_role_id = ur.ems_userrole_roleid
+        where ur.ems_userrole_sysuserid = #{userId} order by e.ems_item_order
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="i"/>
+        </include>
+        FROM item i
+        JOIN roleitem ri ON i.ems_item_id=ri.ems_roleitem_itemid
+        JOIN role r ON ri.ems_roleitem_roleid=r.ems_role_id
+        JOIN sysuserrole ur ON r.ems_role_id=ur.ems_sysuserrole_roleid
+        JOIN sysuser u ON ur.ems_sysuserrole_sysuserid=u.ems_sysuser_id
+        WHERE u.ems_sysuser_id=#{userId} AND i.ems_item_type IN (0,1) ORDER BY i.ems_item_order
+    </select>
+
+    <select id="findByMap" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM item
+        <where>
+            <if test="ems_item_id != null">
+                ems_item_id=#{ems_item_id}
+            </if>
+            <if test="ems_item_parentid != null">
+                AND ems_item_parentid=#{ems_item_parentid}
+            </if>
+            <if test="ems_item_code != null">
+                AND ems_item_code LIKE CONCAT('%',#{ems_item_code},'%')
+            </if>
+            <if test="ems_item_name != null">
+                AND ems_item_name LIKE CONCAT('%',#{ems_item_name},'%')
+            </if>
+            <if test="ems_item_starttime != null and ems_item_endtime != null">
+                AND ems_item_createtime BETWEEN #{ems_item_starttime} AND #{ems_item_endtime}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="i"/>
+        </include>
+        FROM item i WHERE i.ems_item_code=#{code}
+    </select>
+
+    <insert id="insert" parameterType="Item">
+        INSERT INTO item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_item_parentid != null">ems_item_parentid,</if>
+            <if test="ems_item_code != null">ems_item_code,</if>
+            <if test="ems_item_name != null">ems_item_name,</if>
+            <if test="ems_item_path != null">ems_item_path,</if>
+            <if test="ems_item_icon != null">ems_item_icon,</if>
+            <if test="ems_item_createtime != null">ems_item_createtime,</if>
+            <if test="ems_item_updatetime != null">ems_item_updatetime,</if>
+            <if test="ems_item_order != null">ems_item_order,</if>
+            <if test="ems_item_type != null">ems_item_type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_item_parentid != null">#{ems_item_parentid},</if>
+            <if test="ems_item_code != null">#{ems_item_code},</if>
+            <if test="ems_item_name != null">#{ems_item_name},</if>
+            <if test="ems_item_path != null">#{ems_item_path},</if>
+            <if test="ems_item_icon != null">#{ems_item_icon},</if>
+            <if test="ems_item_createtime != null">#{ems_item_createtime},</if>
+            <if test="ems_item_updatetime != null">#{ems_item_updatetime},</if>
+            <if test="ems_item_order != null">#{ems_item_order},</if>
+            <if test="ems_item_type != null">#{ems_item_type},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Item">
+        UPDATE item
+        <set>
+            <if test="ems_item_parentid != null">ems_item_parentid=#{ems_item_parentid},</if>
+            <if test="ems_item_code != null">ems_item_code=#{ems_item_code},</if>
+            <if test="ems_item_name != null">ems_item_name=#{ems_item_name},</if>
+            <if test="ems_item_path != null">ems_item_path=#{ems_item_path},</if>
+            <if test="ems_item_icon != null">ems_item_icon=#{ems_item_icon},</if>
+            <if test="ems_item_updatetime != null">ems_item_updatetime=#{ems_item_updatetime},</if>
+            <if test="ems_item_order != null">ems_item_order=#{ems_item_order},</if>
+            <if test="ems_item_type != null">ems_item_type=#{ems_item_type},</if>
+        </set>
+        WHERE ems_item_id = #{ems_item_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM item WHERE ems_item_id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

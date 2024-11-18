@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.VersionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Version">
+        <id column="ems_version_id" property="ems_version_id" />
+        <result column="ems_version_no" property="ems_version_no" />
+        <result column="ems_version_iscurrent" property="ems_version_iscurrent" />
+        <result column="ems_version_productid" property="ems_version_productid" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.VersionVo">
+        <collection column="ems_version_id" property="moduleVos"
+                    ofType="com.shengqitech.ems.models.vo.ModuleVo"
+                    select="com.shengqitech.ems.mappers.ModuleMapper.selectByVersion"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_version_id, ${alias}.ems_version_no, ${alias}.ems_version_iscurrent, ${alias}.ems_version_productid
+    </sql>
+
+    <select id="selectByProduct" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="v"/>
+        </include>
+        FROM version v WHERE ems_version_productid=#{ems_product_id}
+    </select>
+
+    <insert id="insert" parameterType="Version" useGeneratedKeys="true" keyProperty="ems_version_id">
+        INSERT INTO version
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_version_no != null and ems_version_no != ''">ems_version_no,</if>
+            <if test="ems_version_iscurrent != null">ems_version_iscurrent,</if>
+            <if test="ems_version_productid != null">ems_version_productid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_version_no != null and ems_version_no != ''">#{ems_version_no},</if>
+            <if test="ems_version_iscurrent != null">#{ems_version_iscurrent},</if>
+            <if test="ems_version_productid != null">#{ems_version_productid},</if>
+        </trim>
+    </insert>
+
+    <select id="findByProductId" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="v"/>
+        </include>
+        FROM version v WHERE ems_version_productid=#{ems_product_id}
+        ORDER BY ems_version_no DESC LIMIT 0,1
+    </select>
+
+</mapper>

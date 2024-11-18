@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.SectorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.vo.SectorVo">
+        <id column="ems_sector_id" property="ems_sector_id" />
+        <result column="ems_sector_name" property="ems_sector_name" />
+        <result column="ems_sector_icon" property="ems_sector_icon" />
+        <result column="ems_sector_pid" property="ems_sector_pid" />
+        <result column="ems_sector_index" property="ems_sector_index" />
+        <result column="ems_sector_des" property="ems_sector_des" />
+
+    </resultMap>
+
+
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.SectorVo">
+        <collection column="ems_activity_sectorid = ems_sector_id" property="ems_sector_activities"
+                    ofType="com.shengqitech.ems.models.domains.Activity"
+                    select="com.shengqitech.ems.mappers.ActivityMapper.selectBySectorId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_sector_id, ems_sector_name, ems_sector_icon, ems_sector_pid, ems_sector_index,ems_sector_des
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_sector_id, ${alias}.ems_sector_name, ${alias}.ems_sector_icon, ${alias}.ems_sector_pid, ${alias}.ems_sector_index,${alias}.ems_sector_des
+    </sql>
+
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM sector ORDER BY ems_sector_index ASC
+    </select>
+
+
+</mapper>

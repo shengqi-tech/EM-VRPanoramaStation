@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.PropertyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Property">
+        <id column="ems_property_id" property="ems_property_id" />
+        <result column="ems_property_code" property="ems_property_code" />
+        <result column="ems_property_index" property="ems_property_index" />
+        <result column="ems_property_name" property="ems_property_name" />
+        <result column="ems_property_identifier" property="ems_property_identifier" />
+        <result column="ems_property_des" property="ems_property_des" />
+        <result column="ems_property_unit" property="ems_property_unit" />
+        <result column="ems_property_datatypeid" property="ems_property_datatypeid" />
+        <result column="ems_property_type" property="ems_property_type" />
+        <result column="ems_property_moduleid" property="ems_property_moduleid" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_property_id, ${alias}.ems_property_code, ${alias}.ems_property_index, ${alias}.ems_property_name, ${alias}.ems_property_identifier, ${alias}.ems_property_des, ${alias}.ems_property_unit, ${alias}.ems_property_datatypeid,  ${alias}.ems_property_type, ${alias}.ems_property_moduleid
+    </sql>
+
+    <select id="findByCommon" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="p"/>
+        </include>
+        FROM commonproperty cp JOIN property p ON p.ems_property_id = cp.ems_commonproperty_propertyid
+        WHERE cp.ems_commonproperty_commonid=#{ems_common_id}
+    </select>
+
+    <select id="selectByModuleId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="p"/>
+        </include>
+        FROM property p
+        WHERE ems_property_moduleid=#{ems_module_id}
+    </select>
+
+
+    <insert id="insert" parameterType="Property" useGeneratedKeys="true" keyProperty="ems_property_id">
+        INSERT INTO property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_property_name != null and ems_property_name != ''">ems_property_name,</if>
+            <if test="ems_property_code != null">ems_property_code,</if>
+            <if test="ems_property_index != null">ems_property_index,</if>
+
+            <if test="ems_property_identifier != null">ems_property_identifier,</if>
+            <if test="ems_property_unit != null">ems_property_unit,</if>
+            <if test="ems_property_datatypeid != null">ems_property_datatypeid,</if>
+            <if test="ems_property_type != null">ems_property_type,</if>
+            <if test="ems_property_moduleid != null">ems_property_moduleid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_property_name != null and ems_property_name != ''">#{ems_property_name},</if>
+            <if test="ems_property_code != null">#{ems_property_code},</if>
+            <if test="ems_property_index != null">#{ems_property_index},</if>
+            <if test="ems_property_identifier != null">#{ems_property_identifier},</if>
+            <if test="ems_property_unit != null">#{ems_property_unit},</if>
+            <if test="ems_property_datatypeid != null">#{ems_property_datatypeid},</if>
+            <if test="ems_property_type != null">#{ems_property_type},</if>
+            <if test="ems_property_moduleid != null">#{ems_property_moduleid},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Property">
+        UPDATE property
+        <set>
+            <if test="ems_property_name != null and ems_property_name != ''">ems_property_name=#{ems_property_name},</if>
+            <if test="ems_property_code != null">ems_property_code=#{ems_property_code},</if>
+            <if test="ems_property_index != null">ems_property_index=#{ems_property_index},</if>
+            <if test="ems_property_identifier != null">ems_property_identifier=#{ems_property_identifier},</if>
+            <if test="ems_property_unit != null">ems_property_unit=#{ems_property_unit},</if>
+            <if test="ems_property_datatypeid != null">ems_property_datatypeid=#{ems_property_datatypeid},</if>
+            <if test="ems_property_type != null">ems_property_type=#{ems_property_type},</if>
+            <if test="ems_property_moduleid != null">ems_property_moduleid=#{ems_property_moduleid},</if>
+        </set>
+        WHERE ems_property_id = #{ems_property_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM property WHERE ems_property_id=#{ems_property_id}
+    </delete>
+
+</mapper>

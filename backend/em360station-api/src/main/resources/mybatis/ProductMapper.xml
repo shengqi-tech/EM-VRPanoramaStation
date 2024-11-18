@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Product">
+        <id column="ems_product_id" property="ems_product_id" />
+        <result column="ems_product_name" property="ems_product_name" />
+        <result column="ems_product_picfileid" property="ems_product_picfileid" />
+        <result column="ems_product_modelfileid" property="ems_product_modelfileid" />
+        <result column="ems_product_type" property="ems_product_type" />
+        <result column="ems_product_des" property="ems_product_des" />
+        <result column="ems_product_compositionid" property="ems_product_compositionid" />
+        <result column="ems_product_createtime" property="ems_product_createtime" />
+        <result column="ems_product_updatetime" property="ems_product_updatetime" />
+        <result column="ems_product_brand" property="ems_product_brand" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.ProductVo">
+        <collection column="ems_product_id" property="versionVos"
+                    ofType="com.shengqitech.ems.models.vo.VersionVo"
+                    select="com.shengqitech.ems.mappers.VersionMapper.selectByProduct"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_product_id, ${alias}.ems_product_name, ${alias}.ems_product_picfileid, ${alias}.ems_product_modelfileid, ${alias}.ems_product_type, ${alias}.ems_product_des, ${alias}.ems_product_compositionid, ${alias}.ems_product_createtime, ${alias}.ems_product_updatetime, ${alias}.ems_product_brand
+    </sql>
+
+    <select id="findByVersion" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="p"/>
+        </include>
+        FROM product p JOIN version v ON p.ems_product_id=v.ems_version_productid
+        WHERE v.ems_version_id=#{ems_device_versionid}
+    </select>
+
+    <insert id="insert" parameterType="Product" useGeneratedKeys="true" keyProperty="ems_product_id">
+        INSERT INTO product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_product_name != null and ems_product_name != ''">ems_product_name,</if>
+            <if test="ems_product_picfileid != null">ems_product_picfileid,</if>
+            <if test="ems_product_modelfileid != null">ems_product_modelfileid,</if>
+            <if test="ems_product_type != null">ems_product_type,</if>
+            <if test="ems_product_des != null">ems_product_des,</if>
+            <if test="ems_product_compositionid != null">ems_product_compositionid,</if>
+            <if test="ems_product_createtime != null">ems_product_createtime,</if>
+            <if test="ems_product_updatetime != null">ems_product_updatetime,</if>
+            <if test="ems_product_brand != null">ems_product_brand,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_product_name != null and ems_product_name != ''">#{ems_product_name},</if>
+            <if test="ems_product_picfileid != null">#{ems_product_picfileid},</if>
+            <if test="ems_product_modelfileid != null">#{ems_product_modelfileid},</if>
+            <if test="ems_product_type != null">#{ems_product_type},</if>
+            <if test="ems_product_des != null">#{ems_product_des},</if>
+            <if test="ems_product_compositionid != null">#{ems_product_compositionid},</if>
+            <if test="ems_product_createtime != null">#{ems_product_createtime},</if>
+            <if test="ems_product_updatetime != null">#{ems_product_updatetime},</if>
+            <if test="ems_product_brand != null">#{ems_product_brand},</if>
+        </trim>
+    </insert>
+
+    <select id="findDuplicateProducts" resultType="com.shengqitech.ems.models.domains.Product">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="p"/>
+        </include>
+        FROM product p
+        WHERE ems_product_type=#{productType} AND ems_product_name=#{emsCompositionName}
+    </select>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="p"/>
+        </include>
+        FROM product p
+        <where>
+            <if test="ems_product_id != null">
+                p.ems_product_id=#{ems_product_id}
+            </if>
+            <if test="ems_product_name != null and ems_product_name != ''">
+                AND p.ems_product_name LIKE CONCAT('%',#{ems_product_name},'%')
+            </if>
+            <if test="ems_product_type != null">
+                AND p.ems_product_type=#{ems_product_type}
+            </if>
+            <if test="ems_composition_id != null">
+                AND p.ems_product_compositionid=#{ems_composition_id}
+            </if>
+        </where>
+    </select>
+
+</mapper>

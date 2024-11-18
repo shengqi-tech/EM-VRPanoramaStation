@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.HtmlMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Html">
+        <id column="ems_html_id" property="ems_html_id" />
+        <result column="ems_html_name" property="ems_html_name" />
+        <result column="ems_html_panoramaid" property="ems_html_panoramaid" />
+        <result column="ems_html_tagtypeid" property="ems_html_tagtypeid" />
+        <result column="ems_html_url" property="ems_html_url" />
+        <result column="ems_html_widthratio" property="ems_html_widthratio" />
+        <result column="ems_html_heightratio" property="ems_html_heightratio" />
+        <result column="ems_html_taganimationid" property="ems_html_taganimationid" />
+        <result column="ems_html_rotation" property="ems_html_rotation" />
+        <result column="ems_html_location" property="ems_html_location" />
+        <result column="ems_html_jsondata" property="ems_html_jsondata" />
+        <result column="ems_html_createtime" property="ems_html_createtime" />
+        <result column="ems_html_updatetime" property="ems_html_updatetime" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.HtmlVo">
+        <result column="ems_tagtype_type" property="ems_html_tagtype" />
+        <result column="ems_tagtype_pid" property="ems_html_tagtypepid" />
+        <association column="ems_sysfile_id = ems_tagtype_iconfileid" property="ems_html_tagtypeiconfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_html_id, ems_html_name, ems_html_panoramaid, ems_html_tagtypeid, ems_html_url, ems_html_widthratio, ems_html_heightratio, ems_html_taganimationid, ems_html_rotation, ems_html_location, ems_html_jsondata, ems_html_createtime, ems_html_updatetime
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_html_id, ${alias}.ems_html_name, ${alias}.ems_html_panoramaid, ${alias}.ems_html_tagtypeid, ${alias}.ems_html_url, ${alias}.ems_html_widthratio, ${alias}.ems_html_heightratio, ${alias}.ems_html_taganimationid, ${alias}.ems_html_rotation, ${alias}.ems_html_location, ${alias}.ems_html_jsondata, ${alias}.ems_html_createtime, ${alias}.ems_html_updatetime
+    </sql>
+
+    <select id="selectByPanoramaId" resultMap="VoResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="h"/>
+        </include>
+        ,t.ems_tagtype_iconfileid,t.ems_tagtype_type, t.ems_tagtype_pid FROM html h JOIN tagtype t ON t.ems_tagtype_id = h.ems_html_tagtypeid
+        WHERE h.ems_html_panoramaid=#{ems_panorama_id}
+    </select>
+
+    <insert id="insert" parameterType="Html" useGeneratedKeys="true" keyProperty="ems_html_id">
+        INSERT INTO html
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_html_name != null and ems_html_name != ''">ems_html_name,</if>
+            <if test="ems_html_panoramaid != null">ems_html_panoramaid,</if>
+            <if test="ems_html_tagtypeid != null">ems_html_tagtypeid,</if>
+            <if test="ems_html_url != null">ems_html_url,</if>
+            <if test="ems_html_widthratio != null">ems_html_widthratio,</if>
+            <if test="ems_html_heightratio != null">ems_html_heightratio,</if>
+            <if test="ems_html_taganimationid != null">ems_html_taganimationid,</if>
+            <if test="ems_html_rotation != null">ems_html_rotation,</if>
+            <if test="ems_html_location != null">ems_html_location,</if>
+            <if test="ems_html_jsondata != null">ems_html_jsondata,</if>
+            <if test="ems_html_createtime != null">ems_html_createtime,</if>
+            <if test="ems_html_updatetime != null">ems_html_updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_html_name != null and ems_html_name != ''">#{ems_html_name},</if>
+            <if test="ems_html_panoramaid != null">#{ems_html_panoramaid},</if>
+            <if test="ems_html_tagtypeid != null">#{ems_html_tagtypeid},</if>
+            <if test="ems_html_url != null">#{ems_html_url},</if>
+            <if test="ems_html_widthratio != null">#{ems_html_widthratio},</if>
+            <if test="ems_html_heightratio != null">#{ems_html_heightratio},</if>
+            <if test="ems_html_taganimationid != null">#{ems_html_taganimationid},</if>
+            <if test="ems_html_rotation != null">#{ems_html_rotation},</if>
+            <if test="ems_html_location != null">#{ems_html_location},</if>
+            <if test="ems_html_jsondata != null">#{ems_html_jsondata},</if>
+            <if test="ems_html_createtime != null">#{ems_html_createtime},</if>
+            <if test="ems_html_updatetime != null">#{ems_html_updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Html">
+        UPDATE html
+        <set>
+            <if test="ems_html_name != null and ems_html_name != ''">ems_html_name=#{ems_html_name},</if>
+            <if test="ems_html_panoramaid != null">ems_html_panoramaid=#{ems_html_panoramaid},</if>
+            <if test="ems_html_tagtypeid != null">ems_html_tagtypeid=#{ems_html_tagtypeid},</if>
+            <if test="ems_html_url != null">ems_html_url=#{ems_html_url},</if>
+            <if test="ems_html_widthratio != null">ems_html_widthratio=#{ems_html_widthratio},</if>
+            <if test="ems_html_heightratio != null">ems_html_heightratio=#{ems_html_heightratio},</if>
+            <if test="ems_html_taganimationid != null">ems_html_taganimationid=#{ems_html_taganimationid},</if>
+            <if test="ems_html_rotation != null">ems_html_rotation=#{ems_html_rotation},</if>
+            <if test="ems_html_location != null">ems_html_location=#{ems_html_location},</if>
+            <if test="ems_html_jsondata != null">ems_html_jsondata=#{ems_html_jsondata},</if>
+            <if test="ems_html_updatetime != null">ems_html_updatetime=#{ems_html_updatetime},</if>
+        </set>
+        WHERE ems_html_id = #{ems_html_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM html WHERE ems_html_id=#{ems_html_id}
+    </delete>
+
+    <select id="findByTagtypeId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM html
+        WHERE ems_html_tagtypeid=#{ems_tagtype_id}
+    </select>
+
+    <update id="batchUpdate" parameterType="Html">
+        <foreach collection="htmls" item="item" index="index" open="" close="" separator=";">
+            update html
+            <set>
+                ems_html_name = #{item.ems_html_name},
+                ems_html_panoramaid = #{item.ems_html_panoramaid},
+                ems_html_tagtypeid = #{item.ems_html_tagtypeid},
+                ems_html_url = #{item.ems_html_url},
+                ems_html_widthratio = #{item.ems_html_widthratio},
+                ems_html_heightratio = #{item.ems_html_heightratio},
+                ems_html_taganimationid = #{item.ems_html_taganimationid},
+                ems_html_rotation = #{item.ems_html_rotation},
+                ems_html_location = #{item.ems_html_location}
+                ems_html_jsondata = #{item.ems_html_jsondata}
+            </set>
+            where ems_html_id=#{item.ems_html_id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByPanorama" parameterType="int">
+        DELETE FROM html WHERE ems_html_panoramaid=#{ems_panorama_id}
+    </delete>
+</mapper>

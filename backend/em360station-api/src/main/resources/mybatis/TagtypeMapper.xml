@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.TagtypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Tagtype">
+        <id column="ems_tagtype_id" property="ems_tagtype_id" />
+        <result column="ems_tagtype_name" property="ems_tagtype_name" />
+        <result column="ems_tagtype_iconfileid" property="ems_tagtype_iconfileid" />
+        <result column="ems_tagtype_createtime" property="ems_tagtype_createtime" />
+        <result column="ems_tagtype_updatetime" property="ems_tagtype_updatetime" />
+        <result column="ems_tagtype_pid" property="ems_tagtype_pid" />
+        <result column="ems_tagtype_type" property="ems_tagtype_type" />
+        <result column="ems_tagtype_isdefault" property="ems_tagtype_isdefault" />
+        <result column="ems_tagtype_isupload" property="ems_tagtype_isupload" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.TagtypeVo">
+        <association column="ems_sysfile_id = ems_tagtype_iconfileid" property="ems_tagtype_iconfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+    </resultMap>
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_tagtype_id, ems_tagtype_name, ems_tagtype_iconfileid, ems_tagtype_createtime, ems_tagtype_updatetime, ems_tagtype_pid, ems_tagtype_type, ems_tagtype_isdefault, ems_tagtype_isupload
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_tagtype_id, ${alias}.ems_tagtype_name, ${alias}.ems_tagtype_iconfileid, ${alias}.ems_tagtype_createtime, ${alias}.ems_tagtype_updatetime, ${alias}.ems_tagtype_pid, ${alias}.ems_tagtype_type, ${alias}.ems_tagtype_isdefault, ${alias}.ems_tagtype_isupload
+    </sql>
+
+    <insert id="insert" parameterType="Tagtype" useGeneratedKeys="true" keyProperty="ems_tagtype_id">
+        INSERT INTO tagtype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_tagtype_name != null and ems_tagtype_name != ''">ems_tagtype_name,</if>
+            <if test="ems_tagtype_iconfileid != null">ems_tagtype_iconfileid,</if>
+            <if test="ems_tagtype_createtime != null">ems_tagtype_createtime,</if>
+            <if test="ems_tagtype_updatetime != null">ems_tagtype_updatetime,</if>
+            <if test="ems_tagtype_pid != null">ems_tagtype_pid,</if>
+            <if test="ems_tagtype_type != null">ems_tagtype_type,</if>
+            <if test="ems_tagtype_isupload != null">ems_tagtype_isupload,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_tagtype_name != null and ems_tagtype_name != ''">#{ems_tagtype_name},</if>
+            <if test="ems_tagtype_iconfileid != null">#{ems_tagtype_iconfileid},</if>
+            <if test="ems_tagtype_createtime != null">#{ems_tagtype_createtime},</if>
+            <if test="ems_tagtype_updatetime != null">#{ems_tagtype_updatetime},</if>
+            <if test="ems_tagtype_pid != null">#{ems_tagtype_pid},</if>
+            <if test="ems_tagtype_type != null">#{ems_tagtype_type},</if>
+            <if test="ems_tagtype_isupload != null">#{ems_tagtype_isupload},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Tagtype">
+        UPDATE tagtype
+        <set>
+            <if test="ems_tagtype_name != null and ems_tagtype_name != ''">ems_tagtype_name=#{ems_tagtype_name},</if>
+            <if test="ems_tagtype_iconfileid != null">ems_tagtype_iconfileid=#{ems_tagtype_iconfileid},</if>
+            <if test="ems_tagtype_createtime != null">ems_tagtype_createtime=#{ems_tagtype_createtime},</if>
+            <if test="ems_tagtype_updatetime != null">ems_tagtype_updatetime=#{ems_tagtype_updatetime},</if>
+            <if test="ems_tagtype_pid != null">ems_tagtype_pid=#{ems_tagtype_pid},</if>
+            <if test="ems_tagtype_type != null">ems_tagtype_type=#{ems_tagtype_type},</if>
+            <if test="ems_tagtype_isupload != null">ems_tagtype_isupload=#{ems_tagtype_isupload},</if>
+        </set>
+        WHERE ems_tagtype_id = #{ems_tagtype_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM tagtype WHERE ems_tagtype_id=#{ems_tagtype_id}
+    </delete>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM tagtype
+        <where>
+            <if test="ems_tagtype_id != null">
+                ems_tagtype_id=#{ems_tagtype_id}
+            </if>
+            <if test="ems_tagtype_name != null and ems_tagtype_name != ''">
+                AND ems_tagtype_name LIKE CONCAT('%',#{ems_tagtype_name},'%')
+            </if>
+            <if test="ems_tagtype_pid != null">
+                AND ems_tagtype_pid=#{ems_tagtype_pid}
+            </if>
+        </where>
+        ORDER BY ems_tagtype_id ASC
+    </select>
+
+    <select id="findDefault" resultMap="BaseResultMap">
+        SELECT *
+        FROM tagtype
+        WHERE ems_tagtype_pid = (SELECT ems_tagtype_pid FROM tagtype WHERE ems_tagtype_id = #{ems_tagtype_id})
+          AND ems_tagtype_isdefault = 1 LIMIT 0,1
+    </select>
+</mapper>

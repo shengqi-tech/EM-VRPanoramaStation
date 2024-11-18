@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.VideofusionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Videofusion">
+        <id column="ems_videofusion_id" property="ems_videofusion_id" />
+        <result column="ems_videofusion_name" property="ems_videofusion_name" />
+        <result column="ems_videofusion_panoramaid" property="ems_videofusion_panoramaid" />
+        <result column="ems_videofusion_tagtypeid" property="ems_videofusion_tagtypeid" />
+        <result column="ems_videofusion_flvurl" property="ems_videofusion_flvurl" />
+        <result column="ems_videofusion_param" property="ems_videofusion_param" />
+        <result column="ems_videofusion_deviceid" property="ems_videofusion_deviceid" />
+        <result column="ems_videofusion_rotation" property="ems_videofusion_rotation" />
+        <result column="ems_videofusion_location" property="ems_videofusion_location" />
+        <result column="ems_videofusion_widthratio" property="ems_videofusion_widthratio" />
+        <result column="ems_videofusion_heightratio" property="ems_videofusion_heightratio" />
+        <result column="ems_videofusion_camrotation" property="ems_videofusion_camrotation" />
+        <result column="ems_videofusion_viewscale" property="ems_videofusion_viewscale" />
+        <result column="ems_videofusion_near" property="ems_videofusion_near" />
+        <result column="ems_videofusion_far" property="ems_videofusion_far" />
+        <result column="ems_videofusion_createtime" property="ems_videofusion_createtime" />
+        <result column="ems_videofusion_updatetime" property="ems_videofusion_updatetime" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.VideofusionVo">
+        <association column="ems_sysfile_id = ems_tagtype_iconfileid" property="ems_videofusion_tagtypeiconfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_videofusion_id, ems_videofusion_name, ems_videofusion_panoramaid, ems_videofusion_tagtypeid, ems_videofusion_flvurl, ems_videofusion_param, ems_videofusion_deviceid, ems_videofusion_rotation, ems_videofusion_location, ems_videofusion_widthratio, ems_videofusion_heightratio, ems_videofusion_camrotation, ems_videofusion_viewscale, ems_videofusion_near, ems_videofusion_far, ems_videofusion_createtime, ems_videofusion_updatetime
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_videofusion_id, ${alias}.ems_videofusion_name, ${alias}.ems_videofusion_panoramaid, ${alias}.ems_videofusion_tagtypeid, ${alias}.ems_videofusion_flvurl, ${alias}.ems_videofusion_param, ${alias}.ems_videofusion_deviceid, ${alias}.ems_videofusion_rotation, ${alias}.ems_videofusion_location, ${alias}.ems_videofusion_widthratio, ${alias}.ems_videofusion_heightratio, ${alias}.ems_videofusion_camrotation, ${alias}.ems_videofusion_viewscale, ${alias}.ems_videofusion_near, ${alias}.ems_videofusion_far, ${alias}.ems_videofusion_createtime, ${alias}.ems_videofusion_updatetime
+    </sql>
+
+    <insert id="insert" parameterType="Videofusion">
+        INSERT INTO videofusion
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_videofusion_name != null and ems_videofusion_name != ''">ems_videofusion_name,</if>
+            <if test="ems_videofusion_panoramaid != null">ems_videofusion_panoramaid,</if>
+            <if test="ems_videofusion_tagtypeid != null">ems_videofusion_tagtypeid,</if>
+            <if test="ems_videofusion_flvurl != null">ems_videofusion_flvurl,</if>
+            <if test="ems_videofusion_param != null">ems_videofusion_param,</if>
+            <if test="ems_videofusion_deviceid != null">ems_videofusion_deviceid,</if>
+            <if test="ems_videofusion_rotation != null">ems_videofusion_rotation,</if>
+            <if test="ems_videofusion_location != null">ems_videofusion_location,</if>
+            <if test="ems_videofusion_widthratio != null">ems_videofusion_widthratio,</if>
+            <if test="ems_videofusion_heightratio != null">ems_videofusion_heightratio,</if>
+            <if test="ems_videofusion_camrotation != null">ems_videofusion_camrotation,</if>
+            <if test="ems_videofusion_viewscale != null ">ems_videofusion_viewscale,</if>
+            <if test="ems_videofusion_near != null ">ems_videofusion_near,</if>
+            <if test="ems_videofusion_far != null ">ems_videofusion_far,</if>
+            <if test="ems_videofusion_createtime != null ">ems_videofusion_createtime,</if>
+            <if test="ems_videofusion_updatetime != null ">ems_videofusion_updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_videofusion_name != null and ems_videofusion_name != ''">#{ems_videofusion_name},</if>
+            <if test="ems_videofusion_panoramaid != null">#{ems_videofusion_panoramaid},</if>
+            <if test="ems_videofusion_tagtypeid != null">#{ems_videofusion_tagtypeid},</if>
+            <if test="ems_videofusion_flvurl != null">#{ems_videofusion_flvurl},</if>
+            <if test="ems_videofusion_param != null">#{ems_videofusion_param},</if>
+            <if test="ems_videofusion_deviceid != null">#{ems_videofusion_deviceid},</if>
+            <if test="ems_videofusion_rotation != null">#{ems_videofusion_rotation},</if>
+            <if test="ems_videofusion_location != null">#{ems_videofusion_location},</if>
+            <if test="ems_videofusion_widthratio != null">#{ems_videofusion_widthratio},</if>
+            <if test="ems_videofusion_heightratio != null">#{ems_videofusion_heightratio},</if>
+            <if test="ems_videofusion_camrotation != null">#{ems_videofusion_camrotation},</if>
+            <if test="ems_videofusion_viewscale != null ">#{ems_videofusion_viewscale},</if>
+            <if test="ems_videofusion_near != null ">#{ems_videofusion_near},</if>
+            <if test="ems_videofusion_far != null ">#{ems_videofusion_far},</if>
+            <if test="ems_videofusion_createtime != null ">#{ems_videofusion_createtime},</if>
+            <if test="ems_videofusion_updatetime != null ">#{ems_videofusion_updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Panorama">
+        UPDATE videofusion
+        <set>
+            <if test="ems_videofusion_name != null and ems_videofusion_name != ''">ems_videofusion_name=#{ems_videofusion_name},
+            </if>
+            <if test="ems_videofusion_panoramaid != null">ems_videofusion_panoramaid=#{ems_videofusion_panoramaid},</if>
+            <if test="ems_videofusion_tagtypeid != null">ems_videofusion_tagtypeid=#{ems_videofusion_tagtypeid},</if>
+            <if test="ems_videofusion_flvurl != null">ems_videofusion_flvurl=#{ems_videofusion_flvurl},</if>
+            <if test="ems_videofusion_param != null">ems_videofusion_param=#{ems_videofusion_param},</if>
+            <if test="ems_videofusion_deviceid != null">ems_videofusion_deviceid=#{ems_videofusion_deviceid},</if>
+            <if test="ems_videofusion_rotation != null">ems_videofusion_rotation=#{ems_videofusion_rotation},</if>
+            <if test="ems_videofusion_location != null">ems_videofusion_location=#{ems_videofusion_location},</if>
+            <if test="ems_videofusion_widthratio != null">ems_videofusion_widthratio=#{ems_videofusion_widthratio},</if>
+            <if test="ems_videofusion_heightratio != null">ems_videofusion_heightratio=#{ems_videofusion_heightratio},</if>
+            <if test="ems_videofusion_camrotation != null">ems_videofusion_camrotation=#{ems_videofusion_camrotation},</if>
+            <if test="ems_videofusion_viewscale != null ">ems_videofusion_viewscale=#{ems_videofusion_viewscale},</if>
+            <if test="ems_videofusion_near != null ">ems_videofusion_near=#{ems_videofusion_near},</if>
+            <if test="ems_videofusion_far != null ">ems_videofusion_far=#{ems_videofusion_far},</if>
+            <if test="ems_videofusion_createtime != null ">ems_videofusion_createtime=#{ems_videofusion_createtime},</if>
+            <if test="ems_videofusion_updatetime != null ">ems_videofusion_updatetime=#{ems_videofusion_updatetime},</if>
+        </set>
+        WHERE ems_videofusion_id = #{ems_videofusion_id}
+    </update>
+
+    <select id="selectByPanoramaId" resultMap="VoResultMap">
+        SELECT
+            <include refid="Relevance_Column_List">
+                <property name="alias" value="v"/>
+            </include>
+            ,t.ems_tagtype_iconfileid
+        FROM videofusion v JOIN tagtype t ON v.ems_videofusion_tagtypeid = t.ems_tagtype_id
+        WHERE v.ems_videofusion_panoramaid=#{ems_panorama_id}
+    </select>
+
+    <select id="findByTagtypeId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM videofusion
+        WHERE ems_videofusion_tagtypeid=#{ems_tagtype_id}
+    </select>
+
+    <update id="batchUpdate" parameterType="Videofusion">
+        <foreach collection="videofusions" item="item" index="index" open="" close="" separator=";">
+            update videofusion
+            <set>
+                ems_videofusion_name = #{item.ems_videofusion_name},
+                ems_videofusion_panoramaid = #{item.ems_videofusion_panoramaid},
+                ems_videofusion_tagtypeid = #{item.ems_videofusion_tagtypeid},
+                ems_videofusion_flvurl = #{item.ems_videofusion_flvurl},
+                ems_videofusion_param = #{item.ems_videofusion_param},
+                ems_videofusion_deviceid = #{item.ems_videofusion_deviceid},
+                ems_videofusion_rotation = #{item.ems_videofusion_rotation},
+                ems_videofusion_location = #{item.ems_videofusion_location},
+                ems_videofusion_widthratio = #{item.ems_videofusion_widthratio},
+                ems_videofusion_heightratio = #{item.ems_videofusion_heightratio},
+                ems_videofusion_camrotation = #{item.ems_videofusion_camrotation},
+                ems_videofusion_viewscale = #{item.ems_videofusion_viewscale},
+                ems_videofusion_near = #{item.ems_videofusion_near},
+                ems_videofusion_far = #{item.ems_videofusion_far}
+            </set>
+            where ems_videofusion_id=#{item.ems_videofusion_id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByPanorama" parameterType="int">
+        DELETE FROM videofusion WHERE ems_videofusion_panoramaid=#{ems_panorama_id}
+    </delete>
+</mapper>

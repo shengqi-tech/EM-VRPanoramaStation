@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.SyslogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Syslog">
+        <id column="ems_syslog_id" property="ems_syslog_id" />
+        <result column="ems_syslog_title" property="ems_syslog_title" />
+        <result column="ems_syslog_type" property="ems_syslog_type" />
+        <result column="ems_syslog_method" property="ems_syslog_method" />
+        <result column="ems_syslog_requestmethod" property="ems_syslog_requestmethod" />
+        <result column="ems_syslog_opertype" property="ems_syslog_opertype" />
+        <result column="ems_syslog_operid" property="ems_syslog_operid" />
+        <result column="ems_syslog_opername" property="ems_syslog_opername" />
+        <result column="ems_syslog_customerid" property="ems_syslog_customerid" />
+        <result column="ems_syslog_operurl" property="ems_syslog_operurl" />
+        <result column="ems_syslog_operip" property="ems_syslog_operip" />
+        <result column="ems_syslog_operparam" property="ems_syslog_operparam" />
+        <result column="ems_syslog_jsonresult" property="ems_syslog_jsonresult" />
+        <result column="ems_syslog_status" property="ems_syslog_status" />
+        <result column="ems_syslog_errormsg" property="ems_syslog_errormsg" />
+        <result column="ems_syslog_opertime" property="ems_syslog_opertime" />
+        <result column="ems_syslog_costtime" property="ems_syslog_costtime" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_syslog_id, ${alias}.ems_syslog_title, ${alias}.ems_syslog_type, ${alias}.ems_syslog_method, ${alias}.ems_syslog_requestmethod, ${alias}.ems_syslog_opertype, ${alias}.ems_syslog_operid, ${alias}.ems_syslog_opername, ${alias}.ems_syslog_customerid, ${alias}.ems_syslog_operurl, ${alias}.ems_syslog_operip, ${alias}.ems_syslog_operparam, ${alias}.ems_syslog_jsonresult, ${alias}.ems_syslog_status, ${alias}.ems_syslog_errormsg, ${alias}.ems_syslog_opertime, ${alias}.ems_syslog_costtime
+    </sql>
+
+    <insert id="insert" parameterType="Syslog" useGeneratedKeys="true" keyProperty="ems_syslog_id">
+        INSERT INTO syslog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_syslog_title != null">ems_syslog_title,</if>
+            <if test="ems_syslog_type != null">ems_syslog_type,</if>
+            <if test="ems_syslog_method != null">ems_syslog_method,</if>
+            <if test="ems_syslog_requestmethod != null">ems_syslog_requestmethod,</if>
+            <if test="ems_syslog_opertype != null">ems_syslog_opertype,</if>
+            <if test="ems_syslog_operid != null">ems_syslog_operid,</if>
+            <if test="ems_syslog_opername != null">ems_syslog_opername,</if>
+            <if test="ems_syslog_customerid != null">ems_syslog_customerid,</if>
+            <if test="ems_syslog_operurl != null">ems_syslog_operurl,</if>
+            <if test="ems_syslog_operip != null">ems_syslog_operip,</if>
+            <if test="ems_syslog_operparam != null">ems_syslog_operparam,</if>
+            <if test="ems_syslog_jsonresult != null">ems_syslog_jsonresult,</if>
+            <if test="ems_syslog_status != null">ems_syslog_status,</if>
+            <if test="ems_syslog_errormsg != null">ems_syslog_errormsg,</if>
+            <if test="ems_syslog_opertime != null">ems_syslog_opertime,</if>
+            <if test="ems_syslog_costtime != null">ems_syslog_costtime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_syslog_title != null">#{ems_syslog_title},</if>
+            <if test="ems_syslog_type != null">#{ems_syslog_type},</if>
+            <if test="ems_syslog_method != null">#{ems_syslog_method},</if>
+            <if test="ems_syslog_requestmethod != null">#{ems_syslog_requestmethod},</if>
+            <if test="ems_syslog_opertype != null">#{ems_syslog_opertype},</if>
+            <if test="ems_syslog_operid != null">#{ems_syslog_operid},</if>
+            <if test="ems_syslog_opername != null">#{ems_syslog_opername},</if>
+            <if test="ems_syslog_customerid != null">#{ems_syslog_customerid},</if>
+            <if test="ems_syslog_operurl != null">#{ems_syslog_operurl},</if>
+            <if test="ems_syslog_operip != null">#{ems_syslog_operip},</if>
+            <if test="ems_syslog_operparam != null">#{ems_syslog_operparam},</if>
+            <if test="ems_syslog_jsonresult != null">#{ems_syslog_jsonresult},</if>
+            <if test="ems_syslog_status != null">#{ems_syslog_status},</if>
+            <if test="ems_syslog_errormsg != null">#{ems_syslog_errormsg},</if>
+            <if test="ems_syslog_opertime != null">#{ems_syslog_opertime},</if>
+            <if test="ems_syslog_costtime != null">#{ems_syslog_costtime},</if>
+        </trim>
+    </insert>
+
+    <select id="findByMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+        FROM syslog s
+        <where>
+            <if test="ems_syslog_id != null">
+                s.ems_syslog_id=#{ems_syslog_id}
+            </if>
+            <if test="ems_syslog_type != null">
+                AND s.ems_syslog_type=#{ems_syslog_type}
+            </if>
+            <if test="ems_syslog_operurl != null">
+                AND s.ems_syslog_operurl LIKE CONCAT('%', #{ems_syslog_operurl}, '%')
+            </if>
+            <if test="ems_syslog_operid != null">
+                AND s.ems_syslog_operid=#{ems_syslog_operid}
+            </if>
+            <if test="ems_syslog_status != null">
+                AND s.ems_syslog_status=#{ems_syslog_status}
+            </if>
+            <if test="ems_syslog_strattime != null and ems_syslog_endtime">
+                AND s.ems_syslog_opertime BETWEEN #{ems_syslog_strattime} AND #{ems_syslog_endtime}
+            </if>
+        </where>
+    </select>
+</mapper>

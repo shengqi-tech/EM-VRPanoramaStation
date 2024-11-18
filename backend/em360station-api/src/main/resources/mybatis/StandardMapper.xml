@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.StandardMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Standard">
+        <id column="ems_standard_id" property="ems_standard_id" />
+        <result column="ems_standard_pid" property="ems_standard_pid" />
+        <result column="ems_standard_isfirst" property="ems_standard_isfirst" />
+        <result column="ems_standard_year" property="ems_standard_year" />
+        <result column="ems_standard_namecn" property="ems_standard_namecn" />
+        <result column="ems_standard_nameen" property="ems_standard_nameen" />
+        <result column="ems_standard_no" property="ems_standard_no" />
+        <result column="ems_standard_des" property="ems_standard_des" />
+        <result column="ems_standard_publishtime" property="ems_standard_publishtime" />
+        <result column="ems_standard_carryouttime" property="ems_standard_carryouttime" />
+        <result column="ems_standard_publisher" property="ems_standard_publisher" />
+        <result column="ems_standard_draftingunit" property="ems_standard_draftingunit" />
+        <result column="ems_standard_state" property="ems_standard_state" />
+        <result column="ems_standard_fileid" property="ems_standard_fileid" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_standard_id, ems_standard_pid, ems_standard_isfirst, ems_standard_year, ems_standard_namecn, ems_standard_nameen, ems_standard_no, ems_standard_des, ems_standard_publishtime, ems_standard_carryouttime, ems_standard_publisher, ems_standard_draftingunit, ems_standard_state, ems_standard_fileid
+    </sql>
+
+
+
+</mapper>

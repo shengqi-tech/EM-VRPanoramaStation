@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.SysuserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Sysuser">
+        <id column="ems_sysuser_id" property="ems_sysuser_id"/>
+        <result column="ems_sysuser_loginname" property="ems_sysuser_loginname"/>
+        <result column="ems_sysuser_password" property="ems_sysuser_password"/>
+        <result column="ems_sysuser_name" property="ems_sysuser_name"/>
+        <result column="ems_sysuser_avatarfileid" property="ems_sysuser_avatarfileid"/>
+        <result column="ems_sysuser_status" property="ems_sysuser_status"/>
+        <result column="ems_sysuser_customerid" property="ems_sysuser_customerid"/>
+        <result column="ems_sysuser_address" property="ems_sysuser_address"/>
+        <result column="ems_sysuser_creatime" property="ems_sysuser_creatime"/>
+        <result column="ems_sysuser_updatetime" property="ems_sysuser_updatetime"/>
+        <result column="ems_sysuser_mobilephone" property="ems_sysuser_mobilephone"/>
+        <result column="ems_sysuser_signature" property="ems_sysuser_signature"/>
+        <result column="ems_sysuser_status" property="ems_sysuser_status"/>
+        <result column="ems_sysuser_email" property="ems_sysuser_email"/>
+        <collection column="ems_sysuser_id" property="roles"
+                    ofType="com.shengqitech.ems.models.domains.Role"
+                    select="com.shengqitech.ems.mappers.RoleMapper.selectByUser"/>
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.SysuserVo">
+        <association column="ems_sysfile_id = ems_sysuser_avatarfileid" property="ems_sysuser_avatarfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+        <association column="ems_customer_id = ems_sysuser_customerid" property="ems_sysuser_customer"
+                     javaType="com.shengqitech.ems.models.domains.Customer"
+                     select="com.shengqitech.ems.mappers.CustomerMapper.findById" fetchType="eager"/>
+    </resultMap>
+
+    <resultMap id="ViewVoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.SysuserViewVo">
+        <association column="ems_sysfile_id = ems_sysuser_avatarfileid" property="ems_sysuser_avatarfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+        <association column="ems_customer_id = ems_sysuser_customerid" property="ems_sysuser_customer"
+                     javaType="com.shengqitech.ems.models.domains.Customer"
+                     select="com.shengqitech.ems.mappers.CustomerMapper.findById" fetchType="eager"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_sysuser_id
+        , ${alias}.ems_sysuser_loginname, ${alias}.ems_sysuser_password, ${alias}.ems_sysuser_name, ${alias}.ems_sysuser_avatarfileid, ${alias}.ems_sysuser_status, ${alias}.ems_sysuser_customerid
+        , ${alias}.ems_sysuser_address, ${alias}.ems_sysuser_creatime, ${alias}.ems_sysuser_updatetime, ${alias}.ems_sysuser_mobilephone, ${alias}.ems_sysuser_signature, ${alias}.ems_sysuser_email
+    </sql>
+
+    <select id="selectUserByUserName" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+        FROM sysuser s
+        where s.ems_sysuser_loginname = #{userName}
+    </select>
+
+    <select id="checkUserNameUnique" parameterType="String" resultMap="BaseResultMap">
+        SELECT ems_sysuser_id, ems_sysuser_loginname
+        FROM sysuser
+        WHERE ems_sysuser_loginname = #{userName} LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="Sysuser" useGeneratedKeys="true" keyProperty="ems_sysuser_id">
+        INSERT INTO sysuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_sysuser_loginname != null and ems_sysuser_loginname != ''">ems_sysuser_loginname,</if>
+            <if test="ems_sysuser_password != null and ems_sysuser_password != ''">ems_sysuser_password,</if>
+            <if test="ems_sysuser_name != null and ems_sysuser_name != ''">ems_sysuser_name,</if>
+            <if test="ems_sysuser_avatarfileid != null and ems_sysuser_avatarfileid != 0">ems_sysuser_avatarfileid,</if>
+            <if test="ems_sysuser_status != null">ems_sysuser_status,</if>
+            <if test="ems_sysuser_customerid != null and ems_sysuser_customerid != 0">ems_sysuser_customerid,</if>
+            <if test="ems_sysuser_address != null and ems_sysuser_address != ''">ems_sysuser_address,</if>
+            <if test="ems_sysuser_creatime != null">ems_sysuser_creatime,</if>
+            <if test="ems_sysuser_updatetime != null">ems_sysuser_updatetime,</if>
+            <if test="ems_sysuser_mobilephone != null and ems_sysuser_mobilephone != ''">ems_sysuser_mobilephone,</if>
+            <if test="ems_sysuser_signature != null and ems_sysuser_signature != ''">ems_sysuser_signature,</if>
+            <if test="ems_sysuser_email != null and ems_sysuser_email != ''">ems_sysuser_email,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_sysuser_loginname != null and ems_sysuser_loginname != ''">#{ems_sysuser_loginname},</if>
+            <if test="ems_sysuser_password != null and ems_sysuser_password != ''">#{ems_sysuser_password},</if>
+            <if test="ems_sysuser_name != null and ems_sysuser_name != ''">#{ems_sysuser_name},</if>
+            <if test="ems_sysuser_avatarfileid != null and ems_sysuser_avatarfileid != 0">#{ems_sysuser_avatarfileid},</if>
+            <if test="ems_sysuser_status != null">#{ems_sysuser_status},</if>
+            <if test="ems_sysuser_customerid != null and ems_sysuser_customerid != 0">#{ems_sysuser_customerid},</if>
+            <if test="ems_sysuser_address != null and ems_sysuser_address != ''">#{ems_sysuser_address},</if>
+            <if test="ems_sysuser_creatime != null">#{ems_sysuser_creatime},</if>
+            <if test="ems_sysuser_updatetime != null">#{ems_sysuser_updatetime},</if>
+            <if test="ems_sysuser_mobilephone != null and ems_sysuser_mobilephone != ''">#{ems_sysuser_mobilephone},</if>
+            <if test="ems_sysuser_signature != null and ems_sysuser_signature != ''">#{ems_sysuser_signature},</if>
+            <if test="ems_sysuser_email != null and ems_sysuser_email != ''">#{ems_sysuser_email},</if>
+        </trim>
+    </insert>
+
+    <!-- 批量新增用户角色关系 -->
+    <insert id="insertUserRoles" parameterType="java.util.Map">
+        insert into sysuserrole(ems_sysuserrole_sysuserid,ems_sysuserrole_roleid)
+        values
+        <foreach collection="roleids" item="item" index="index" separator=",">
+            (#{id},#{item})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserRolesByUserid" parameterType="int">
+        DELETE
+        FROM sysuserrole
+        WHERE ems_sysuserrole_sysuserid = #{ems_sysuser_id}
+    </delete>
+
+    <update id="update" parameterType="Sysuser">
+        UPDATE sysuser
+        <set>
+            <if test="ems_sysuser_password != null and ems_sysuser_password != ''">ems_sysuser_password=#{ems_sysuser_password},</if>
+            <if test="ems_sysuser_name != null and ems_sysuser_name != ''">ems_sysuser_name=#{ems_sysuser_name},</if>
+            <if test="ems_sysuser_avatarfileid != null">ems_sysuser_avatarfileid=#{ems_sysuser_avatarfileid},</if>
+            <if test="ems_sysuser_status != null">ems_sysuser_status=#{ems_sysuser_status},</if>
+            <if test="ems_sysuser_customerid != null">ems_sysuser_customerid=#{ems_sysuser_customerid},</if>
+            <if test="ems_sysuser_address != null and ems_sysuser_address != ''">ems_sysuser_address=#{ems_sysuser_address},</if>
+            <if test="ems_sysuser_creatime != null">ems_sysuser_creatime=#{ems_sysuser_creatime},</if>
+            <if test="ems_sysuser_updatetime != null">ems_sysuser_updatetime=#{ems_sysuser_updatetime},</if>
+            <if test="ems_sysuser_mobilephone != null and ems_sysuser_mobilephone != ''">ems_sysuser_mobilephone=#{ems_sysuser_mobilephone},</if>
+            <if test="ems_sysuser_signature != null and ems_sysuser_signature != ''">ems_sysuser_signature=#{ems_sysuser_signature},</if>
+            <if test="ems_sysuser_email != null and ems_sysuser_email != ''">ems_sysuser_email=#{ems_sysuser_email},</if>
+        </set>
+        WHERE ems_sysuser_id=#{ems_sysuser_id}
+    </update>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+            FROM sysuser s
+        <where>
+            <if test="ems_sysuser_id != null">
+                s.ems_sysuser_id=#{ems_sysuser_id}
+            </if>
+            <if test="ems_sysuser_name != null and ems_sysuser_name != ''">
+                AND s.ems_sysuser_name LIKE CONCAT('%',#{ems_sysuser_name},'%')
+            </if>
+            <if test="ems_sysuser_customerid != null">
+                s.ems_sysuser_customerid=#{ems_sysuser_customerid}
+            </if>
+            <if test="ems_sysuser_starttime != null and ems_sysuser_endtime != null">
+                AND s.ems_sysuser_creatime BETWEEN #{ems_sysuser_starttime} AND #{ems_sysuser_endtime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getView" resultMap="ViewVoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+            FROM sysuser s
+        WHERE s.ems_sysuser_id=#{ems_sysuser_id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM sysuser WHERE ems_sysuser_id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

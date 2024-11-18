@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.SysfileMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Sysfile">
+        <id column="ems_sysfile_id" property="ems_sysfile_id" />
+        <result column="ems_sysfile_name" property="ems_sysfile_name" />
+        <result column="ems_sysfile_size" property="ems_sysfile_size" />
+        <result column="ems_sysfile_type" property="ems_sysfile_type" />
+        <result column="ems_sysfile_suffix" property="ems_sysfile_suffix" />
+        <result column="ems_sysfile_path" property="ems_sysfile_path" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_sysfile_id, ems_sysfile_name, ems_sysfile_size, ems_sysfile_type, ems_sysfile_suffix, ems_sysfile_path
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_sysfile_id, ${alias}.ems_sysfile_name,${alias}.ems_sysfile_size,${alias}.ems_sysfile_type,${alias}.ems_sysfile_suffix,${alias}.ems_sysfile_path
+    </sql>
+
+    <!-- 根据id查询 -->
+    <select id="selectByFileId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+        FROM sysfile s
+        WHERE s.ems_sysfile_id=#{ems_sysfile_id}
+    </select>
+
+    <insert id="insert" parameterType="Sysfile" useGeneratedKeys="true" keyProperty="ems_sysfile_id">
+        INSERT INTO sysfile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_sysfile_name != null and ems_sysfile_name != ''">ems_sysfile_name,</if>
+            <if test="ems_sysfile_size != null and ems_sysfile_size != 0">ems_sysfile_size,</if>
+            <if test="ems_sysfile_suffix != null and ems_sysfile_suffix != ''">ems_sysfile_suffix,</if>
+            <if test="ems_sysfile_type != null and ems_sysfile_type != ''">ems_sysfile_type,</if>
+            <if test="ems_sysfile_path != null and ems_sysfile_path != ''">ems_sysfile_path,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_sysfile_name != null and ems_sysfile_name != ''">#{ems_sysfile_name},</if>
+            <if test="ems_sysfile_size != null and ems_sysfile_size != 0">#{ems_sysfile_size},</if>
+            <if test="ems_sysfile_suffix != null and ems_sysfile_suffix != ''">#{ems_sysfile_suffix},</if>
+            <if test="ems_sysfile_type != null and ems_sysfile_type != ''">#{ems_sysfile_type},</if>
+            <if test="ems_sysfile_path != null and ems_sysfile_path != ''">#{ems_sysfile_path},</if>
+        </trim>
+    </insert>
+
+    <select id="findByIds" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM sysfile
+        WHERE ems_sysfile_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

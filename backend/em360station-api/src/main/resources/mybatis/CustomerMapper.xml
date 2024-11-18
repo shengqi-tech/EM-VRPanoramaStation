@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.CustomerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Customer">
+        <id column="ems_customer_id" property="ems_customer_id" />
+        <result column="ems_customer_name" property="ems_customer_name" />
+        <result column="ems_customer_logofileid" property="ems_customer_logofileid" />
+        <result column="ems_customer_state" property="ems_customer_state" />
+        <result column="ems_customer_city" property="ems_customer_city" />
+        <result column="ems_customer_region" property="ems_customer_region" />
+        <result column="ems_customer_address" property="ems_customer_address" />
+        <result column="ems_customer_des" property="ems_customer_des" />
+        <result column="ems_customer_isrealname" property="ems_customer_isrealname" />
+        <result column="ems_customer_createtime" property="ems_customer_createtime" />
+        <result column="ems_customer_updatetime" property="ems_customer_updatetime" />
+        <result column="ems_customer_realnametime" property="ems_customer_realnametime" />
+        <result column="ems_customer_legalperson" property="ems_customer_legalperson" />
+        <result column="ems_customer_organizationcode" property="ems_customer_organizationcode" />
+        <result column="ems_customer_email" property="ems_customer_email" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.CustomerVo">
+        <association column="ems_sysfile_id = ems_customer_logofileid" property="ems_customer_logofile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_customer_id
+        , ems_customer_name, ems_customer_logofileid, ems_customer_state, ems_customer_city, ems_customer_region, ems_customer_address, ems_customer_des, ems_customer_isrealname, ems_customer_createtime, ems_customer_updatetime, ems_customer_realnametime, ems_customer_legalperson, ems_customer_organizationcode, ems_customer_email
+    </sql>
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_customer_id
+        , ${alias}.ems_customer_name, ${alias}.ems_customer_logofileid, ${alias}.ems_customer_state, ${alias}.ems_customer_city, ${alias}.ems_customer_region, ${alias}.ems_customer_address, ${alias}.ems_customer_des, ${alias}.ems_customer_isrealname, ${alias}.ems_customer_createtime, ${alias}.ems_customer_updatetime, ${alias}.ems_customer_realnametime, ${alias}.ems_customer_legalperson, ${alias}.ems_customer_organizationcode, ${alias}.ems_customer_email
+    </sql>
+
+    <insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="ems_customer_id">
+        INSERT INTO customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_customer_name != null and ems_customer_name != ''">ems_customer_name,</if>
+            <if test="ems_customer_logofileid != null">ems_customer_logofileid,</if>
+            <if test="ems_customer_state != null">ems_customer_state,</if>
+            <if test="ems_customer_city != null">ems_customer_city,</if>
+            <if test="ems_customer_region != null">ems_customer_region,</if>
+            <if test="ems_customer_address != null">ems_customer_address,</if>
+            <if test="ems_customer_des != null">ems_customer_des,</if>
+            <if test="ems_customer_isrealname != null">ems_customer_isrealname,</if>
+            <if test="ems_customer_createtime != null">ems_customer_createtime,</if>
+            <if test="ems_customer_updatetime != null">ems_customer_updatetime,</if>
+            <if test="ems_customer_realnametime != null">ems_customer_realnametime,</if>
+            <if test="ems_customer_legalperson != null">ems_customer_legalperson,</if>
+            <if test="ems_customer_organizationcode != null">ems_customer_organizationcode,</if>
+            <if test="ems_customer_email != null">ems_customer_email,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_customer_name != null and ems_customer_name != ''">#{ems_customer_name},</if>
+            <if test="ems_customer_logofileid != null">#{ems_customer_logofileid},</if>
+            <if test="ems_customer_state != null">#{ems_customer_state},</if>
+            <if test="ems_customer_city != null">#{ems_customer_city},</if>
+            <if test="ems_customer_region != null">#{ems_customer_region},</if>
+            <if test="ems_customer_address != null">#{ems_customer_address},</if>
+            <if test="ems_customer_des != null">#{ems_customer_des},</if>
+            <if test="ems_customer_isrealname != null">#{ems_customer_isrealname},</if>
+            <if test="ems_customer_createtime != null">#{ems_customer_createtime},</if>
+            <if test="ems_customer_updatetime != null">#{ems_customer_updatetime},</if>
+            <if test="ems_customer_realnametime != null">#{ems_customer_realnametime},</if>
+            <if test="ems_customer_legalperson != null">#{ems_customer_legalperson},</if>
+            <if test="ems_customer_organizationcode != null">#{ems_customer_organizationcode},</if>
+            <if test="ems_customer_email != null">#{ems_customer_email},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Customer">
+        UPDATE customer
+        <set>
+            <if test="ems_customer_name != null and ems_customer_name != ''">ems_customer_name=#{ems_customer_name},</if>
+            <if test="ems_customer_logofileid != null">ems_customer_logofileid=#{ems_customer_logofileid},</if>
+            <if test="ems_customer_state != null">ems_customer_state=#{ems_customer_state},</if>
+            <if test="ems_customer_city != null">ems_customer_city=#{ems_customer_city},</if>
+            <if test="ems_customer_region != null">ems_customer_region=#{ems_customer_region},</if>
+            <if test="ems_customer_address != null">ems_customer_address=#{ems_customer_address},</if>
+            <if test="ems_customer_des != null">ems_customer_des=#{ems_customer_des},</if>
+            <if test="ems_customer_isrealname != null">ems_customer_isrealname=#{ems_customer_isrealname},</if>
+            <if test="ems_customer_createtime != null">ems_customer_createtime=#{ems_customer_createtime},</if>
+            <if test="ems_customer_updatetime != null">ems_customer_updatetime=#{ems_customer_updatetime},</if>
+            <if test="ems_customer_realnametime != null">ems_customer_realnametime=#{ems_customer_realnametime},</if>
+            <if test="ems_customer_legalperson != null">ems_customer_legalperson=#{ems_customer_legalperson},</if>
+            <if test="ems_customer_organizationcode != null">ems_customer_organizationcode=#{ems_customer_organizationcode},</if>
+            <if test="ems_customer_email != null">ems_customer_email=#{ems_customer_email},</if>
+        </set>
+        WHERE ems_customer_id = #{ems_customer_id}
+    </update>
+
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM customer
+        <where>
+            <if test="ems_customer_id != null">
+                ems_customer_id=#{ems_customer_id}
+            </if>
+            <if test="ems_customer_name != null and ems_customer_name != ''">
+                AND ems_customer_name LIKE CONCAT('%',#{ems_customer_name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM customer WHERE ems_customer_id=#{ems_customer_id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM customer WHERE ems_customer_id=#{ems_customer_id}
+    </delete>
+
+    <delete id="deleteCustomercomposition" parameterType="int">
+        DELETE FROM customercomposition WHERE ems_customercomposition_customerid IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkCustomerExistUser" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM sysuser WHERE ems_sysuser_customerid=#{ems_customer_id}
+    </select>
+    <select id="checkCustomerExistComposition" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM customcomposition WHERE ems_customcomposition_customerid=#{ems_customer_id}
+    </select>
+</mapper>

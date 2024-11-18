@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Role">
+        <id column="ems_role_id" property="ems_role_id"/>
+        <result column="ems_role_tag" property="ems_role_tag"/>
+        <result column="ems_role_name" property="ems_role_name"/>
+        <result column="ems_role_des" property="ems_role_des"/>
+        <result column="ems_role_createtime" property="ems_role_createtime"/>
+        <result column="ems_role_updatetime" property="ems_role_updatetime"/>
+        <result column="ems_role_status" property="ems_role_status"/>
+    </resultMap>
+
+    <resultMap id="ViewVoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.RoleViewVo">
+        <collection column="ems_role_id" property="ems_role_items"
+                    ofType="com.shengqitech.ems.models.domains.Item"
+                    select="com.shengqitech.ems.mappers.ItemMapper.selectByRoleId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        r
+        .
+        ems_role_id
+        , r.ems_role_tag, r.ems_role_name, r.ems_role_des, r.ems_role_createtime, r.ems_role_updatetime, r.ems_role_status
+    </sql>
+
+    <!-- 根据用户查询 -->
+    <select id="findByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="r"/>
+        </include>
+        FROM role r JOIN sysuserrole sr ON r.ems_role_id=sr.ems_sysuserrole_roleid
+        WHERE sr.ems_sysuserrole_sysuserid=#{ems_sysuser_id}
+    </select>
+
+    <select id="selectByUser" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="r"/>
+        </include>
+        FROM role r JOIN sysuserrole s ON r.ems_role_id = s.ems_sysuserrole_roleid
+        WHERE s.ems_sysuserrole_sysuserid=#{ems_sysuser_id}
+    </select>
+
+    <select id="selectRolePermissionByUserId" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="r"/>
+        </include>
+        FROM role r
+    </select>
+
+    <select id="findByTag" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="r"/>
+        </include>
+        FROM role r
+        WHERE r.ems_role_tag=#{ems_role_tag}
+    </select>
+
+    <select id="findByMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="r"/>
+        </include>
+        FROM role r
+        <where>
+            <if test="ems_role_id != null">
+                r.ems_role_id=#{ems_role_id}
+            </if>
+            <if test="ems_role_tag != null">
+                r.ems_role_tag LIKE CONCAT('%',#{ems_role_tag},'%')
+            </if>
+            <if test="ems_role_name != null">
+                r.ems_role_name LIKE CONCAT('%',#{ems_role_name},'%')
+            </if>
+            <if test="ems_role_starttime != null and ems_role_endtime != null">
+                r.ems_role_createtime BETWEEN #{ems_role_starttime} AND #{ems_role_endtime}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="Role" useGeneratedKeys="true" keyProperty="ems_role_id">
+        INSERT INTO role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_role_tag != null">ems_role_tag,</if>
+            <if test="ems_role_name != null">ems_role_name,</if>
+            <if test="ems_role_des != null">ems_role_des,</if>
+            <if test="ems_role_createtime != null">ems_role_createtime,</if>
+            <if test="ems_role_updatetime != null">ems_role_updatetime,</if>
+            <if test="ems_role_status != null">ems_role_status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_role_tag != null">#{ems_role_tag},</if>
+            <if test="ems_role_name != null">#{ems_role_name},</if>
+            <if test="ems_role_des != null">#{ems_role_des},</if>
+            <if test="ems_role_createtime != null">#{ems_role_createtime},</if>
+            <if test="ems_role_updatetime != null">#{ems_role_updatetime},</if>
+            <if test="ems_role_status != null">#{ems_role_status},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Role">
+        UPDATE role
+        <set>
+            <if test="ems_role_tag != null">ems_role_tag=#{ems_role_tag},</if>
+            <if test="ems_role_name != null">ems_role_name=#{ems_role_name},</if>
+            <if test="ems_role_des != null">ems_role_des=#{ems_role_des},</if>
+            <if test="ems_role_updatetime != null">ems_role_updatetime=#{ems_role_updatetime},</if>
+            <if test="ems_role_status != null">ems_role_status=#{ems_role_status},</if>
+        </set>
+        WHERE ems_role_id = #{ems_role_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM role WHERE ems_role_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteRoleitem" parameterType="int">
+        DELETE
+        FROM roleitem
+        WHERE ems_roleitem_roleid = #{ems_role_id}
+    </delete>
+
+    <insert id="inserRoleItem" parameterType="int">
+        INSERT INTO roleitem(ems_roleitem_roleid, ems_roleitem_itemid)
+        VALUES
+        <foreach collection="ids" item="item" index="index" separator=",">
+            (#{ems_role_id},#{item})
+        </foreach>
+    </insert>
+
+    <select id="getView" resultMap="ViewVoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="r"/>
+        </include>
+        FROM role r WHERE r.ems_role_id=#{ems_role_id}
+    </select>
+</mapper>

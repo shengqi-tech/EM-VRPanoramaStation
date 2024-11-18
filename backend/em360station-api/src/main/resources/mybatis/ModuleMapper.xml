@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ModuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Module">
+        <id column="ems_module_id" property="ems_module_id" />
+        <result column="ems_module_name" property="ems_module_name" />
+        <result column="ems_module_mode" property="ems_module_mode" />
+        <result column="ems_module_type" property="ems_module_type" />
+        <result column="ems_module_specifications" property="ems_module_specifications" />
+        <result column="ems_module_des" property="ems_module_des" />
+        <result column="ems_module_versionid" property="ems_module_versionid" />
+        <result column="ems_module_icon" property="ems_module_icon" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.ModuleVo">
+        <collection column="ems_module_id" property="properties"
+                    ofType="com.shengqitech.ems.models.domains.Property"
+                    select="com.shengqitech.ems.mappers.PropertyMapper.selectByModuleId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_module_id, ${alias}.ems_module_name, ${alias}.ems_module_mode, ${alias}.ems_module_type, ${alias}.ems_module_specifications, ${alias}.ems_module_des, ${alias}.ems_module_versionid, ${alias}.ems_module_icon
+    </sql>
+
+    <select id="selectByVersion" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="m"/>
+        </include>
+        FROM module m WHERE ems_module_versionid=#{ems_version_id}
+    </select>
+
+    <select id="findDuplicateModule" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List">
+                <property name="alias" value="m"/>
+            </include>
+        FROM module m
+        WHERE ems_module_type=#{ems_module_type}
+    </select>
+
+    <insert id="insert" parameterType="Module" useGeneratedKeys="true" keyProperty="ems_module_id">
+        INSERT INTO module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_module_name != null">ems_module_name,</if>
+            <if test="ems_module_mode != null">ems_module_mode,</if>
+            <if test="ems_module_type != null">ems_module_type,</if>
+            <if test="ems_module_specifications != null">ems_module_specifications,</if>
+            <if test="ems_module_des != null">ems_module_des,</if>
+            <if test="ems_module_versionid != null">ems_module_versionid,</if>
+            <if test="ems_module_icon != null">ems_module_icon,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_module_name != null">#{ems_module_name},</if>
+            <if test="ems_module_mode != null">#{ems_module_mode},</if>
+            <if test="ems_module_type != null">#{ems_module_type},</if>
+            <if test="ems_module_specifications != null">#{ems_module_specifications},</if>
+            <if test="ems_module_des != null">#{ems_module_des},</if>
+            <if test="ems_module_versionid != null">#{ems_module_versionid},</if>
+            <if test="ems_module_icon != null">#{ems_module_icon},</if>
+        </trim>
+    </insert>
+
+</mapper>

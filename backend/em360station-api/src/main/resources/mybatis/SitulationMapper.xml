@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.SituationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.vo.SituationVo">
+        <id column="ems_situation_id" property="ems_situation_id" />
+        <result column="ems_situation_name" property="ems_situation_name" />
+        <result column="ems_situation_icon" property="ems_situation_icon" />
+        <result column="ems_situation_icon" property="ems_situation_icon" />
+        <result column="ems_situation_index" property="ems_situation_index" />
+        <result column="ems_situation_des" property="ems_situation_des" />
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_situation_id, ems_situation_name, ems_situation_icon, ems_situation_icon, ems_situation_index,ems_situation_des
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_situation_id, ${alias}.ems_situation_name, ${alias}.ems_situation_icon, ${alias}.ems_situation_icon, ${alias}.ems_situation_index, ${alias}.ems_situation_des
+    </sql>
+
+
+    <select id="findByMap" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM situation ORDER BY ems_situation_index ASC
+    </select>
+
+
+</mapper>

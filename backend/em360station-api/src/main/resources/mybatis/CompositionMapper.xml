@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.CompositionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Composition">
+        <id column="ems_composition_id" property="ems_composition_id" />
+        <result column="ems_composition_pid" property="ems_composition_pid" />
+        <result column="ems_composition_name" property="ems_composition_name" />
+        <result column="ems_composition_iconfileid" property="ems_composition_iconfileid" />
+        <result column="ems_composition_modelfileid" property="ems_composition_modelfileid" />
+        <result column="ems_composition_des" property="ems_composition_des" />
+        <result column="ems_composition_isleaf" property="ems_composition_isleaf" />
+        <result column="ems_composition_standardid" property="ems_composition_standardid" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_composition_id, ems_composition_pid, ems_composition_name, ems_composition_iconfileid, ems_composition_modelfileid, ems_composition_des, ems_composition_isleaf, ems_composition_standardid
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_composition_id, ${alias}.ems_composition_pid, ${alias}.ems_composition_name, ${alias}.ems_composition_iconfileid, ${alias}.ems_composition_modelfileid, ${alias}.ems_composition_des, ${alias}.ems_composition_isleaf, ${alias}.ems_composition_standardid
+    </sql>
+
+    <insert id="insert" parameterType="Composition" useGeneratedKeys="true" keyProperty="ems_composition_id">
+        INSERT INTO composition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_composition_pid != null">ems_composition_pid,</if>
+            <if test="ems_composition_name != null and ems_composition_name != ''">ems_composition_name,</if>
+            <if test="ems_composition_iconfileid != null">ems_composition_iconfileid,</if>
+            <if test="ems_composition_des != null">ems_composition_des,</if>
+            <if test="ems_composition_isleaf != null">ems_composition_isleaf,</if>
+            <if test="ems_composition_standardid != null">ems_composition_standardid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_composition_pid != null">#{ems_composition_pid},</if>
+            <if test="ems_composition_name != null and ems_composition_name != ''">#{ems_composition_name},</if>
+            <if test="ems_composition_iconfileid != null">#{ems_composition_iconfileid},</if>
+            <if test="ems_composition_des != null">#{ems_composition_des},</if>
+            <if test="ems_composition_isleaf != null">#{ems_composition_isleaf},</if>
+            <if test="ems_composition_standardid != null">#{ems_composition_standardid},</if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="Composition" useGeneratedKeys="true" keyProperty="ems_composition_id">
+        insert into composition(ems_composition_pid, ems_composition_name, ems_composition_iconfileid,
+        ems_composition_modelfileid, ems_composition_des, ems_composition_isleaf, ems_composition_standardid)
+        values
+        <foreach collection="compositions" item="item" separator=",">
+            (#{item.ems_composition_pid}, #{item.ems_composition_name}, #{item.ems_composition_iconfileid},
+            #{item.ems_composition_modelfileid}, #{item.ems_composition_des}, #{item.ems_composition_isleaf},
+            #{item.ems_composition_standardid})
+        </foreach>
+    </insert>
+
+    <select id="findByMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="c"/>
+        </include>
+        FROM composition c
+        <if test="ems_sysuser_customerid != null">
+            JOIN customcomposition cc ON c.ems_composition_id=cc.ems_customcomposition_compositionid
+        </if>
+        <where>
+            <if test="ems_sysuser_customerid != null">
+                cc.ems_customcomposition_customerid=#{ems_sysuser_customerid}
+            </if>
+            <if test="ems_composition_id != null">
+                AND c.ems_composition_id=#{ems_composition_id}
+            </if>
+            <if test="ems_composition_pid != null">
+                AND c.ems_composition_pid=#{ems_composition_pid}
+            </if>
+        </where>
+        ORDER BY c.ems_composition_id
+    </select>
+
+    <select id="findByName" parameterType="string" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM composition WHERE ems_composition_name=#{name}
+    </select>
+
+    <select id="findDuplicateComposition" resultType="com.shengqitech.ems.models.domains.Composition">
+        SELECT <include refid="Base_Column_List"/> FROM composition
+        WHERE ems_composition_name=#{compositionName}
+    </select>
+</mapper>

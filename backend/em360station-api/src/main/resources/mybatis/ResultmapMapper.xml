@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ResultmapMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Resultmap">
+        <id column="ems_resultmap_id" property="ems_resultmap_id" />
+        <result column="ems_resultmap_source" property="ems_resultmap_source" />
+        <result column="ems_resultmap_destination" property="ems_resultmap_destination" />
+        <result column="ems_resultmap_apiid" property="ems_resultmap_apiid" />
+        <result column="ems_resultmap_createtime" property="ems_resultmap_createtime" />
+        <result column="ems_resultmap_updatetime" property="ems_resultmap_updatetime" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_resultmap_id, ems_resultmap_source, ems_resultmap_destination, ems_resultmap_apiid, ems_resultmap_createtime, ems_resultmap_updatetime
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_resultmap_id, ${alias}.ems_resultmap_source, ${alias}.ems_resultmap_destination, ${alias}.ems_resultmap_apiid, ${alias}.ems_resultmap_createtime, ${alias}.ems_resultmap_updatetime
+    </sql>
+
+    <select id="selectByApiId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM resultmap WHERE ems_resultmap_apiid=#{ems_resultmap_apiid}
+    </select>
+
+    <insert id="insert" parameterType="Resultmap" useGeneratedKeys="true" keyProperty="ems_resultmap_id">
+        INSERT INTO resultmap
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_resultmap_source != null">ems_resultmap_source,</if>
+            <if test="ems_resultmap_destination != null">ems_resultmap_destination,</if>
+            <if test="ems_resultmap_apiid != null">ems_resultmap_apiid,</if>
+            <if test="ems_resultmap_createtime != null">ems_resultmap_createtime,</if>
+            <if test="ems_resultmap_updatetime != null">ems_resultmap_updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_resultmap_source != null">#{ems_resultmap_source},</if>
+            <if test="ems_resultmap_destination != null">#{ems_resultmap_destination},</if>
+            <if test="ems_resultmap_apiid != null">#{ems_resultmap_apiid},</if>
+            <if test="ems_resultmap_createtime != null">#{ems_resultmap_createtime},</if>
+            <if test="ems_resultmap_updatetime != null">#{ems_resultmap_updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Resultmap">
+        UPDATE resultmap
+        <set>
+            <if test="ems_resultmap_source != null">ems_resultmap_source=#{ems_resultmap_source},</if>
+            <if test="ems_resultmap_destination != null">ems_resultmap_destination=#{ems_resultmap_destination},</if>
+            <if test="ems_resultmap_apiid != null">ems_resultmap_apiid=#{ems_resultmap_apiid},</if>
+            <if test="ems_resultmap_updatetime != null">ems_resultmap_updatetime=#{ems_resultmap_updatetime},</if>
+        </set>
+        WHERE ems_resultmap_id = #{ems_resultmap_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM resultmap WHERE ems_resultmap_id=#{ems_resultmap_id}
+    </delete>
+</mapper>

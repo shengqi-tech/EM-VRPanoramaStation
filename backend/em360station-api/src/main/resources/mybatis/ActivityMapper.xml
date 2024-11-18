@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ActivityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Activity">
+        <id column="ems_activity_id" property="ems_activity_id" />
+        <result column="ems_activity_name" property="ems_activity_name" />
+        <result column="ems_activity_elementid" property="ems_activity_elementid" />
+        <result column="ems_activity_sectorid" property="ems_activity_sectorid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_activity_id, ems_activity_name, ems_activity_elementid,ems_activity_sectorid
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_activity_id, ${alias}.ems_activity_name, ${alias}.ems_activity_elementid, ${alias}.ems_activity_sectorid
+    </sql>
+
+    <!-- 根据id查询 -->
+    <select id="selectByElementId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+        FROM activity s
+        WHERE s.ems_activity_elementid=#{ems_activity_elementid}
+    </select>
+
+    <select id="selectBySectorId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="s"/>
+        </include>
+        FROM activity s
+        WHERE s.ems_activity_sectorid=#{ems_activity_sectorid}
+    </select>
+
+
+</mapper>

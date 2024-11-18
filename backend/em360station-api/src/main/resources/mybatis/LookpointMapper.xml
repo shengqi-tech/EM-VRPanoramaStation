@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.LookpointMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Lookpoint">
+        <id column="ems_lookpoint_id" property="ems_lookpoint_id" />
+        <result column="ems_lookpoint_fov" property="ems_lookpoint_fov" />
+        <result column="ems_lookpoint_weight" property="ems_lookpoint_weight" />
+        <result column="ems_lookpoint_startcoordinate" property="ems_lookpoint_startcoordinate" />
+        <result column="ems_lookpoint_hotspotid" property="ems_lookpoint_hotspotid" />
+        <result column="ems_lookpoint_guideid" property="ems_lookpoint_guideid" />
+        <result column="ems_lookpoint_hotspottype" property="ems_lookpoint_hotspottype" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_lookpoint_id, ems_lookpoint_fov, ems_lookpoint_weight, ems_lookpoint_startcoordinate, ems_lookpoint_hotspotid, ems_lookpoint_guideid, ems_lookpoint_hotspottype
+    </sql>
+
+    <select id="selectByGuideId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM lookpoint
+        WHERE ems_lookpoint_guideid=#{ems_guide_id}
+    </select>
+
+    <insert id="insert" parameterType="Lookpoint" useGeneratedKeys="true" keyProperty="ems_lookpoint_id">
+        INSERT INTO lookpoint
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_lookpoint_fov != null">ems_lookpoint_fov,</if>
+            <if test="ems_lookpoint_weight != null">ems_lookpoint_weight,</if>
+            <if test="ems_lookpoint_startcoordinate != null">ems_lookpoint_startcoordinate,</if>
+            <if test="ems_lookpoint_hotspotid != null">ems_lookpoint_hotspotid,</if>
+            <if test="ems_lookpoint_guideid != null">ems_lookpoint_guideid,</if>
+            <if test="ems_lookpoint_hotspottype != null">ems_lookpoint_hotspottype,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_lookpoint_fov != null">#{ems_lookpoint_fov},</if>
+            <if test="ems_lookpoint_weight != null">#{ems_lookpoint_weight},</if>
+            <if test="ems_lookpoint_startcoordinate != null">#{ems_lookpoint_startcoordinate},</if>
+            <if test="ems_lookpoint_hotspotid != null">#{ems_lookpoint_hotspotid},</if>
+            <if test="ems_lookpoint_guideid != null">#{ems_lookpoint_guideid},</if>
+            <if test="ems_lookpoint_hotspottype != null">#{ems_lookpoint_hotspottype},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" parameterType="Lookpoint">
+        INSERT INTO
+        lookpoint(ems_lookpoint_fov,ems_lookpoint_weight,ems_lookpoint_startcoordinate,ems_lookpoint_hotspotid,ems_lookpoint_guideid,ems_lookpoint_hotspottype)
+        VALUES
+        <foreach collection="lookpoints" item="item" separator=",">
+            (#{item.ems_lookpoint_fov},#{item.ems_lookpoint_weight},#{item.ems_lookpoint_startcoordinate},#{item.ems_lookpoint_hotspotid},#{item.ems_lookpoint_guideid},#{item.ems_lookpoint_hotspottype})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Lookpoint">
+        UPDATE lookpoint
+        <set>
+            <if test="ems_lookpoint_fov != null">ems_lookpoint_fov=#{ems_lookpoint_fov},</if>
+            <if test="ems_lookpoint_weight != null">ems_lookpoint_weight=#{ems_lookpoint_weight},</if>
+            <if test="ems_lookpoint_startcoordinate != null">ems_lookpoint_startcoordinate=#{ems_lookpoint_startcoordinate},</if>
+            <if test="ems_lookpoint_hotspotid != null">ems_lookpoint_hotspotid=#{ems_lookpoint_hotspotid},</if>
+            <if test="ems_lookpoint_guideid != null">ems_lookpoint_guideid=#{ems_lookpoint_guideid},</if>
+            <if test="ems_lookpoint_hotspottype != null">ems_lookpoint_hotspottype=#{ems_lookpoint_hotspottype},</if>
+        </set>
+        WHERE ems_lookpoint_id = #{ems_lookpoint_id}
+    </update>
+
+    <update id="updateBatch" parameterType="Lookpoint">
+        <foreach collection="lookpoints" item="item" separator=";">
+            UPDATE lookpoint SET
+            ems_lookpoint_fov=#{item.ems_lookpoint_fov},ems_lookpoint_weight=#{item.ems_lookpoint_weight},ems_lookpoint_startcoordinate=#{item.ems_lookpoint_startcoordinate},ems_lookpoint_hotspotid=#{item.ems_lookpoint_hotspotid},ems_lookpoint_guideid=#{item.ems_lookpoint_guideid},ems_lookpoint_hotspottype=#{item.ems_lookpoint_hotspottype}
+            WHERE ems_lookpoint_id=#{item.ems_lookpoint_id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByGuide" parameterType="int">
+        DELETE FROM lookpoint WHERE ems_lookpoint_guideid=#{ems_guide_id}
+    </delete>
+</mapper>

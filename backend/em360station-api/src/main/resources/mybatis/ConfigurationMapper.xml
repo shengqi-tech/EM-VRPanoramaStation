@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ConfigurationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Configuration">
+        <id column="ems_configuration_id" property="ems_configuration_id" />
+
+        <result column="ems_configuration_key" property="ems_configuration_key" />
+        <result column="ems_configuration_name" property="ems_configuration_name" />
+        <result column="ems_configuration_type" property="ems_configuration_type" />
+        <result column="ems_configuration_compositionid" property="ems_configuration_compositionid" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_configuration_id, ${alias}.ems_configuration_key,${alias}.ems_configuration_name, ${alias}.ems_configuration_type, ${alias}.ems_configuration_compositionid
+    </sql>
+
+
+<!--    <select id="getConfigurationsByDeviceId" resultType="com.shengqitech.ems.models.domains.Configuration" parameterType="INTEGER">-->
+<!--        SELECT c.* FROM installconfiguration ic,configuration c where ic.ems_installconfiguration_configurationid=c.ems_configuration_id and ic.ems_installconfiguration_deviceid=#{id}-->
+<!--    </select>-->
+
+
+    <insert id="insert" parameterType="Configuration" useGeneratedKeys="true" keyProperty="ems_configuration_id">
+        INSERT INTO configuration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_configuration_name != null">ems_configuration_name,</if>
+            <if test="ems_configuration_type != null">ems_configuration_type,</if>
+            <if test="ems_configuration_compositionid != null">ems_configuration_compositionid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_configuration_name != null">#{ems_configuration_name},</if>
+            <if test="ems_configuration_type != null">#{ems_configuration_type},</if>
+            <if test="ems_configuration_compositionid != null">#{ems_configuration_compositionid},</if>
+        </trim>
+    </insert>
+
+    <select id="findByName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="c"/>
+        </include>
+        FROM configuration c
+        WHERE ems_configuration_name=#{name}
+    </select>
+
+    <select id="findByMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="c"/>
+        </include>
+        FROM configuration c
+        <where>
+            <if test="ems_configuration_id != null">
+                c.ems_configuration_id=#{ems_configuration_id}
+            </if>
+            <if test="ems_configuration_name != null and ems_configuration_name != ''">
+                AND c.ems_configuration_name LIKE CONCAT('%',#{ems_configuration_name},'%')
+            </if>
+
+            <if test="ems_composition_id != null">
+                AND c.ems_configuration_compositionid=#{ems_composition_id}
+            </if>
+        </where>
+    </select>
+
+</mapper>

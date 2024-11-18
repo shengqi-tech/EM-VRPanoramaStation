@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.ApiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Api">
+        <id column="ems_api_id" property="ems_api_id" />
+        <result column="ems_api_name" property="ems_api_name" />
+        <result column="ems_api_url" property="ems_api_url" />
+        <result column="ems_api_parameters" property="ems_api_parameters" />
+        <result column="ems_api_header" property="ems_api_header" />
+        <result column="ems_api_receptorid" property="ems_api_receptorid" />
+        <result column="ems_api_requesttype" property="ems_api_requesttype" />
+        <result column="ems_api_sysuserid" property="ems_api_sysuserid" />
+        <result column="ems_api_createtime" property="ems_api_createtime" />
+        <result column="ems_api_updatetime" property="ems_api_updatetime" />
+        <result column="ems_api_restapigroupid" property="ems_api_restapigroupid" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.ApiVo">
+        <collection column="ems_resultmap_apiid = ems_api_id" property="resultmapList"
+                    ofType="com.shengqitech.ems.models.domains.Resultmap"
+                    select="com.shengqitech.ems.mappers.ResultmapMapper.selectByApiId"/>
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_api_id, ems_api_url, ems_api_name, ems_api_parameters, ems_api_header, ems_api_receptorid, ems_api_requesttype, ems_api_sysuserid, ems_api_createtime, ems_api_updatetime, ems_api_restapigroupid
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_api_id, ${alias}.ems_api_url, ${alias}.ems_api_name, ${alias}.ems_api_parameters, ${alias}.ems_api_header, ${alias}.ems_api_receptorid, ${alias}.ems_api_requesttype, ${alias}.ems_api_sysuserid, ${alias}.ems_api_createtime, ${alias}.ems_api_updatetime, ${alias}.ems_api_restapigroupid
+    </sql>
+
+    <select id="selectByRestapigroupId" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM api
+        WHERE ems_api_restapigroupid=#{ems_api_restapigroupid}
+    </select>
+
+    <insert id="insert" parameterType="Api" useGeneratedKeys="true" keyProperty="ems_api_id">
+        INSERT INTO api
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_api_name != null and ems_api_name != ''">ems_api_name,</if>
+            <if test="ems_api_url != null and ems_api_url != ''">ems_api_url,</if>
+            <if test="ems_api_parameters != null and ems_api_parameters != ''">ems_api_parameters,</if>
+            <if test="ems_api_header != null">ems_api_header,</if>
+            <if test="ems_api_receptorid != null">ems_api_receptorid,</if>
+            <if test="ems_api_requesttype != null">ems_api_requesttype,</if>
+            <if test="ems_api_sysuserid != null">ems_api_sysuserid,</if>
+            <if test="ems_api_createtime != null">ems_api_createtime,</if>
+            <if test="ems_api_updatetime != null">ems_api_updatetime,</if>
+            <if test="ems_api_restapigroupid != null">ems_api_restapigroupid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_api_name != null and ems_api_name != ''">#{ems_api_name},</if>
+            <if test="ems_api_url != null and ems_api_url != ''">#{ems_api_url},</if>
+            <if test="ems_api_parameters != null and ems_api_parameters != ''">#{ems_api_parameters},</if>
+            <if test="ems_api_header != null">#{ems_api_header},</if>
+            <if test="ems_api_receptorid != null">#{ems_api_receptorid},</if>
+            <if test="ems_api_requesttype != null">#{ems_api_requesttype},</if>
+            <if test="ems_api_sysuserid != null">#{ems_api_sysuserid},</if>
+            <if test="ems_api_createtime != null">#{ems_api_createtime},</if>
+            <if test="ems_api_updatetime != null">#{ems_api_updatetime},</if>
+            <if test="ems_api_restapigroupid != null">#{ems_api_restapigroupid},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Api">
+        UPDATE api
+        <set>
+            <if test="ems_api_name != null and ems_api_name != ''">ems_api_name=#{ems_api_name},</if>
+            <if test="ems_api_url != null and ems_api_url != ''">ems_api_url=#{ems_api_url},</if>
+            <if test="ems_api_parameters != null and ems_api_parameters != ''">ems_api_parameters=#{ems_api_parameters},</if>
+            <if test="ems_api_header != null">ems_api_header=#{ems_api_header},</if>
+            <if test="ems_api_receptorid != null">ems_api_receptorid=#{ems_api_receptorid},</if>
+            <if test="ems_api_requesttype != null">ems_api_requesttype=#{ems_api_requesttype},</if>
+            <if test="ems_api_sysuserid != null">ems_api_sysuserid=#{ems_api_sysuserid},</if>
+            <if test="ems_api_updatetime != null">ems_api_updatetime=#{ems_api_updatetime},</if>
+            <if test="ems_api_restapigroupid != null">ems_api_restapigroupid=#{ems_api_restapigroupid},</if>
+        </set>
+        WHERE ems_api_id = #{ems_api_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM api WHERE ems_api_id=#{ems_api_id}
+    </delete>
+
+    <select id="findByMap" resultMap="VoResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM api
+        <where>
+            <if test="ems_api_url != null and ems_api_url != ''">
+                ems_api_url LIKE CONCAT('%',#{ems_api_url},'%')
+            </if>
+            <if test="ems_api_requesttype != null and ems_api_requesttype != ''">
+                AND ems_api_requesttype=#{ems_api_requesttype}
+            </if>
+            <if test="ems_api_starttime != null and ems_api_endtime != null">
+                AND ems_api_createtime BETWEEN #{ems_api_starttime} AND #{ems_api_endtime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

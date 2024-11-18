@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.AssignMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Assign">
+        <id column="ems_assign_id" property="ems_assign_id" />
+        <result column="ems_assign_time" property="ems_assign_time" />
+        <result column="ems_assign_expirationdate" property="ems_assign_expirationdate" />
+        <result column="ems_assign_instanceid" property="ems_assign_instanceid" />
+        <result column="ems_assign_userid" property="ems_assign_userid" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}.ems_assign_id, ${alias}.ems_assign_time, ${alias}.ems_assign_expirationdate, ${alias}.ems_assign_instanceid, ${alias}.ems_assign_userid
+    </sql>
+
+    <insert id="insert" parameterType="Assign" useGeneratedKeys="true" keyProperty="ems_assign_id">
+        INSERT INTO assign
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_assign_time != null">ems_assign_time,</if>
+            <if test="ems_assign_expirationdate != null and ems_assign_expirationdate != ''">ems_assign_expirationdate,</if>
+            <if test="ems_assign_instanceid != null">ems_assign_instanceid,</if>
+            <if test="ems_assign_userid != null">ems_assign_userid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_assign_time != null">#{ems_assign_time},</if>
+            <if test="ems_assign_expirationdate != null and ems_assign_expirationdate != ''">#{ems_assign_expirationdate},</if>
+            <if test="ems_assign_instanceid != null">#{ems_assign_instanceid},</if>
+            <if test="ems_assign_userid != null">#{ems_assign_userid},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByUser" parameterType="int">
+        DELETE FROM assign WHERE ems_assign_userid=#{ems_sysuser_id}
+    </delete>
+
+    <select id="fingByUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="a"/>
+        </include>
+        FROM assign a WHERE ems_assign_userid=#{ems_sysuser_id}
+    </select>
+</mapper>

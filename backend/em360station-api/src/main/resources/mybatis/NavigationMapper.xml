@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.NavigationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Navigation">
+        <id column="ems_navigation_id" property="ems_navigation_id" />
+        <result column="ems_navigation_name" property="ems_navigation_name" />
+        <result column="ems_navigation_panoramaid" property="ems_navigation_panoramaid" />
+        <result column="ems_navigation_topanoramaid" property="ems_navigation_topanoramaid" />
+        <result column="ems_navigation_tagtypeid" property="ems_navigation_tagtypeid" />
+        <result column="ems_navigation_rotation" property="ems_navigation_rotation" />
+        <result column="ems_navigation_location" property="ems_navigation_location" />
+        <result column="ems_navigation_widthratio" property="ems_navigation_widthratio" />
+        <result column="ems_navigation_heightratio" property="ems_navigation_heightratio" />
+        <result column="ems_navigation_taganimationid" property="ems_navigation_taganimationid" />
+        <result column="ems_navigation_jsondata" property="ems_navigation_jsondata" />
+        <result column="ems_navigation_createtime" property="ems_navigation_createtime" />
+        <result column="ems_navigation_updatetime" property="ems_navigation_updatetime" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.NavigationVo">
+        <result column="ems_tagtype_type" property="ems_navigation_tagtype" />
+        <result column="ems_tagtype_pid" property="ems_navigation_tagtypepid" />
+        <association column="ems_sysfile_id = ems_tagtype_iconfileid" property="ems_navigation_tagtypeiconfile"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_navigation_id, ems_navigation_name, ems_navigation_panoramaid, ems_navigation_topanoramaid, ems_navigation_tagtypeid, ems_navigation_rotation, ems_navigation_location, ems_navigation_widthratio, ems_navigation_heightratio, ems_navigation_taganimationid, ems_navigation_jsondata, ems_navigation_createtime, ems_navigation_updatetime
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}.ems_navigation_id, ${alias}.ems_navigation_name, ${alias}.ems_navigation_panoramaid, ${alias}.ems_navigation_topanoramaid, ${alias}.ems_navigation_tagtypeid, ${alias}.ems_navigation_rotation, ${alias}.ems_navigation_location, ${alias}.ems_navigation_widthratio, ${alias}.ems_navigation_heightratio, ${alias}.ems_navigation_taganimationid, ${alias}.ems_navigation_jsondata, ${alias}.ems_navigation_createtime, ${alias}.ems_navigation_updatetime
+    </sql>
+
+    <select id="selectByPanoramaId" resultMap="VoResultMap">
+        SELECT
+        <include refid="Relevance_Column_List">
+            <property name="alias" value="n"/>
+        </include>
+        ,t.ems_tagtype_iconfileid, t.ems_tagtype_type, t.ems_tagtype_pid FROM navigation n JOIN tagtype t ON n.ems_navigation_tagtypeid = t.ems_tagtype_id
+        WHERE n.ems_navigation_panoramaid=#{ems_panorama_id}
+    </select>
+
+    <insert id="insert" parameterType="Navigation" useGeneratedKeys="true" keyProperty="ems_navigation_id">
+        INSERT INTO navigation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_navigation_name != null and ems_navigation_name != ''">ems_navigation_name,</if>
+            <if test="ems_navigation_panoramaid != null">ems_navigation_panoramaid,</if>
+            <if test="ems_navigation_topanoramaid != null">ems_navigation_topanoramaid,</if>
+            <if test="ems_navigation_tagtypeid != null">ems_navigation_tagtypeid,</if>
+            <if test="ems_navigation_rotation != null">ems_navigation_rotation,</if>
+            <if test="ems_navigation_location != null">ems_navigation_location,</if>
+            <if test="ems_navigation_widthratio != null">ems_navigation_widthratio,</if>
+            <if test="ems_navigation_heightratio != null">ems_navigation_heightratio,</if>
+            <if test="ems_navigation_taganimationid != null">ems_navigation_taganimationid,</if>
+            <if test="ems_navigation_jsondata != null">ems_navigation_jsondata,</if>
+            <if test="ems_navigation_createtime != null">ems_navigation_createtime,</if>
+            <if test="ems_navigation_updatetime != null">ems_navigation_updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_navigation_name != null and ems_navigation_name != ''">#{ems_navigation_name},</if>
+            <if test="ems_navigation_panoramaid != null">#{ems_navigation_panoramaid},</if>
+            <if test="ems_navigation_topanoramaid != null">#{ems_navigation_topanoramaid},</if>
+            <if test="ems_navigation_tagtypeid != null">#{ems_navigation_tagtypeid},</if>
+            <if test="ems_navigation_rotation != null">#{ems_navigation_rotation},</if>
+            <if test="ems_navigation_location != null">#{ems_navigation_location},</if>
+            <if test="ems_navigation_widthratio != null">#{ems_navigation_widthratio},</if>
+            <if test="ems_navigation_heightratio != null">#{ems_navigation_heightratio},</if>
+            <if test="ems_navigation_taganimationid != null">#{ems_navigation_taganimationid},</if>
+            <if test="ems_navigation_jsondata != null">#{ems_navigation_jsondata},</if>
+            <if test="ems_navigation_createtime != null">#{ems_navigation_createtime},</if>
+            <if test="ems_navigation_updatetime != null">#{ems_navigation_updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Navigation">
+        UPDATE navigation
+        <set>
+            <if test="ems_navigation_name != null and ems_navigation_name != ''">ems_navigation_name=#{ems_navigation_name},</if>
+            <if test="ems_navigation_panoramaid != null">ems_navigation_panoramaid=#{ems_navigation_panoramaid},</if>
+            <if test="ems_navigation_topanoramaid != null">ems_navigation_topanoramaid=#{ems_navigation_topanoramaid},</if>
+            <if test="ems_navigation_tagtypeid != null">ems_navigation_tagtypeid=#{ems_navigation_tagtypeid},</if>
+            <if test="ems_navigation_rotation != null">ems_navigation_rotation=#{ems_navigation_rotation},</if>
+            <if test="ems_navigation_location != null">ems_navigation_location=#{ems_navigation_location},</if>
+            <if test="ems_navigation_widthratio != null">ems_navigation_widthratio=#{ems_navigation_widthratio},</if>
+            <if test="ems_navigation_heightratio != null">ems_navigation_heightratio=#{ems_navigation_heightratio},</if>
+            <if test="ems_navigation_taganimationid != null">ems_navigation_taganimationid=#{ems_navigation_taganimationid},</if>
+            <if test="ems_navigation_jsondata != null">ems_navigation_jsondata=#{ems_navigation_jsondata},</if>
+            <if test="ems_navigation_updatetime != null">ems_navigation_updatetime=#{ems_navigation_updatetime},</if>
+        </set>
+        WHERE ems_navigation_id = #{ems_navigation_id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM navigation WHERE ems_navigation_id=#{ems_navigation_id}
+    </delete>
+
+    <select id="findByTagtypeId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM navigation
+        WHERE ems_navigation_tagtypeid=#{ems_tagtype_id}
+    </select>
+
+    <update id="batchUpdate" parameterType="Navigation">
+        <foreach collection="navigations" item="item" index="index" open="" close="" separator=";">
+            update navigation
+            <set>
+                ems_navigation_name = #{item.ems_navigation_name},
+                ems_navigation_panoramaid = #{item.ems_navigation_panoramaid},
+                ems_navigation_topanoramaid = #{item.ems_navigation_topanoramaid},
+                ems_navigation_tagtypeid = #{item.ems_navigation_tagtypeid},
+                ems_navigation_rotation = #{item.ems_navigation_rotation},
+                ems_navigation_location = #{item.ems_navigation_location},
+                ems_navigation_widthratio = #{item.ems_navigation_widthratio},
+                ems_navigation_heightratio = #{item.ems_navigation_heightratio},
+                ems_navigation_taganimationid = #{item.ems_navigation_taganimationid},
+                ems_navigation_jsondata = #{item.ems_navigation_jsondata}
+            </set>
+            where ems_navigation_id=#{item.ems_navigation_id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByPanorama" parameterType="int">
+        DELETE FROM navigation WHERE ems_navigation_panoramaid=#{ems_panorama_id} OR ems_navigation_topanoramaid=#{ems_panorama_id}
+    </delete>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.DeviceAlarmMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.DeviceAlarm">
+        <id column="ems_devicealarm_id" property="ems_devicealarm_id"/>
+        <result column="ems_devicealarm_happentime" property="ems_devicealarm_happentime"/>
+        <result column="ems_devicealarm_createtime" property="ems_devicealarm_createtime"/>
+        <result column="ems_devicealarm_devicealarmtypeid" property="ems_devicealarm_devicealarmtypeid"/>
+        <result column="ems_devicealarm_levelid" property="ems_devicealarm_levelid"/>
+        <result column="ems_devicealarm_deviceid" property="ems_devicealarm_deviceid"/>
+        <result column="ems_devicealarm_log" property="ems_devicealarm_log"/>
+        <result column="ems_devicealarm_value" property="ems_devicealarm_value"/>
+    </resultMap>
+
+    <resultMap id="VoResultMap" extends="BaseResultMap" type="com.shengqitech.ems.models.vo.DeviceAlarmVo">
+        <association column="ems_devicealarm_levelid" property="ems_devicealarm_alarmlevel"
+                     javaType="com.shengqitech.ems.models.domains.AlarmLevel"
+                     select="com.shengqitech.ems.mappers.AlarmLevelMapper.selectById" fetchType="eager"/>
+        <association column="ems_devicealarm_deviceid" property="ems_devicealarm_device"
+                     javaType="com.shengqitech.ems.models.domains.Device"
+                     select="com.shengqitech.ems.mappers.DeviceMapper.findById" fetchType="eager"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ${alias}
+        .
+        ems_devicealarm_id
+        ,
+        ${alias}
+        .
+        ems_devicealarm_happentime,
+        ${alias}
+        .
+        ems_devicealarm_createtime,
+        ${alias}
+        .
+        ems_devicealarm_devicealarmtypeid,
+        ${alias}
+        .
+        ems_devicealarm_levelid,
+        ${alias}
+        .
+        ems_devicealarm_deviceid,
+        ${alias}
+        .
+        ems_devicealarm_log,
+        ${alias}
+        .
+        ems_devicealarm_value
+    </sql>
+
+    <insert id="insert" parameterType="DeviceAlarm" useGeneratedKeys="true" keyProperty="ems_devicealarm_id">
+        INSERT INTO devicealarm
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_devicealarm_happentime != null">ems_devicealarm_happentime,</if>
+            <if test="ems_devicealarm_createtime != null">ems_devicealarm_createtime,</if>
+            <if test="ems_devicealarm_levelid != null">ems_devicealarm_levelid,</if>
+            <if test="ems_devicealarm_deviceid != null">ems_devicealarm_deviceid,</if>
+            <if test="ems_devicealarm_devicealarmtypeid != null">ems_devicealarm_devicealarmtypeid,</if>
+            <if test="ems_devicealarm_log != null">ems_devicealarm_log,</if>
+            <if test="ems_devicealarm_value != null">ems_devicealarm_value,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_devicealarm_happentime != null">#{ems_devicealarm_happentime},</if>
+            <if test="ems_devicealarm_createtime != null">#{ems_devicealarm_createtime},</if>
+            <if test="ems_devicealarm_levelid != null">#{ems_devicealarm_levelid},</if>
+            <if test="ems_devicealarm_deviceid != null">#{ems_devicealarm_deviceid},</if>
+            <if test="ems_devicealarm_log != null">#{ems_devicealarm_log},</if>
+            <if test="ems_devicealarm_value != null">#{ems_devicealarm_value},</if>
+        </trim>
+    </insert>
+
+    <select id="findByStationId" resultMap="VoResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="t"/>
+        </include>
+        FROM (
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="d"/>
+        </include>
+        ,ROW_NUMBER() OVER (PARTITION BY ems_devicealarm_deviceid ORDER BY ems_devicealarm_happentime DESC) AS rn
+        FROM devicealarm d
+        WHERE ems_devicealarm_deviceid IN (SELECT ems_device_id FROM device WHERE ems_device_instanceid = #{id})
+        ) t
+        WHERE t.rn = 1;
+    </select>
+
+    <select id="findRepetition" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List">
+            <property name="alias" value="d"/>
+        </include>
+        FROM devicealarm d WHERE ems_devicealarm_deviceid=#{ems_devicealarm_deviceid} AND
+        ems_devicealarm_happentime=#{ems_devicealarm_happentime}
+    </select>
+
+
+    <select id="findDeviceAlarmByInsanceId" resultType="int">
+        SELECT
+       count(*)
+        FROM devicealarm d WHERE ems_devicealarm_deviceid in (select ems_device_id  from device  where ems_device_instanceid = #{ems_instance_id} )
+    </select>
+
+</mapper>

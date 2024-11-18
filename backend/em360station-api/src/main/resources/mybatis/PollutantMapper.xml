@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.PollutantMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Pollutant">
+        <id column="ems_pollutant_id" property="ems_pollutant_id" />
+        <result column="ems_pollutant_namecn" property="ems_pollutant_namecn" />
+        <result column="ems_pollutant_nameen" property="ems_pollutant_nameen" />
+        <result column="ems_pollutant_chemicalsymbols" property="ems_pollutant_chemicalsymbols" />
+        <result column="ems_pollutant_code" property="ems_pollutant_code" />
+        <result column="ems_pollutant_pollutantclassificationid" property="ems_pollutant_pollutantclassificationid" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_pollutant_id, ems_pollutant_namecn, ems_pollutant_nameen, ems_pollutant_chemicalsymbols, ems_pollutant_code, ems_pollutant_pollutantclassificationid
+    </sql>
+
+
+
+</mapper>

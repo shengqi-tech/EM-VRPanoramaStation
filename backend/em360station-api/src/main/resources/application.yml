@@ -1,0 +1,158 @@
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 18083
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+
+# 日志配置
+logging:
+  level:
+    com.shengqitech.ems.mappers: debug
+    org.springframework: warn
+
+# Spring配置
+spring:
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  profiles:
+    active: dev
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      maxFileSize:  300MB
+      # 设置总上传的文件大小
+      maxRequestSize:  500MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  influx:
+    # 组织： shengqi-tech bucket： eme
+    url: http://localhost:8086
+    bucket: ems
+    org: shengqi
+    token: UT9UsuRPsWwdnGqYIYmu9hIejRmpK98bO97hzDnpwfDmJoFrvvVYQloTXoRDCvrbCEcPf-38j6LnaSfrVNzVSg==
+  # redis 配置
+  redis:
+    # 地址
+    host: localhost
+    #    host: 192.168.2.10
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    database: 0
+    # 密码
+    password: 123456
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 534951557@qq.com
+    from: 534951557@qq.com
+    password: 534951557..
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+
+### xxl-job, access token
+xxl:
+  job:
+    accessToken: default_token
+    i18n: zh_CN
+    ## xxl-job, triggerpool max size
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100
+    ### xxl-job, log retention days
+    logretentiondays: 30
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.shengqitech.ems.**.domains
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认180分钟）
+  expireTime: 180
+
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
+
+# PageHelper分页插件
+pagehelper:
+  reasonable: false
+  supportMethodsArguments: true
+  params: count=countSql
+  # 默认false,当为true时，自动检验适合的数据库
+  auto-dialect: true
+  # 这个一定要加上，不然mysql和postgresql分页两个只能用一个，另一个会报错，加上后，两中数据库分页都可以用了
+  auto-runtime-dialect: true
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 项目相关配置
+ems:
+  # 名称
+  name: ems
+  # 版本
+  version: 1.0
+  # 文件路径 示例（ Windows配置D:/ems/uploadPath，Linux配置 /home/ems/uploadPath）
+  profile: e:/shengqi-tech/ems/file/systemfile
+
+aliyun:
+  AccessKeyID: LTAI5tC6bSZGuP1iyXbLrJTn
+  AccessKeySecret: H8bm25AaqTXZ3azdb2osfcfBq8qYJD
+  sms:
+    expireTime: 5
+    templateCode: SMS_464740666
+    signName: 武汉生栖科技

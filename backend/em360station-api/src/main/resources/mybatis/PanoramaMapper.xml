@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shengqitech.ems.mappers.PanoramaMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shengqitech.ems.models.domains.Panorama">
+        <id column="ems_panorama_id" property="ems_panorama_id"/>
+        <result column="ems_panorama_name" property="ems_panorama_name"/>
+        <result column="ems_panorama_level" property="ems_panorama_level"/>
+        <result column="ems_panorama_coverid" property="ems_panorama_coverid"/>
+        <result column="ems_panorama_slicefileids" property="ems_panorama_slicefileids"/>
+        <result column="ems_panorama_index" property="ems_panorama_index"/>
+        <result column="ems_panorama_default" property="ems_panorama_default"/>
+        <result column="ems_panorama_initview" property="ems_panorama_initview"/>
+        <result column="ems_panorama_fov" property="ems_panorama_fov"/>
+        <result column="ems_panorama_instanceid" property="ems_panorama_instanceid"/>
+        <result column="ems_panorama_des" property="ems_panorama_des"/>
+        <result column="ems_panorama_createtime" property="ems_panorama_createtime"/>
+        <result column="ems_panorama_updatetime" property="ems_panorama_updatetime"/>
+        <result column="ems_panorama_userid" property="ems_panorama_userid"/>
+        <result column="ems_panorama_isdelete" property="ems_panorama_isdelete"/>
+    </resultMap>
+
+    <resultMap id="VoResultMap" type="com.shengqitech.ems.models.vo.PanoramaVo">
+        <id column="ems_panorama_id" property="ems_panorama_id"/>
+        <result column="ems_panorama_name" property="ems_panorama_name"/>
+        <result column="ems_panorama_level" property="ems_panorama_level"/>
+        <result column="ems_panorama_index" property="ems_panorama_index"/>
+        <result column="ems_panorama_default" property="ems_panorama_default"/>
+        <result column="ems_panorama_initview" property="ems_panorama_initview"/>
+        <result column="ems_panorama_fov" property="ems_panorama_fov"/>
+        <result column="ems_panorama_instanceid" property="ems_panorama_instanceid"/>
+        <result column="ems_panorama_des" property="ems_panorama_des"/>
+        <result column="ems_panorama_createtime" property="ems_panorama_createtime"/>
+        <result column="ems_panorama_updatetime" property="ems_panorama_updatetime"/>
+        <result column="ems_panorama_userid" property="ems_panorama_userid"/>
+        <result column="ems_panorama_isdelete" property="ems_panorama_isdelete"/>
+        <association column="ems_sysfile_id = ems_panorama_coverid" property="ems_panorama_cover"
+                     javaType="com.shengqitech.ems.models.domains.Sysfile"
+                     select="com.shengqitech.ems.mappers.SysfileMapper.selectByFileId" fetchType="eager"/>
+    </resultMap>
+
+    <resultMap id="ViewResultMap" extends="VoResultMap" type="com.shengqitech.ems.models.vo.PanoramaViewVo">
+        <collection column="ems_panorama_id" property="ems_panorama_commonvos"
+                    ofType="com.shengqitech.ems.models.vo.CommonVo"
+                    select="com.shengqitech.ems.mappers.CommonMapper.selectByPanoramaId"/>
+        <collection column="ems_panorama_id" property="ems_panorama_navigationvos"
+                    ofType="com.shengqitech.ems.models.vo.NavigationVo"
+                    select="com.shengqitech.ems.mappers.NavigationMapper.selectByPanoramaId"/>
+        <collection column="ems_panorama_id" property="ems_panorama_htmlvos"
+                    ofType="com.shengqitech.ems.models.vo.HtmlVo"
+                    select="com.shengqitech.ems.mappers.HtmlMapper.selectByPanoramaId"/>
+        <collection column="ems_panorama_id" property="ems_panorama_videofusionvos"
+                    ofType="com.shengqitech.ems.models.vo.VideofusionVo"
+                    select="com.shengqitech.ems.mappers.VideofusionMapper.selectByPanoramaId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ems_panorama_id
+        , ems_panorama_name, ems_panorama_level, ems_panorama_coverid, ems_panorama_slicefileids, ems_panorama_index, ems_panorama_default, ems_panorama_initview, ems_panorama_fov, ems_panorama_instanceid, ems_panorama_des, ems_panorama_createtime, ems_panorama_updatetime, ems_panorama_userid, ems_panorama_isdelete
+    </sql>
+
+    <sql id="Relevance_Column_List">
+        ${alias}
+        .
+        ems_panorama_id
+        ,
+        ${alias}
+        .
+        ems_panorama_name,
+        ${alias}
+        .
+        ems_panorama_level,
+        ${alias}
+        .
+        ems_panorama_coverid,
+        ${alias}
+        .
+        ems_panorama_slicefileids,
+        ${alias}
+        .
+        ems_panorama_index,
+        ${alias}
+        .
+        ems_panorama_default,
+        ${alias}
+        .
+        ems_panorama_initview,
+        ${alias}
+        .
+        ems_panorama_fov,
+        ${alias}
+        .
+        ems_panorama_instanceid,
+        ${alias}
+        .
+        ems_panorama_des,
+        ${alias}
+        .
+        ems_panorama_createtime,
+        ${alias}
+        .
+        ems_panorama_updatetime,
+        ${alias}
+        .
+        ems_panorama_userid,
+        ${alias}
+        .
+        ems_panorama_isdelete
+    </sql>
+
+    <insert id="insert" parameterType="Panorama" useGeneratedKeys="true" keyProperty="ems_panorama_id">
+        INSERT INTO panorama
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ems_panorama_name != null and ems_panorama_name != ''">ems_panorama_name,</if>
+            <if test="ems_panorama_level != null">ems_panorama_level,</if>
+            <if test="ems_panorama_coverid != null">ems_panorama_coverid,</if>
+            <if test="ems_panorama_slicefileids != null">ems_panorama_slicefileids,</if>
+            <if test="ems_panorama_index != null">ems_panorama_index,</if>
+            <if test="ems_panorama_default != null">ems_panorama_default,</if>
+            <if test="ems_panorama_initview != null">ems_panorama_initview,</if>
+            <if test="ems_panorama_fov != null">ems_panorama_fov,</if>
+            <if test="ems_panorama_instanceid != null">ems_panorama_instanceid,</if>
+            <if test="ems_panorama_des != null">ems_panorama_des,</if>
+            <if test="ems_panorama_createtime != null">ems_panorama_createtime,</if>
+            <if test="ems_panorama_updatetime != null ">ems_panorama_updatetime,</if>
+            <if test="ems_panorama_userid != null ">ems_panorama_userid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ems_panorama_name != null and ems_panorama_name != ''">#{ems_panorama_name},</if>
+            <if test="ems_panorama_level != null">#{ems_panorama_level},</if>
+            <if test="ems_panorama_coverid != null">#{ems_panorama_coverid},</if>
+            <if test="ems_panorama_slicefileids != null">#{ems_panorama_slicefileids},</if>
+            <if test="ems_panorama_index != null">#{ems_panorama_index},</if>
+            <if test="ems_panorama_default != null">#{ems_panorama_default},</if>
+            <if test="ems_panorama_initview != null">#{ems_panorama_initview},</if>
+            <if test="ems_panorama_fov != null">#{ems_panorama_fov},</if>
+            <if test="ems_panorama_instanceid != null">#{ems_panorama_instanceid},</if>
+            <if test="ems_panorama_des != null">#{ems_panorama_des},</if>
+            <if test="ems_panorama_createtime != null">#{ems_panorama_createtime},</if>
+            <if test="ems_panorama_updatetime != null ">#{ems_panorama_updatetime},</if>
+            <if test="ems_panorama_userid != null ">#{ems_panorama_userid},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Panorama">
+        UPDATE panorama
+        <set>
+            <if test="ems_panorama_name != null and ems_panorama_name != ''">ems_panorama_name=#{ems_panorama_name},
+            </if>
+            <if test="ems_panorama_level != null">ems_panorama_level=#{ems_panorama_level},</if>
+            <if test="ems_panorama_coverid != null">ems_panorama_coverid=#{ems_panorama_coverid},</if>
+            <if test="ems_panorama_slicefileids != null">ems_panorama_slicefileids=#{ems_panorama_slicefileids},</if>
+            <if test="ems_panorama_index != null">ems_panorama_index=#{ems_panorama_index},</if>
+            <if test="ems_panorama_default != null">ems_panorama_default=#{ems_panorama_default},</if>
+            <if test="ems_panorama_initview != null">ems_panorama_initview=#{ems_panorama_initview},</if>
+            <if test="ems_panorama_fov != null">ems_panorama_fov=#{ems_panorama_fov},</if>
+            <if test="ems_panorama_instanceid != null">ems_panorama_instanceid=#{ems_panorama_instanceid},</if>
+            <if test="ems_panorama_des != null">ems_panorama_des=#{ems_panorama_des},</if>
+            <if test="ems_panorama_updatetime != null">ems_panorama_updatetime=#{ems_panorama_updatetime},</if>
+            <if test="ems_panorama_userid != null ">ems_panorama_userid=#{ems_panorama_userid},</if>
+        </set>
+        WHERE ems_panorama_id = #{ems_panorama_id}
+    </update>
+
+    <select id="findByMap" resultMap="ViewResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM panorama
+        WHERE ems_panorama_isdelete=0
+        <if test="ems_panorama_id != null">
+            AND ems_panorama_id=#{ems_panorama_id}
+        </if>
+        <if test="ems_panorama_name != null and ems_panorama_name != ''">
+            AND ems_panorama_name like CONCAT('%', #{ems_panorama_name,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="ems_panorama_level != null">
+            AND ems_panorama_level=#{ems_panorama_level}
+        </if>
+        <if test="ems_panorama_instanceid != null">
+            AND ems_panorama_instanceid=#{ems_panorama_instanceid}
+        </if>
+        <if test="ems_panorama_starttime != null and ems_panorama_endtime != null">
+            AND ems_panorama_createtime BETWEEN #{ems_panorama_starttime} AND #{ems_panorama_endtime}
+        </if>
+        ORDER BY ems_panorama_index ASC
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM panorama WHERE ems_panorama_id=#{ems_panorama_id}
+    </delete>
+
+    <select id="getView" resultMap="ViewResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM panorama
+        WHERE ems_panorama_isdelete=0
+        AND ems_panorama_id=#{ems_panorama_id}
+    </select>
+
+    <update id="resetDefault" parameterType="int">
+        UPDATE panorama SET ems_panorama_default=0 WHERE ems_panorama_instanceid=#{ems_instance_id}
+    </update>
+
+    <update id="setHomePage" parameterType="int">
+        UPDATE panorama SET ems_panorama_default = 1 WHERE ems_panorama_id=#{ems_panorama_id}
+    </update>
+
+    <update id="sort" parameterType="int">
+        UPDATE panorama AS p1
+            INNER JOIN (SELECT COALESCE (((p2.ems_panorama_index) + (p3.ems_panorama_index)) / 2,
+            (SELECT MIN(p4.ems_panorama_index) - 1
+            FROM panorama p4
+            WHERE p4.ems_panorama_id = ${id})) AS new_index
+            FROM panorama p2
+            CROSS JOIN (SELECT MAX(p5.ems_panorama_index) AS ems_panorama_index
+            FROM panorama p5
+            WHERE p5.ems_panorama_index <![CDATA[ < ]]> (SELECT p6.ems_panorama_index
+            FROM panorama p6
+            WHERE p6.ems_panorama_id = ${id})) AS p3
+            WHERE p2.ems_panorama_id = ${id}) AS new_values
+        SET p1.ems_panorama_index = new_values.new_index
+        WHERE p1.ems_panorama_id = ${sortId}
+    </update>
+
+    <update id="sortLast" parameterType="int">
+        UPDATE panorama AS p1
+            INNER JOIN (
+            SELECT MAX(ems_panorama_index) + 1 AS new_index
+            FROM panorama
+            ) AS new_values
+        SET p1.ems_panorama_index = new_values.new_index
+        WHERE p1.ems_panorama_id = ${sortId};
+    </update>
+
+    <select id="getMaxIndexByInstanceId" parameterType="int" resultType="Double">
+        SELECT MAX(ems_panorama_index) FROM panorama WHERE ems_panorama_instanceid=#{ems_instance_id}
+    </select>
+</mapper>
